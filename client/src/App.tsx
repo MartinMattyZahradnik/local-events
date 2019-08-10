@@ -1,33 +1,38 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { StylesProvider } from "@material-ui/styles";
+import { Provider } from "react-redux";
+import configureStore from "store/store";
 
-import { GlobalStyle, Button } from "./bricks/index";
+// Components
+import { GlobalStyle, theme, Button } from "bricks/index";
+import { Header } from "components/common";
 
-const theme = {
-  primary: "red",
-  secondary: "green"
-};
+const { store } = configureStore();
 
 const App: React.FC = () => {
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <React.Fragment>
-          <GlobalStyle />
-          <div className="App">
-            <header className="App-header">
-              <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learn React
-              </a>
-            </header>
-          </div>
-        </React.Fragment>
+        <Provider store={store}>
+          <React.Fragment>
+            <GlobalStyle />
+            <div className="App">
+              <Header />
+              <header className="App-header">
+                <a
+                  className="App-link"
+                  href="https://reactjs.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn React
+                </a>
+                <Button>Pokustek</Button>
+              </header>
+            </div>
+          </React.Fragment>
+        </Provider>
       </ThemeProvider>
     </StylesProvider>
   );
