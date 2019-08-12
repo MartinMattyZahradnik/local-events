@@ -4,10 +4,14 @@ import styledNormalize from "styled-normalize";
 export default createGlobalStyle`
   ${styledNormalize}
   
+  html {
+    font-size: 62.5%;
+  }
+
   body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     color: blue;
-    font-size: 25px;
+    font-size: 1.6rem;
   }
   
   a {

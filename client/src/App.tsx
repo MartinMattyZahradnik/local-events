@@ -1,40 +1,39 @@
-import React from "react";
-import { ThemeProvider } from "styled-components";
-import { StylesProvider } from "@material-ui/styles";
-import { Provider } from "react-redux";
-import configureStore from "store/store";
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 // Components
-import { GlobalStyle, theme, Button } from "bricks/index";
 import { Header } from "components/common";
+import Routes from "./Routes";
 
-const { store } = configureStore();
+// Actions
+import { fetchUser } from "actions/userActions";
+
+const StyledApp = styled.div`
+  margin-top: 6.4rem;
+  padding-top: 2.5rem;
+`;
+
+const StyledAppWrapper = styled.div`
+  max-width: 120rem;
+  margin: auto;
+`;
 
 const App: React.FC = () => {
+  const dispatch = useDispatch();
+  dispatch(fetchUser());
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <StylesProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
-          <React.Fragment>
-            <GlobalStyle />
-            <div className="App">
-              <Header />
-              <header className="App-header">
-                <a
-                  className="App-link"
-                  href="https://reactjs.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn React
-                </a>
-                <Button>Pokustek</Button>
-              </header>
-            </div>
-          </React.Fragment>
-        </Provider>
-      </ThemeProvider>
-    </StylesProvider>
+    <StyledApp>
+      <Header />
+      <StyledAppWrapper>
+        <Routes />
+      </StyledAppWrapper>
+    </StyledApp>
   );
 };
 

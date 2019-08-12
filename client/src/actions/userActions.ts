@@ -4,16 +4,27 @@ export const actionTypes = {
   FETCH_USER_ERROR: "users/FETCH_USER_SUCCESS"
 };
 
-export const fetchUsers = () => ({
+export interface User {
+  id: string;
+  name: string;
+  firstName: string;
+  userName: string;
+  email: string;
+  phone?: string;
+  age?: number;
+  gender: "male" | "female";
+}
+
+export const fetchUser = () => ({
   type: actionTypes.FETCH_USER
 });
 
-export const fetchUsersSucces = (payload: any) => ({
+export const fetchUserSucces = (payload: User[]) => ({
   type: actionTypes.FETCH_USER_SUCCESS,
   payload
 });
 
-export const fetchUsersError = (payload: any) => ({
+export const fetchUserError = (payload: any) => ({
   type: actionTypes.FETCH_USER_ERROR,
   payload
 });
