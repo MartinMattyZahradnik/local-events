@@ -1,6 +1,16 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-const EventList = () => {
+// Actions
+import { fetchEvents } from "actions/eventsActions";
+
+const EventList: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchEvents());
+  });
+
   return <div>Event List</div>;
 };
 
