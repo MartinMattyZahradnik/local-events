@@ -3,7 +3,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 // Components
-import EventList from "components/pages/event-list/EventList";
+import EventList from "pages/eventList/EventList";
 
 export const history = createBrowserHistory();
 

@@ -26,7 +26,7 @@ function result(state = {}, { type, payload }: any) {
   }
 }
 
-function working(state = {}, { type }: any) {
+function isLoading(state = {}, { type }: any) {
   switch (type) {
     case userActionsTypes.FETCH_USER:
       return true;
@@ -36,4 +36,4 @@ function working(state = {}, { type }: any) {
   }
 }
 
-export default combineReducers({ error, result, working });
+export default combineReducers({ error, result, isLoading });

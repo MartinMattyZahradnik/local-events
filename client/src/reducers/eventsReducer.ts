@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 import { actionTypes as eventsActions } from "actions/eventsActions";
 
-function error(state = null, { type, payload }: any) {
+function error(state = false, { type, payload }: any) {
   switch (type) {
     case eventsActions.FETCH_EVENTS_ERROR:
       return payload;
@@ -16,7 +16,7 @@ function error(state = null, { type, payload }: any) {
   }
 }
 
-function result(state = {}, { type, payload }: any) {
+function result(state = [], { type, payload }: any) {
   switch (type) {
     case eventsActions.FETCH_EVENTS_SUCCESS:
       return payload;
@@ -26,7 +26,7 @@ function result(state = {}, { type, payload }: any) {
   }
 }
 
-function working(state = {}, { type }: any) {
+function isLoading(state = false, { type }: any) {
   switch (type) {
     case eventsActions.FETCH_EVENTS:
       return true;
@@ -36,4 +36,4 @@ function working(state = {}, { type }: any) {
   }
 }
 
-export default combineReducers({ error, result, working });
+export default combineReducers({ error, result, isLoading });

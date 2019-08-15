@@ -1,10 +1,12 @@
+import { createSelector } from "reselect";
+
 export const actionTypes = {
-  FETCH_EVENTS: "users/FETCH_USER",
-  FETCH_EVENTS_SUCCESS: "users/FETCH_USER_SUCCESS",
-  FETCH_EVENTS_ERROR: "users/FETCH_USER_SUCCESS"
+  FETCH_EVENTS: "events/FETCH_EVENTS",
+  FETCH_EVENTS_SUCCESS: "events/FETCH_EVENTS_SUCCESS",
+  FETCH_EVENTS_ERROR: "events/FETCH_EVENTS_ERROR"
 };
 
-export interface IEvents {
+export interface IEvent {
   id: string;
   name: string;
   description: string;
@@ -29,7 +31,7 @@ export const fetchEvents = () => ({
   type: actionTypes.FETCH_EVENTS
 });
 
-export const fetchEventsSuccess = (payload: IEvents[]) => ({
+export const fetchEventsSuccess = (payload: IEvent[]) => ({
   type: actionTypes.FETCH_EVENTS_SUCCESS,
   payload
 });
@@ -38,3 +40,20 @@ export const fetchEventsError = (payload: any) => ({
   type: actionTypes.FETCH_EVENTS_ERROR,
   payload
 });
+
+const getEvents = (state: any) => state.events;
+
+export const selectEvents = createSelector(
+  getEvents,
+  eventsState => eventsState.result
+);
+
+export const selectEventsError = createSelector(
+  getEvents,
+  eventsState => eventsState.error
+);
+
+export const selectEventsIsLoading = createSelector(
+  getEvents,
+  eventsState => eventsState.isLoading
+);
