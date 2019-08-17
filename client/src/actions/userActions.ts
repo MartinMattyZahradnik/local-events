@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 export const actionTypes = {
   FETCH_USER: "users/FETCH_USER",
   FETCH_USER_SUCCESS: "users/FETCH_USER_SUCCESS",
@@ -28,3 +30,9 @@ export const fetchUserError = (payload: any) => ({
   type: actionTypes.FETCH_USER_ERROR,
   payload
 });
+
+const getUser = (state: any) => state.user.result;
+export const selectUser = createSelector(
+  getUser,
+  userState => userState
+);

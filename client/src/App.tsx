@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import * as React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { IntlProvider } from "react-intl";
+import { useSelector } from "react-redux";
 
 // Components
 import { Header } from "components/common";
@@ -8,6 +10,8 @@ import Routes from "./Routes";
 
 // Actions
 import { fetchUser } from "actions/userActions";
+import { selectLocale } from "actions/localizationActions";
+import locales, { availableLocales } from "localization";
 
 const StyledApp = styled.div`
   margin-top: 6.4rem;
@@ -20,19 +24,22 @@ const StyledAppWrapper = styled.div`
 `;
 
 const App: React.FC = () => {
+  const locale: availableLocales = useSelector(selectLocale);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(fetchUser());
   });
 
   return (
-    <StyledApp>
-      <Header />
-      <StyledAppWrapper>
-        <Routes />
-      </StyledAppWrapper>
-    </StyledApp>
+    <IntlProvider locale={locale} messages={locales[locale]}>
+      <StyledApp>
+        <Header />
+        <StyledAppWrapper>
+          <Routes />
+        </StyledAppWrapper>
+      </StyledApp>
+    </IntlProvider>
   );
 };
 

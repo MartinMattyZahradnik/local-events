@@ -25,7 +25,7 @@ const mockedEvents = [
     }
   },
   {
-    id: "1",
+    id: "2",
     name: "Citi Taste of Tennis",
     description: `As a premier lifestyle event on the tennis tour, Citi Taste of Tennis offers foodies and tennis fans an evening of signature cuisine prepared by top chefs paired with some of the world’s best tennis players. Guests will enjoy an unforgettable evening sampling fine food, sipping signature cocktails and fine wines, and mingling with their favorite tennis players. Along with great music, the event features a 360-degree photo booth, an exciting cooking demonstration, past Citi Taste of Tennis players and chefs, and a number of other surprises.  A portion of the proceeds raised benefit New York Junior Tennis and Learning. Tickets to the event are $300 and include unlimited food and drink throughout the evening. Citi clients are eligible to receive a 15 percent discount on general admission tickets. Group discounts are also available.`,
     imageUrl: "https://cdn2.allevents.in/thumbs/thumb5d44d8a5c26d2.png",
@@ -43,7 +43,7 @@ const mockedEvents = [
     }
   },
   {
-    id: "1",
+    id: "3",
     name: "Citi Taste of Tennis",
     description: `As a premier lifestyle event on the tennis tour, Citi Taste of Tennis offers foodies and tennis fans an evening of signature cuisine prepared by top chefs paired with some of the world’s best tennis players. Guests will enjoy an unforgettable evening sampling fine food, sipping signature cocktails and fine wines, and mingling with their favorite tennis players. Along with great music, the event features a 360-degree photo booth, an exciting cooking demonstration, past Citi Taste of Tennis players and chefs, and a number of other surprises.  A portion of the proceeds raised benefit New York Junior Tennis and Learning. Tickets to the event are $300 and include unlimited food and drink throughout the evening. Citi clients are eligible to receive a 15 percent discount on general admission tickets. Group discounts are also available.`,
     imageUrl: "https://cdn2.allevents.in/thumbs/thumb5d44d8a5c26d2.png",
@@ -61,7 +61,7 @@ const mockedEvents = [
     }
   },
   {
-    id: "1",
+    id: "4",
     name: "Citi Taste of Tennis",
     description: `As a premier lifestyle event on the tennis tour, Citi Taste of Tennis offers foodies and tennis fans an evening of signature cuisine prepared by top chefs paired with some of the world’s best tennis players. Guests will enjoy an unforgettable evening sampling fine food, sipping signature cocktails and fine wines, and mingling with their favorite tennis players. Along with great music, the event features a 360-degree photo booth, an exciting cooking demonstration, past Citi Taste of Tennis players and chefs, and a number of other surprises.  A portion of the proceeds raised benefit New York Junior Tennis and Learning. Tickets to the event are $300 and include unlimited food and drink throughout the evening. Citi clients are eligible to receive a 15 percent discount on general admission tickets. Group discounts are also available.`,
     imageUrl: "https://cdn2.allevents.in/thumbs/thumb5d44d8a5c26d2.png",
@@ -79,7 +79,7 @@ const mockedEvents = [
     }
   },
   {
-    id: "1",
+    id: "5",
     name: "Citi Taste of Tennis",
     description: `As a premier lifestyle event on the tennis tour, Citi Taste of Tennis offers foodies and tennis fans an evening of signature cuisine prepared by top chefs paired with some of the world’s best tennis players. Guests will enjoy an unforgettable evening sampling fine food, sipping signature cocktails and fine wines, and mingling with their favorite tennis players. Along with great music, the event features a 360-degree photo booth, an exciting cooking demonstration, past Citi Taste of Tennis players and chefs, and a number of other surprises.  A portion of the proceeds raised benefit New York Junior Tennis and Learning. Tickets to the event are $300 and include unlimited food and drink throughout the evening. Citi clients are eligible to receive a 15 percent discount on general admission tickets. Group discounts are also available.`,
     imageUrl: "https://cdn2.allevents.in/thumbs/thumb5d44d8a5c26d2.png",

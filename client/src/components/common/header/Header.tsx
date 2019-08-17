@@ -2,15 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 // Components
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  InputBase,
+  Grid
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-
-// Components
-import { Grid } from "@material-ui/core";
 import { AppMenu } from "components/common";
+import LanguageSelector from "./LanguageSelector";
 
 const StyledAppBar = styled(AppBar)`
   position: fixed;
@@ -21,6 +22,10 @@ const ToolTipWrapper = styled(Grid)`
   margin-left: auto;
   display: flex;
   align-items: center;
+`;
+
+const StyledLanguageSelector = styled(LanguageSelector)`
+  margin-left: auto;
 `;
 
 const Header = () => {
@@ -40,6 +45,7 @@ const Header = () => {
             inputProps={{ "aria-label": "search" }}
           />
         </ToolTipWrapper>
+        <StyledLanguageSelector />
       </Toolbar>
     </StyledAppBar>
   );

@@ -52,8 +52,8 @@ const EventList: React.FC = () => {
   return (
     <StyledEventCardList>
       {events.map((event: IEvent) => (
-        <StyledEventCardWrapper>
-          <EventCard key={event.id} event={event} />
+        <StyledEventCardWrapper key={event.id}>
+          <EventCard event={event} />
         </StyledEventCardWrapper>
       ))}
     </StyledEventCardList>
