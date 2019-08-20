@@ -1,14 +1,21 @@
 import express from "express";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
+
+// Routes
+import eventRoutes from "./routes/evets";
 
 const app = express();
 app.use(bodyParser.json());
 
-app.get("/events", (req, res) => {
-  res.status(200).json({ status: "to be done :)" });
-});
+app.use("/events", eventRoutes);
 
-const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`App is listen on port ${PORT}`);
-});
+mongoose
+  .connect(
+    // "mongodb+srv://maximilian:9u4biljMQc4jjqbe@cluster0-ntrwp.mongodb.net/messages?retryWrites=true"
+    "mongodb+srv://matty:DJZU4FfVwxrDqdUG@cluster0-dgbbx.mongodb.net/local-events?retryWrites=true"
+  )
+  .then(result => {
+    app.listen(8080);
+  })
+  .catch(err => console.log(err));

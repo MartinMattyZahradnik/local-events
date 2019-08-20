@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
-import userReducers from "reducers/userReducer";
-import eventsReducers from "reducers/eventsReducer";
+import userReducer from "reducers/userReducer";
+import eventsReducer from "reducers/eventsReducer";
 import localizationReducer from "reducers/localizationReducer";
 
 export default combineReducers({
   localization: localizationReducer,
-  user: userReducers,
-  events: eventsReducers
+  user: userReducer,
+  events: eventsReducer
 });
