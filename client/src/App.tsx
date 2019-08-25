@@ -15,7 +15,8 @@ import locales, { availableLocales } from "localization";
 
 const StyledApp = styled.div`
   margin-top: 6.4rem;
-  padding-top: 2.5rem;
+  padding: 4rem 0;
+  background-color: ${({ theme }) => theme.color.background};
 `;
 
 const StyledAppWrapper = styled.div`
@@ -29,7 +30,7 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     dispatch(fetchUser());
-  });
+  }, [dispatch]);
 
   return (
     <IntlProvider locale={locale} messages={locales[locale]}>

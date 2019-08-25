@@ -4,5 +4,7 @@ export default {
   "General.login": "einloggen",
   "General.logout": "ausloggen",
   "General.username": "nutzername",
-  "General.password": "passwort"
+  "General.password": "passwort",
+
+  "Eventlist.heading": "Beliebte Veranstaltungen in"
 };

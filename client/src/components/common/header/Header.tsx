@@ -16,6 +16,9 @@ import LanguageSelector from "./LanguageSelector";
 const StyledAppBar = styled(AppBar)`
   position: fixed;
   top: 0;
+  background-color: ${({ theme }) => theme.color.primary};
+  color: ${({ theme }) => theme.color.background};
+  font-size: ${({ theme }) => theme.color.background};
 `;
 
 const ToolTipWrapper = styled(Grid)`
