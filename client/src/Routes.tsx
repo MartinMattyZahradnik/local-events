@@ -1,19 +1,15 @@
 import React from "react";
-import { Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 // Components
 import EventList from "pages/eventList/EventList";
 
-export const history = createBrowserHistory();
-
 const Routes = () => {
   return (
-    <Router history={history}>
-      <Switch>
-        <Route exact path="/" component={EventList} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path="/" component={EventList} />
+      <Redirect to="/" />
+    </Switch>
   );
 };
 

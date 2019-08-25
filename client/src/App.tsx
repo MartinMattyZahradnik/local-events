@@ -1,8 +1,9 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { IntlProvider } from "react-intl";
-import { useSelector } from "react-redux";
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 // Components
 import { Header } from "components/common";
@@ -24,6 +25,8 @@ const StyledAppWrapper = styled.div`
   margin: auto;
 `;
 
+export const history = createBrowserHistory();
+
 const App: React.FC = () => {
   const locale: availableLocales = useSelector(selectLocale);
   const dispatch = useDispatch();
@@ -34,12 +37,14 @@ const App: React.FC = () => {
 
   return (
     <IntlProvider locale={locale} messages={locales[locale]}>
-      <StyledApp>
-        <Header />
-        <StyledAppWrapper>
-          <Routes />
-        </StyledAppWrapper>
-      </StyledApp>
+      <Router history={history}>
+        <StyledApp>
+          <Header />
+          <StyledAppWrapper>
+            <Routes />
+          </StyledAppWrapper>
+        </StyledApp>
+      </Router>
     </IntlProvider>
   );
 };
