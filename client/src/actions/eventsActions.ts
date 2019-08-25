@@ -7,20 +7,30 @@ export const actionTypes = {
 };
 
 export interface IEvent {
-  id: string;
+  _id: string;
   name: string;
   description: string;
-  location: string;
   date: number;
   imageUrl: string;
-  images: string[];
-  category: string;
-  attendants: string[];
+  images?: string[];
+  category: [string];
+  attendants?: string[];
   similiarEvents?: string[];
-  city: string;
+  address: {
+    street: string;
+    postalCode: string;
+    city: string;
+    countryCode: string;
+    country: string;
+  };
+  price: {
+    price: number;
+    currency: string;
+    locale: string;
+  };
   tags: string[];
-  map: string;
-  socialLinks: {
+  coordinates: [number, number];
+  socialLinks?: {
     facebook?: string;
     twitter?: string;
     pinterest?: string;
