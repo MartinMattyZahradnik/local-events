@@ -44,3 +44,33 @@ export const createEventController = async (
     next(err);
   }
 };
+
+interface ErrorWithStatusCode extends Error {
+  statusCode?: number;
+}
+
+export const deleteEventController = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  const { eventId } = req.params;
+
+  try {
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      const error: ErrorWithStatusCode = new Error("Could not find Event.");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    await Event.findByIdAndRemove(eventId);
+    res.status(200).json({ message: "Deleted post." });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};

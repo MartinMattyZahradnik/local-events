@@ -1,25 +1,23 @@
 import mongoose, { Schema } from "mongoose";
 
-//  id: string;
-//   name: string;
-//   description: string;
-//   location: string;
-//   date: number;
-//   imageUrl: string;
-//   images: string[];
-//   category: string;
-//   attendants: string[];
-//   similiarEvents?: string[];
-//   city: string;
-//   tags: string[];
-//   map: string;
-//   socialLinks: {
-//     facebook?: string;
-//     twitter?: string;
-//     pinterest?: string;
-//   };
+const eventsCategory = [
+  "music",
+  "arts",
+  "business",
+  "parties",
+  "classes",
+  "sport",
+  "wellness",
+  "food and drink",
 
-const eventsCategory = ["fun", "party", "family", "outdoor", "art"];
+  "fun",
+  "movie",
+  "party",
+  "family",
+  "outdoor",
+  "art",
+  "nature"
+];
 
 const eventSchema = new Schema(
   {
@@ -31,33 +29,48 @@ const eventSchema = new Schema(
       type: String,
       required: true
     },
-    location: {
-      type: String,
-      required: true
-    },
-    date: { type: Number, default: Date.now },
+    date: { type: Number, default: Date.now, required: true },
     imageUrl: {
       type: String
     },
     category: {
-      type: String,
+      type: [String],
       enum: eventsCategory,
       required: true
     },
+    coordinates: [Number, Number],
     similiarEvents: [
       {
         type: Schema.Types.ObjectId,
         ref: "Event"
       }
     ],
-    city: {
-      type: String
-    },
     tags: [
       {
         type: String
       }
-    ]
+    ],
+    price: {
+      price: {
+        type: Number,
+        default: 0
+      },
+      currency: {
+        type: String,
+        default: "USD"
+      },
+      locale: {
+        type: String,
+        default: "en-US"
+      }
+    },
+    address: {
+      street: { type: String, required: true },
+      postalCode: String,
+      city: { type: String, required: true },
+      countryCode: String,
+      country: { type: String, required: true }
+    }
   },
   { timestamps: true }
 );
