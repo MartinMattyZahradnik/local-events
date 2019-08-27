@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 // Components
 import {
   AppBar,
@@ -35,9 +35,11 @@ const Header = () => {
   return (
     <StyledAppBar>
       <Toolbar>
-        <Typography variant="h4" noWrap>
-          LocalEvents
-        </Typography>
+        <Link to="/">
+          <Typography variant="h4" noWrap>
+            LocalEvents
+          </Typography>
+        </Link>
 
         <AppMenu />
 
