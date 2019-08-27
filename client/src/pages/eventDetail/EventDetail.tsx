@@ -1,7 +1,8 @@
 import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 
-interface IEventDetailProps {
-  match: any;
+interface IEventDetailProps extends RouteComponentProps<{ id: string }> {
+  // other pros
 }
 
 const EventDetail = ({ match }: IEventDetailProps) => {

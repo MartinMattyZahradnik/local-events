@@ -1,19 +1,21 @@
+import { IAction } from "store/action";
 import { actionTypes as localizationActionsTypes } from "actions/localizationActions";
 
-type availableLocales = "en" | "de";
+export type availableLocales = "en" | "de";
 
-const defaultState = {
+export interface ILocalizationReducerState {
+  locale: availableLocales;
+}
+
+const defaultState: ILocalizationReducerState = {
   locale: "en"
 };
 
-type localizationAction = {
-  type: string;
-  payload: availableLocales;
-};
+type LocalizationReducerPayload = availableLocales;
 
 function localizationReducer(
-  state = defaultState,
-  { type, payload }: localizationAction
+  state: ILocalizationReducerState = defaultState,
+  { type, payload }: IAction<LocalizationReducerPayload>
 ) {
   switch (type) {
     case localizationActionsTypes.CHANGE_LOCALE:

@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 
+import { IState } from "reducers/rootReducer";
 export const actionTypes = {
   FETCH_EVENTS: "events/FETCH_EVENTS",
   FETCH_EVENTS_SUCCESS: "events/FETCH_EVENTS_SUCCESS",
@@ -36,9 +37,10 @@ export interface IEvent {
     pinterest?: string;
   };
 }
-
-export const fetchEvents = () => ({
-  type: actionTypes.FETCH_EVENTS
+export type FetchEventsPayload = { pageNumber: number; perPage: number };
+export const fetchEvents = (pageNumber: number, perPage: number) => ({
+  type: actionTypes.FETCH_EVENTS,
+  payload: { pageNumber, perPage }
 });
 
 export const fetchEventsSuccess = (payload: IEvent[]) => ({
@@ -51,7 +53,7 @@ export const fetchEventsError = (payload: any) => ({
   payload
 });
 
-const getEvents = (state: any) => state.events;
+const getEvents = (state: IState) => state.events;
 
 export const selectEvents = createSelector(
   getEvents,

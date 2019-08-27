@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { IState } from "reducers/rootReducer";
 
 export const actionTypes = {
   FETCH_USER: "users/FETCH_USER",
@@ -31,7 +32,7 @@ export const fetchUserError = (payload: any) => ({
   payload
 });
 
-const getUser = (state: any) => state.user.result;
+const getUser = (state: IState) => state.user.result;
 export const selectUser = createSelector(
   getUser,
   userState => userState
