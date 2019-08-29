@@ -1,0 +1,5 @@
+export const actionTypes = {
+  FETCH_EVENTS: "events/FETCH_EVENTS",
+  FETCH_EVENTS_SUCCESS: "events/FETCH_EVENTS_SUCCESS",
+  FETCH_EVENTS_ERROR: "events/FETCH_EVENTS_ERROR"
+};

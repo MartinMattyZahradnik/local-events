@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 
 // Actions
-import { changeLocale } from "actions/localizationActions";
+import { changeLocale } from "redux/localization/actions";
 
 const StyledLanguageList = styled.ul`
   list-style: none;

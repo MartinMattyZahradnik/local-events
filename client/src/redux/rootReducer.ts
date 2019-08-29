@@ -1,12 +1,13 @@
 import { combineReducers } from "redux";
 
-import userReducer from "reducers/userReducer";
-import eventsReducer from "reducers/eventsReducer";
-import localizationReducer from "reducers/localizationReducer";
+// Reducers
+import userReducer from "redux/user/reducers";
+import eventsReducer from "redux/events/reducers";
+import localizationReducer from "redux/localization/reducers";
 
 // Reducers Types
-import { ILocalizationReducerState } from "reducers/localizationReducer";
-import { IEventsReducerState } from "reducers/eventsReducer";
+import { ILocalizationReducerState } from "redux/localization/types";
+import { IEventsReducerState } from "redux/events/reducers";
 
 export interface IState {
   localization: ILocalizationReducerState;

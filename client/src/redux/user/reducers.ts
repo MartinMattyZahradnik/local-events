@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { actionTypes as userActionsTypes } from "actions/userActions";
+import { actionTypes as userActionsTypes } from "redux/user/constants";
 
 function error(state = null, { type, payload }: any) {
   switch (type) {

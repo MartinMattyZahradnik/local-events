@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
 
-import { IAction } from "store/action";
-import { actionTypes as eventsActions, IEvent } from "actions/eventsActions";
+import { IAction } from "redux/action";
+import { IEvent } from "./types";
+import { actionTypes as eventsActions } from "./constants";
 
 type IErrorPayload = true | false;
 

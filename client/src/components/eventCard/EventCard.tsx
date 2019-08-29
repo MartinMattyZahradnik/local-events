@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { Card, CardContent, Grid } from "@material-ui/core";
 
 // Types
-import { IEvent } from "actions/eventsActions";
+import { IEvent } from "redux/events/types";
 
 // Other
 import { localizePrice } from "localization";

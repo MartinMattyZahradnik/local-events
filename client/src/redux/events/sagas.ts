@@ -1,9 +1,14 @@
 import axios from "axios";
 import { takeLatest, put } from "redux-saga/effects";
-import { actionTypes as eventsActionTypes } from "actions/eventsActions";
 
 // Actions
-import { fetchEventsSuccess, FetchEventsPayload } from "actions/eventsActions";
+import { fetchEventsSuccess } from "./actions";
+
+// Types
+import { FetchEventsPayload } from "./types";
+
+// Constants
+import { actionTypes as eventsActionTypes } from "./constants";
 
 function* fetchEventsWatcher({
   payload

@@ -6,7 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "styled-components";
 import { StylesProvider } from "@material-ui/styles";
 import { Provider } from "react-redux";
-import configureStore from "store/store";
+import configureStore from "redux/store";
 
 // Components
 import { CircularProgress } from "@material-ui/core";

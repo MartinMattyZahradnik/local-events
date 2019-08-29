@@ -10,9 +10,10 @@ import { Header } from "components/common";
 import Routes from "./Routes";
 
 // Actions
-import { fetchUser } from "actions/userActions";
-import { selectLocale } from "actions/localizationActions";
-import locales, { availableLocales } from "localization";
+import { fetchUser } from "redux/user/actions";
+import { selectLocale } from "redux/localization/actions";
+import locales from "localization";
+import { AvailableLocales } from "redux/localization/types";
 
 const StyledApp = styled.div`
   margin-top: 6.4rem;
@@ -28,7 +29,7 @@ const StyledAppWrapper = styled.div`
 export const history = createBrowserHistory();
 
 const App: React.FC = () => {
-  const locale: availableLocales = useSelector(selectLocale);
+  const locale: AvailableLocales = useSelector(selectLocale);
   const dispatch = useDispatch();
 
   React.useEffect(() => {

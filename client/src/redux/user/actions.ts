@@ -1,22 +1,11 @@
 import { createSelector } from "reselect";
-import { IState } from "reducers/rootReducer";
 
-export const actionTypes = {
-  FETCH_USER: "users/FETCH_USER",
-  FETCH_USER_SUCCESS: "users/FETCH_USER_SUCCESS",
-  FETCH_USER_ERROR: "users/FETCH_USER_SUCCESS"
-};
+// Types
+import { IState } from "redux/rootReducer";
+import { IUser } from "./types";
 
-export interface IUser {
-  id: string;
-  name: string;
-  firstName: string;
-  userName: string;
-  email: string;
-  phone?: string;
-  age?: number;
-  gender: "male" | "female";
-}
+// Constatns
+import { actionTypes } from "redux/user/constants";
 
 export const fetchUser = () => ({
   type: actionTypes.FETCH_USER

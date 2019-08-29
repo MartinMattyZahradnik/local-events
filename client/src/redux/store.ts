@@ -4,8 +4,8 @@ import createSagaMiddleware from "redux-saga";
 import storage from "redux-persist/lib/storage";
 import { createLogger } from "redux-logger";
 
-import rootReducer from "reducers/rootReducer";
-import rootSaga from "sagas/rootSaga";
+import rootReducer from "redux/rootReducer";
+import rootSaga from "redux/rootSaga";
 
 /**
  * Store Creator

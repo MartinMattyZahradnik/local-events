@@ -17,8 +17,6 @@ export const localizePrice = (
   });
 };
 
-export type availableLocales = "en" | "de";
-
 export default {
   en,
   de

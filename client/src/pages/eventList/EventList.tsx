@@ -8,17 +8,17 @@ import { FormattedMessage } from "react-intl";
 import { EventCard } from "components";
 
 // Actions
-import { fetchEvents } from "actions/eventsActions";
+import { fetchEvents } from "redux/events/actions";
 
 // Selectors
 import {
   selectEvents,
   selectEventsIsLoading,
   selectEventsError
-} from "actions/eventsActions";
+} from "redux/events/selectors";
 
 // Types
-import { IEvent } from "actions/eventsActions";
+import { IEvent } from "redux/events/types";
 
 const StyledEventCardList = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const StyledHeading = styled.h2`
 const EventList: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchEvents());
+    dispatch(fetchEvents(1, 10));
   }, [dispatch]);
 
   const events = useSelector(selectEvents, shallowEqual);
