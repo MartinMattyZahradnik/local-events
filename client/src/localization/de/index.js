@@ -5,6 +5,9 @@ export default {
   "General.logout": "ausloggen",
   "General.username": "nutzername",
   "General.password": "passwort",
+  "General.time": "zeit",
+  "General.place": "ort",
+  "General.createdBy": "Erstellt von",
 
   "Eventlist.heading": "Beliebte Veranstaltungen in"
 };

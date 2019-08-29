@@ -51,6 +51,31 @@ interface ErrorWithStatusCode extends Error {
   statusCode?: number;
 }
 
+export const getEventController = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  const { eventId } = req.params;
+
+  try {
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      const error: ErrorWithStatusCode = new Error("Could not find Event.");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({ event, message: "Fetch event successfull" });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
 export const deleteEventController = async (
   req: any,
   res: Response,
