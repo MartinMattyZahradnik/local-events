@@ -20,10 +20,15 @@ function error(state = false, { type, payload }: IAction<IErrorPayload>) {
   }
 }
 
-type IResultState = IEvent[];
+type IResultState = { events: IEvent[]; totalItems: number };
+
+const ResultDefaultState = {
+  events: [],
+  totalItems: 0
+};
 
 function result(
-  state: IResultState = [],
+  state: IResultState = ResultDefaultState,
   { type, payload }: IAction<IResultState>
 ) {
   switch (type) {

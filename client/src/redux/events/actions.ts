@@ -6,7 +6,10 @@ export const fetchEvents = (pageNumber: number, perPage: number) => ({
   payload: { pageNumber, perPage }
 });
 
-export const fetchEventsSuccess = (payload: IEvent[]) => ({
+export const fetchEventsSuccess = (payload: {
+  events: IEvent[];
+  totalItems: number;
+}) => ({
   type: actionTypes.FETCH_EVENTS_SUCCESS,
   payload
 });

@@ -24,7 +24,12 @@ function* fetchEventsWatcher({
       `http://localhost:8080/events?offset=${offset}&limit=${perPage}`
     );
 
-    yield put(fetchEventsSuccess(resp.data.events));
+    yield put(
+      fetchEventsSuccess({
+        totalItems: resp.data.totalItems,
+        events: resp.data.events
+      })
+    );
   } catch (e) {
     console.error(e);
   }

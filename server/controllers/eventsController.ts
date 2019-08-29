@@ -6,12 +6,14 @@ export const getEventsController = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { offset, limit } = req.query;
+
   try {
     const totalItems = await Event.find().countDocuments();
     const events = await Event.find()
       .sort({ createdAt: -1 })
-      // .skip((currentPage - 1) * perPage)
-      .limit(20);
+      .skip(parseInt(offset))
+      .limit(parseInt(limit));
 
     res.status(200).json({
       message: "Fetched events successfully.",

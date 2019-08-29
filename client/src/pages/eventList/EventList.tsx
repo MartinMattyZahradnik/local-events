@@ -6,6 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 // Components
 import { EventCard } from "components";
+import { Pagination } from "components/common";
 
 // Actions
 import { fetchEvents } from "redux/events/actions";
@@ -13,6 +14,7 @@ import { fetchEvents } from "redux/events/actions";
 // Selectors
 import {
   selectEvents,
+  selectEventsTotal,
   selectEventsIsLoading,
   selectEventsError
 } from "redux/events/selectors";
@@ -46,6 +48,7 @@ const EventList: React.FC = () => {
   }, [dispatch]);
 
   const events = useSelector(selectEvents, shallowEqual);
+  const total = useSelector(selectEventsTotal, shallowEqual);
   const isLoading = useSelector(selectEventsIsLoading, shallowEqual);
   const error = useSelector(selectEventsError, shallowEqual);
 
@@ -54,10 +57,13 @@ const EventList: React.FC = () => {
     return null;
   }
 
-  if (isLoading) {
-    // @Todo - create loading component
-    return <div>Loading</div>;
+  if (!isLoading && events.length === 0) {
+    return <div>Currently there are no events</div>;
   }
+
+  const handlePaginationChange = (pageNumber: number, perPage: number) => {
+    dispatch(fetchEvents(pageNumber, perPage));
+  };
 
   return (
     <>
@@ -72,12 +78,14 @@ const EventList: React.FC = () => {
       <StyledEventCardList>
         {events.map((event: IEvent) => (
           <StyledEventCardWrapper key={event._id}>
-            <Link to={`/eventt/${event._id}`}>
+            <Link to={`/event/${event._id}`}>
               <EventCard event={event} />
             </Link>
           </StyledEventCardWrapper>
         ))}
       </StyledEventCardList>
+
+      <Pagination onChange={handlePaginationChange} total={total} />
     </>
   );
 };
