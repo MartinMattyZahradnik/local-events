@@ -38,8 +38,11 @@ const eventSchema = new Schema(
       enum: eventsCategory,
       required: true
     },
-    coordinates: [Number, Number],
-    similiarEvents: [
+    coordinates: {
+      type: [Number, Number],
+      required: false
+    },
+    similarEvents: [
       {
         type: Schema.Types.ObjectId,
         ref: "Event"

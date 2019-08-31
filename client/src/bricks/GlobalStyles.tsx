@@ -18,8 +18,8 @@ export default createGlobalStyle`
 
   body {
     color: #595959;
-    font-size: 1.6rem;
-    
+    font-size: 1.4rem;
+    line-height: 2.2rem;
   }
 
   h1, h2, h3 {

@@ -12,6 +12,7 @@ import { IEvent } from "redux/events/types";
 const StyledEventHeader = styled(Card)`
   display: flex;
   width: 100%;
+  margin-bottom: 5rem;
 `;
 
 const StyledEventImage = styled.img`
@@ -60,7 +61,7 @@ interface IEventHeaderProps {
 const EventHeader = ({ event }: IEventHeaderProps) => {
   const intl = useIntl();
   const { address } = event;
-  console.log(event.address);
+
   return (
     <StyledEventHeader>
       <StyledEventImage src={event.imageUrl} />

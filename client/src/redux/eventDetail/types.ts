@@ -7,7 +7,7 @@ export interface IEvent {
   images?: string[];
   category: [string];
   attendants?: string[];
-  similiarEvents?: string[];
+  similarEvents?: string[];
   address: {
     street: string;
     postalCode: string;

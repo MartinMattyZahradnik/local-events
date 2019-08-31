@@ -8,6 +8,7 @@ export default {
   "General.time": "time",
   "General.place": "place",
   "General.createdBy": "created by",
+  "General.similarEvents": "Similar Events",
 
   // Event List
   "Eventlist.heading": "Popular Events in"

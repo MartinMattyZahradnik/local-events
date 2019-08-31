@@ -14,3 +14,8 @@ export const fetchEventDetailSuccess = (payload: IEvent) => ({
 export const resetEventDetail = () => ({
   type: actionTypes.RESET_EVENT_DETAIL
 });
+
+export const fetchSimilarEvents = (event: IEvent) => ({
+  type: actionTypes.FETCH_SIMILAR_EVENTS,
+  payload: event
+});
