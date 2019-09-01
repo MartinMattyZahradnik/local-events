@@ -23,11 +23,18 @@ function error(state = false, { type, payload }: IAction<IErrorPayload>) {
 
 function result(
   state: IResultState = null,
-  { type, payload }: IAction<IResultState>
+  // { type, payload }: IAction<IResultState>
+  { type, payload }: any
 ) {
   switch (type) {
     case eventsActions.FETCH_EVENT_DETAIL_SUCCESS:
       return payload;
+
+    case eventsActions.FETCH_SIMILAR_EVENTS_SUCCESS:
+      return {
+        ...state,
+        similarEvents: payload.events
+      };
 
     case eventsActions.RESET_EVENT_DETAIL:
       return null;

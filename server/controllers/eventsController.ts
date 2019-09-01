@@ -51,7 +51,7 @@ interface ErrorWithStatusCode extends Error {
   statusCode?: number;
 }
 
-export const getEventController = async (
+export const getEventDetailController = async (
   req: any,
   res: Response,
   next: NextFunction
@@ -94,6 +94,39 @@ export const deleteEventController = async (
 
     await Event.findByIdAndRemove(eventId);
     res.status(200).json({ message: "Deleted post." });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+export const getSimilarEventsController = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  const limit = req.query.limit || 4;
+  const { eventId } = req.params;
+
+  try {
+    const event: any = await Event.findById(eventId);
+
+    if (!event) {
+      const error: ErrorWithStatusCode = new Error("Could not find Event.");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const similarEvents = await Event.find({
+      category: { $in: event.category },
+      country: event.country
+    }).limit(parseInt(limit));
+
+    res
+      .status(200)
+      .json({ similarEvents, message: "Fetch similar events successfull" });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

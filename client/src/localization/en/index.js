@@ -9,6 +9,7 @@ export default {
   "General.place": "place",
   "General.createdBy": "created by",
   "General.similarEvents": "Similar Events",
+  "General.tags": "tags",
 
   // Event List
   "Eventlist.heading": "Popular Events in"

@@ -29,7 +29,6 @@ const Pagination = ({
 
   const handleChangePage = (pageNumber: number) => () => {
     onChange(pageNumber, perPage);
-    console.log(pageNumber, "??");
     setCurrentPageNumber(pageNumber);
   };
 

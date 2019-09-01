@@ -45,6 +45,7 @@ const StyledHeading = styled.h2`
   font-size: 2.2rem;
   text-align: left;
   margin-bottom: 2.5rem;
+  text-transform: capitalize;
 `;
 
 const StyledSimilarEventsHeading = styled.h2`
@@ -92,7 +93,9 @@ const EventDetail = ({ match }: IEventDetailProps) => {
         <StyledEventImage src={event.imageUrl} />
         <StyledHeading>{event.name}</StyledHeading>
         <StyledDescription>{event.description}</StyledDescription>
-        <StyledHeading>Tags</StyledHeading>
+        <StyledHeading>
+          {intl.formatMessage({ id: "General.tags", defaultMessage: "Tags" })}
+        </StyledHeading>
         <StyledTags>
           {event.tags.map(tag => (
             <StyledTag key={tag} label={tag} variant="outlined" />
@@ -120,7 +123,7 @@ const EventDetail = ({ match }: IEventDetailProps) => {
           defaultMessage: "Similar Events"
         })}
       </StyledSimilarEventsHeading>
-      <SimilarEvents event={event} />
+      <SimilarEvents eventId={event._id} />
     </Grid>
   );
 };

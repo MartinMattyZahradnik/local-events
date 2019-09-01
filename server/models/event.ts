@@ -50,7 +50,8 @@ const eventSchema = new Schema(
     ],
     tags: [
       {
-        type: String
+        type: String,
+        required: true
       }
     ],
     price: {

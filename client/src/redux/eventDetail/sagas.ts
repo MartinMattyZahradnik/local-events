@@ -2,7 +2,7 @@ import axios from "axios";
 import { takeLatest, put } from "redux-saga/effects";
 
 // Actions
-import { fetchEventDetailSuccess } from "./actions";
+import { fetchEventDetailSuccess, fetchSimilarEventsSuccess } from "./actions";
 
 // Constants
 import { actionTypes as eventsActionTypes } from "./constants";
@@ -24,9 +24,33 @@ function* fetchEventDetailWatcher({
   }
 }
 
+function* fetchSimilarEventsWatcher({
+  payload
+}: {
+  type: string;
+  payload: { eventId: string; limit: number };
+}) {
+  const { eventId, limit } = payload;
+
+  try {
+    const resp = yield axios.get(
+      `http://localhost:8080/events/${eventId}/similar?limit=${limit}`
+    );
+
+    yield put(fetchSimilarEventsSuccess(eventId, resp.data.similarEvents));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export default function* userSaga() {
   yield takeLatest(
     eventsActionTypes.FETCH_EVENT_DETAIL,
     fetchEventDetailWatcher
+  );
+
+  yield takeLatest(
+    eventsActionTypes.FETCH_SIMILAR_EVENTS,
+    fetchSimilarEventsWatcher
   );
 }
