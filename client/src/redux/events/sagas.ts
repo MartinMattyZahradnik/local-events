@@ -1,4 +1,4 @@
-import axios from "axios";
+import { request } from "utils/request";
 import { takeLatest, put } from "redux-saga/effects";
 
 // Actions
@@ -20,9 +20,7 @@ function* fetchEventsWatcher({
   const offset = (pageNumber - 1) * perPage;
 
   try {
-    const resp = yield axios.get(
-      `http://localhost:8080/events?offset=${offset}&limit=${perPage}`
-    );
+    const resp = yield request.get(`/events?offset=${offset}&limit=${perPage}`);
 
     yield put(
       fetchEventsSuccess({

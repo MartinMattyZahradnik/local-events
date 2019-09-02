@@ -32,7 +32,7 @@ const SimilarEvents = ({ eventId, limit = 4 }: ISimilarEventsProps) => {
   const similarEvents = useSelector(selectSimilarEvents);
   useEffect(() => {
     dispatch(fetchSimilarEvents(eventId, limit));
-  }, [dispatch, eventId]);
+  }, [dispatch, eventId, limit]);
 
   return (
     <Grid container>

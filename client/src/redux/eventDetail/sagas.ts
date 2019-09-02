@@ -1,4 +1,4 @@
-import axios from "axios";
+import { request } from "utils/request";
 import { takeLatest, put } from "redux-saga/effects";
 
 // Actions
@@ -16,7 +16,7 @@ function* fetchEventDetailWatcher({
   const { eventId } = payload;
 
   try {
-    const resp = yield axios.get(`http://localhost:8080/events/${eventId}`);
+    const resp = yield request.get(`/events/${eventId}`);
 
     yield put(fetchEventDetailSuccess(resp.data.event));
   } catch (e) {
@@ -33,9 +33,7 @@ function* fetchSimilarEventsWatcher({
   const { eventId, limit } = payload;
 
   try {
-    const resp = yield axios.get(
-      `http://localhost:8080/events/${eventId}/similar?limit=${limit}`
-    );
+    const resp = yield request.get(`/events/${eventId}/similar?limit=${limit}`);
 
     yield put(fetchSimilarEventsSuccess(eventId, resp.data.similarEvents));
   } catch (e) {
