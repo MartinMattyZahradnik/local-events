@@ -6,12 +6,14 @@ import { Request, Response, NextFunction } from "express";
 
 // Routes
 import eventRoutes from "./routes/evets";
+import userRoutes from "./routes/user";
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/events", eventRoutes);
+app.use("/user", userRoutes);
 
 interface IErrorHandlerType extends Error {
   statusCode?: number;

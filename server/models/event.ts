@@ -74,6 +74,10 @@ const eventSchema = new Schema(
       city: { type: String, required: true },
       countryCode: String,
       country: { type: String, required: true }
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
     }
   },
   { timestamps: true }

@@ -59,7 +59,7 @@ export const getEventDetailController = async (
   const { eventId } = req.params;
 
   try {
-    const event = await Event.findById(eventId);
+    const event = await Event.findById(eventId).populate("owner");
 
     if (!event) {
       const error: ErrorWithStatusCode = new Error("Could not find Event.");
