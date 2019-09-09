@@ -8,3 +8,12 @@ export interface IUser {
   age?: number;
   gender: "male" | "female";
 }
+
+export interface ILoginActionPayload {
+  email: string;
+  password: string;
+}
+
+export interface IPasswordResetActionPayload {
+  email: string;
+}

@@ -4,7 +4,7 @@ import { createSelector } from "reselect";
 import { IState } from "redux/rootReducer";
 import { IUser } from "./types";
 
-// Constatns
+// Constants
 import { actionTypes } from "redux/user/constants";
 
 export const fetchUser = () => ({
@@ -26,3 +26,33 @@ export const selectUser = createSelector(
   getUser,
   userState => userState
 );
+
+export const login = (email: string, password: string) => ({
+  type: actionTypes.LOGIN,
+  payload: { email, password }
+});
+
+export const loginSuccess = () => ({
+  type: actionTypes.LOGIN_SUCCESS
+});
+
+export const loginError = () => ({
+  type: actionTypes.LOGIN_ERROR
+});
+
+export const logout = () => ({
+  type: actionTypes.LOGOUT
+});
+
+export const passwordReset = (email: string) => ({
+  type: actionTypes.PASSWORD_RESET,
+  payload: { email }
+});
+
+export const passwordResetSuccess = () => ({
+  type: actionTypes.PASSWORD_RESET_SUCCESS
+});
+
+export const passwordResetError = () => ({
+  type: actionTypes.PASSWORD_RESET_ERROR
+});

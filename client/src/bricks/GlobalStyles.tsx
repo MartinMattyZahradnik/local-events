@@ -39,4 +39,8 @@ export default createGlobalStyle`
   
   a {
     text-decoration: none;
+  }
+  
+  .MuiTextField-root {
+    width: 100%;
   }`;

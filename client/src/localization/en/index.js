@@ -10,6 +10,13 @@ export default {
   "General.createdBy": "created by",
   "General.similarEvents": "Similar Events",
   "General.tags": "tags",
+  "General.submit": "submit",
+
+  // Auth
+  "Auth.passwordReset": "password reset",
+  "Auth.login": "login",
+  "Auth.register": "register",
+  "Auth.backToLogin": "Back to login",
 
   // Event List
   "Eventlist.heading": "Popular Events in"
