@@ -1,3 +1,6 @@
+type AvailableUserRoles = "admin" | "user" | "visitor";
+type Gender = "male" | "female" | "other";
+
 export interface IUser {
   id: string;
   name: string;
@@ -5,8 +8,15 @@ export interface IUser {
   userName: string;
   email: string;
   phone?: string;
-  age?: number;
-  gender: "male" | "female";
+  birthDate: Date;
+  userRole: AvailableUserRoles;
+  gender: Gender;
+  address: {
+    street: string;
+    postalCode: string;
+    city: string;
+    country: string;
+  };
 }
 
 export interface ILoginActionPayload {
@@ -16,4 +26,21 @@ export interface ILoginActionPayload {
 
 export interface IPasswordResetActionPayload {
   email: string;
+}
+
+export interface IRegisterUserActionPayload {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  phone?: string;
+  birthDate: Date;
+  password: string;
+  gender: Gender;
+  address: {
+    street: string;
+    postalCode: string;
+    city: string;
+    country: string;
+  };
 }

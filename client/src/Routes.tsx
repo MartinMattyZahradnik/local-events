@@ -2,7 +2,14 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 // Components
-import { EventList, EventDetail, LoginPage, PasswordReset } from "pages";
+import {
+  EventList,
+  EventDetail,
+  LoginPage,
+  PasswordReset,
+  RegisterUser,
+  UpdateUser
+} from "pages";
 
 const Routes = () => {
   return (
@@ -11,7 +18,8 @@ const Routes = () => {
       <Route exact path="/event/:id" component={EventDetail} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/password-reset" component={PasswordReset} />
-      {/* <Route exact path="/register-user" component={RegisterUser} />  */}
+      <Route exact path="/register-user" component={RegisterUser} />
+      <Route exact path="/update-user" component={UpdateUser} />
       <Redirect to="/" />
     </Switch>
   );

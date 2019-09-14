@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { IntlProvider } from "react-intl";
 import { Router } from "react-router-dom";
@@ -10,7 +10,6 @@ import { Header } from "components/common";
 import Routes from "./Routes";
 
 // Actions
-import { fetchUser } from "redux/user/actions";
 import { selectLocale } from "redux/localization/actions";
 import locales from "localization";
 import { AvailableLocales } from "redux/localization/types";
@@ -30,11 +29,6 @@ export const history = createBrowserHistory();
 
 const App: React.FC = () => {
   const locale: AvailableLocales = useSelector(selectLocale);
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
 
   return (
     <IntlProvider locale={locale} messages={locales[locale]}>

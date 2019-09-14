@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
+const availableUserRoles = ["admin", "visitor", "user"];
+
 const userSchema = new Schema(
   {
     firstName: {
@@ -13,6 +15,12 @@ const userSchema = new Schema(
     userName: {
       type: String,
       required: true
+    },
+    userRole: {
+      type: String,
+      enum: availableUserRoles,
+      required: true,
+      default: "user"
     },
     birthDate: {
       type: Number,
