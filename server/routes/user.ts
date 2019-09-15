@@ -5,7 +5,8 @@ import {
   getUsersController,
   getUserController,
   updateUserController,
-  deleteUserController
+  deleteUserController,
+  loginController
 } from "../controllers/userController";
 
 const router = express.Router();
@@ -16,5 +17,7 @@ router.get("/", getUsersController);
 router.get("/:id", getUserController);
 router.put("/:id", updateUserController);
 router.delete("/:id", deleteUserController);
+
+router.post("/login", loginController);
 
 export default router;

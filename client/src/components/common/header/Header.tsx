@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
 // Components
 import {
   AppBar,
@@ -11,6 +12,9 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { AppMenu } from "components/common";
+import HeaderUser from "./HeaderUser";
+
+// Selectors
 import LanguageSelector from "./LanguageSelector";
 
 const StyledAppBar = styled(AppBar)`
@@ -51,6 +55,7 @@ const Header = () => {
           />
         </ToolTipWrapper>
         <StyledLanguageSelector />
+        <HeaderUser />
       </Toolbar>
     </StyledAppBar>
   );

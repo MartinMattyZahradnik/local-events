@@ -71,7 +71,6 @@ const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
 
   const handleFormSubmit = (e: any, values: any) => {
     e.preventDefault();
-    console.log("???", values);
     handleSubmit();
   };
 
@@ -135,8 +134,6 @@ const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
 const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
   displayName: "Login form",
   handleSubmit(values, { props, setSubmitting }) {
-    console.log(props, "!!!");
-    console.log(values);
     props.login(values.email, values.password);
   },
   mapPropsToValues(props) {

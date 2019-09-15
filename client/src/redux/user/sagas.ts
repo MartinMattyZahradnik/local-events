@@ -50,7 +50,7 @@ function* registerUserWatcher({
   try {
     const resp = yield request.post(`/user`, formData);
     yield put(registerUserSuccess(resp.data.user));
-    history.push("/login");
+    history.push("/user/login");
   } catch (e) {
     registerUserError();
     console.error(e);
@@ -82,9 +82,9 @@ function* loginSagaWatcher({
   payload: ILoginActionPayload;
 }) {
   try {
-    const resp = yield request.post(`/login`, payload);
-
-    yield put(loginSuccess());
+    const resp = yield request.post(`/user/login`, payload);
+    yield put(loginSuccess(resp.data.user));
+    history.push("/");
   } catch (e) {
     loginError();
     console.error(e);

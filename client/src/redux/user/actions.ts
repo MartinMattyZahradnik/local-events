@@ -34,8 +34,9 @@ export const login = (email: string, password: string) => ({
   payload: { email, password }
 });
 
-export const loginSuccess = () => ({
-  type: actionTypes.LOGIN_SUCCESS
+export const loginSuccess = (user: IUser) => ({
+  type: actionTypes.LOGIN_SUCCESS,
+  payload: { user }
 });
 
 export const loginError = () => ({

@@ -133,3 +133,45 @@ export const deleteUserController = async (
     next(err);
   }
 };
+
+export const loginController = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      res.status(400).json({
+        message: "email and password are required params for auth"
+      });
+    }
+
+    const user = await User.findOne({
+      email
+    });
+    console.log(user, "user");
+
+    if (!user) {
+      res.status(404).json({
+        message: `Unable to find user with email ${email}`
+      });
+    }
+
+    if (user.password !== password) {
+      res.status(403).json({
+        message: `Invalid combination of username and password, please try again`
+      });
+    }
+
+    res.status(200).json({
+      message: "Login success",
+      user
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};

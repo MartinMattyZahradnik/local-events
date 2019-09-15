@@ -9,6 +9,8 @@ function error(state = null, { type, payload }: any) {
 
     case userActionsTypes.FETCH_USER:
     case userActionsTypes.FETCH_USER_SUCCESS:
+    case userActionsTypes.LOGIN_SUCCESS:
+    case userActionsTypes.LOGOUT:
       return false;
 
     default:
@@ -16,10 +18,14 @@ function error(state = null, { type, payload }: any) {
   }
 }
 
-function result(state = {}, { type, payload }: any) {
+function result(state = null, { type, payload }: any) {
   switch (type) {
     case userActionsTypes.FETCH_USER_SUCCESS:
-      return payload;
+    case userActionsTypes.LOGIN_SUCCESS:
+      return payload.user;
+
+    case userActionsTypes.LOGOUT:
+      return null;
 
     default:
       return state;
@@ -29,7 +35,12 @@ function result(state = {}, { type, payload }: any) {
 function isLoading(state = {}, { type }: any) {
   switch (type) {
     case userActionsTypes.FETCH_USER:
+    case userActionsTypes.LOGIN:
       return true;
+
+    case userActionsTypes.LOGIN_SUCCESS:
+    case userActionsTypes.LOGOUT:
+      return false;
 
     default:
       return false;

@@ -26,7 +26,6 @@ const UpdateUser: React.FC = () => {
   const dispatch = useDispatch();
   const userId = "5d700df7dd776d0a9d0c0e17";
   const user = useSelector(selectUser);
-  console.log(user, "??");
   useEffect(() => {
     dispatch(fetchUser(userId));
   }, [dispatch, userId]);
@@ -37,7 +36,7 @@ const UpdateUser: React.FC = () => {
 
   return (
     <StyledFormWrapper container>
-      <UserForm {...user.result} onSubmit={handleSubmit} />
+      <UserForm {...user} onSubmit={handleSubmit} />
     </StyledFormWrapper>
   );
 };
