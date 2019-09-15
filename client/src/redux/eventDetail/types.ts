@@ -33,6 +33,6 @@ export type IResultState = IEvent | null;
 
 export type IEventDetailReducerState = {
   result: IResultState;
-  working: boolean;
+  error: boolean;
   isLoading: boolean;
 };

@@ -11,6 +11,8 @@ export default {
   "General.similarEvents": "Similar Events",
   "General.tags": "tags",
   "General.submit": "submit",
+  "General.create": "create",
+  "General.update": "update",
 
   // Auth
   "Auth.passwordReset": "password reset",

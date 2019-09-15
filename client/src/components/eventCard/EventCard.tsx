@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 // Components
 import { Card, CardContent, Grid } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
 
 // Types
 import { IEvent } from "redux/events/types";
@@ -14,6 +16,23 @@ import { localizePrice } from "localization";
 interface IEventCardProps {
   event: IEvent;
 }
+
+const StyledEditIcon = styled(EditIcon)`
+  display: none;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: ${({ theme }) => theme.color.primary};
+`;
+
+const StyledCard = styled(Card)`
+  position: relative;
+  &:hover ${StyledEditIcon} {
+    display: block;
+  }
+`;
 
 const StyledImage = styled.img`
   width: 100%;
@@ -71,6 +90,7 @@ const StyledPrice = styled.span`
 
 const EventCard = ({ event }: IEventCardProps) => {
   const {
+    _id,
     name,
     imageUrl,
     description,
@@ -79,7 +99,10 @@ const EventCard = ({ event }: IEventCardProps) => {
     address: { city, street }
   } = event;
   return (
-    <Card>
+    <StyledCard>
+      <Link to={`/event/${_id}/update`}>
+        <StyledEditIcon />
+      </Link>
       <StyledImage src={imageUrl} />
       <StyledCardContent>
         <StyledHeading>{name}</StyledHeading>
@@ -98,7 +121,7 @@ const EventCard = ({ event }: IEventCardProps) => {
           </StyledPrice>
         </StyledPriceWrapper>
       </StyledCardContent>
-    </Card>
+    </StyledCard>
   );
 };
 

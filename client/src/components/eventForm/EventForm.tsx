@@ -9,7 +9,7 @@ import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
 
 // Types
-import { IRegisterUserActionPayload } from "redux/user/types";
+import { ICreateEventActionPayload } from "redux/events/types";
 
 const StyledRegisterUserWrapper = styled(Card)`
   padding: 5rem;
@@ -38,14 +38,22 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
-interface IUserFormValues extends IRegisterUserActionPayload {}
+interface IEventFormValues extends ICreateEventActionPayload {}
 
-interface IRegisterUserProps extends IUserFormValues {
-  onSubmit: (formValues: IRegisterUserActionPayload) => any;
+interface ICreateEventProps extends IEventFormValues {
+  onSubmit: (formValues: ICreateEventActionPayload) => any;
+  actionButtonLabel: string;
 }
 
-const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
-  const { isSubmitting, handleSubmit, setFieldValue } = props;
+const EventForm = (
+  props: ICreateEventProps & FormikProps<IEventFormValues>
+) => {
+  const {
+    isSubmitting,
+    handleSubmit,
+    setFieldValue,
+    actionButtonLabel
+  } = props;
   const intl = useIntl();
 
   const handleFormSubmit = (e: any, values: any) => {
@@ -59,50 +67,10 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
         <Grid container>
           <StyledFieldWrapper item xs={6}>
             <Field
-              name="userName"
+              name="name"
               type="text"
-              label="User Name"
-              placeholder="Type User Name"
-              component={FormField}
-            />
-          </StyledFieldWrapper>
-
-          <StyledFieldWrapper item xs={6}>
-            <Field
-              name="firstName"
-              type="text"
-              label="First Name"
-              placeholder="Type First Name"
-              component={FormField}
-            />
-          </StyledFieldWrapper>
-
-          <StyledFieldWrapper item xs={6}>
-            <Field
-              name="lastName"
-              type="text"
-              label="Last Name"
-              placeholder="Type Last Name"
-              component={FormField}
-            />
-          </StyledFieldWrapper>
-
-          <StyledFieldWrapper item xs={6}>
-            <Field
-              name="email"
-              type="email"
-              label="Email"
-              placeholder="Type your email"
-              component={FormField}
-            />
-          </StyledFieldWrapper>
-
-          <StyledFieldWrapper item xs={6}>
-            <Field
-              name="phone"
-              type="text"
-              label="Phone"
-              placeholder="Type your phone"
+              label="Event Name"
+              placeholder="Type Event Name"
               component={FormField}
             />
           </StyledFieldWrapper>
@@ -110,51 +78,50 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           <StyledFieldWrapper item xs={3}>
             <Field
               required
-              name="birthDate"
-              label="Birth Date"
-              placeholder="Select your birth date"
+              name="date"
+              label="Event Date"
+              placeholder="Select event date"
               component={FormDatePiker}
               onChange={setFieldValue}
-              disableFuture={true}
             />
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={3}>
             <Field
               required
-              name="gender"
-              label="Gender"
-              placeholder="Select gender"
+              name="category"
+              label="Category"
+              placeholder="Select category"
               component={FormSelect}
               options={[
-                { value: "male", label: "Male" },
-                { value: "female", label: "Female" }
+                { value: "fun", label: "Fun" },
+                { value: "family", label: "Family" }
               ]}
             />
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={6}>
             <Field
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Type your password"
+              required
+              name="imageUrl"
+              type="text"
+              label="Image url"
+              placeholder="Type image url"
               component={FormField}
             />
           </StyledFieldWrapper>
-
           <StyledFieldWrapper item xs={6}>
             <Field
-              name="passwordConfirm"
-              type="password"
-              label="Confirm Password"
-              placeholder="Confirm your password"
+              required
+              name="images"
+              type="text"
+              label="Images urls"
+              placeholder="Type images urls ,"
               component={FormField}
             />
           </StyledFieldWrapper>
 
           <StyledHeading>Address</StyledHeading>
-
           <StyledFieldWrapper item xs={6}>
             <Field
               name="address.street"
@@ -164,7 +131,6 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               component={FormField}
             />
           </StyledFieldWrapper>
-
           <StyledFieldWrapper item xs={3}>
             <Field
               name="address.postalCode"
@@ -174,7 +140,6 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               component={FormField}
             />
           </StyledFieldWrapper>
-
           <StyledFieldWrapper item xs={3}>
             <Field
               name="address.city"
@@ -184,7 +149,6 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               component={FormField}
             />
           </StyledFieldWrapper>
-
           <StyledFieldWrapper item xs={3}>
             <Field
               required
@@ -195,14 +159,55 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               options={[{ value: "US", label: "United States" }]}
             />
           </StyledFieldWrapper>
+
+          <StyledFieldWrapper item xs={3}>
+            <Field
+              required
+              type="number"
+              name="price"
+              label="Price"
+              placeholder="Type Event Price"
+              component={FormField}
+            />
+          </StyledFieldWrapper>
+
+          <StyledFieldWrapper item xs={3}>
+            <Field
+              required
+              type="text"
+              name="tags"
+              label="Tags"
+              placeholder="Type Tags"
+              component={FormField}
+            />
+          </StyledFieldWrapper>
+
+          <StyledFieldWrapper item xs={3}>
+            <Field
+              required
+              type="text"
+              name="coordinates"
+              label="Coordinates"
+              placeholder="Type comma-separated coordinates"
+              component={FormField}
+            />
+          </StyledFieldWrapper>
+
+          <StyledFieldWrapper item xs={12}>
+            <Field
+              multiline
+              name="description"
+              type="text"
+              label="Event description"
+              placeholder="Type Event description"
+              component={FormField}
+            />
+          </StyledFieldWrapper>
         </Grid>
 
         <Grid container>
           <StyledButton type="submit" disabled={isSubmitting}>
-            {intl.formatMessage({
-              id: "Auth.register",
-              defaultMessage: "Register"
-            })}
+            {actionButtonLabel}
           </StyledButton>
         </Grid>
       </Form>
@@ -210,32 +215,34 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
   );
 };
 
-export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
-  displayName: "User form",
+export default withFormik<ICreateEventProps, ICreateEventActionPayload>({
+  displayName: "Event form",
   handleSubmit(values, { props, setSubmitting }) {
     props.onSubmit(values);
   },
   mapPropsToValues({
-    userName,
-    firstName,
-    lastName,
-    email,
-    phone,
-    birthDate,
+    name,
+    description,
+    date,
+    imageUrl,
+    images,
+    category,
     address,
-    gender,
-    password
+    price,
+    tags,
+    coordinates
   }) {
     return {
-      userName,
-      firstName,
-      lastName,
-      email,
-      phone,
-      birthDate,
+      name,
+      description,
+      date,
+      imageUrl,
+      images,
+      category,
       address,
-      gender,
-      password
+      price,
+      tags,
+      coordinates
     };
   }
-})(UserForm);
+})(EventForm);

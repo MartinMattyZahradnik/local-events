@@ -71,8 +71,7 @@ interface IEventDetailProps extends RouteComponentProps<MatchParams> {}
 const EventDetail = ({ match }: IEventDetailProps) => {
   const intl = useIntl();
   const { id } = match.params;
-  const eventDetail = useSelector(selectEventDetail);
-  const event = eventDetail.result;
+  const event = useSelector(selectEventDetail);
 
   const dispatch = useDispatch();
   useEffect(() => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { FieldProps } from "formik";
+import styled from "styled-components";
 
 // Components
 
@@ -9,6 +10,10 @@ import {
   MenuItem,
   FormHelperText
 } from "@material-ui/core";
+
+const StyledSelect = styled(Select)`
+  width: 100%;
+`;
 
 type SelectOption = {
   label: string;
@@ -41,7 +46,7 @@ const Field: React.FC<IProps> = ({
   return (
     <>
       <InputLabel htmlFor={id}>{label}</InputLabel>
-      <Select
+      <StyledSelect
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -57,7 +62,7 @@ const Field: React.FC<IProps> = ({
             {item.label}
           </MenuItem>
         ))}
-      </Select>
+      </StyledSelect>
       {hasError && <FormHelperText>{errorText}</FormHelperText>}
     </>
   );

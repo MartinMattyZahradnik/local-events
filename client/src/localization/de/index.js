@@ -11,6 +11,8 @@ export default {
   "General.similarEvents": "Ähnliche Veranstaltungen",
   "General.tags": "stichworte",
   "General.submit": "einreichen",
+  "General.create": "erstellen",
+  "General.update": "aktualisieren",
 
   // Auth
   "Auth.passwordReset": "Passwort zurücksetzen",

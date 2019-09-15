@@ -8,8 +8,10 @@ import {
   LoginPage,
   PasswordReset,
   RegisterUser,
-  UpdateUser
+  UpdateUser,
+  CreateEvent
 } from "pages";
+import UpdateEventPage from "pages/updateEvent/UpdateEvent";
 
 const Routes = () => {
   return (
@@ -20,6 +22,8 @@ const Routes = () => {
       <Route exact path="/password-reset" component={PasswordReset} />
       <Route exact path="/register-user" component={RegisterUser} />
       <Route exact path="/update-user" component={UpdateUser} />
+      <Route exact path="/create-event" component={CreateEvent} />
+      <Route exact path="/event/:id/update" component={UpdateEventPage} />
       <Redirect to="/" />
     </Switch>
   );

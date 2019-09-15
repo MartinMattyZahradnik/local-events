@@ -3,14 +3,24 @@ import get from "lodash.get";
 
 import { IState } from "redux/rootReducer";
 
-const getEvent = (state: IState) => state.eventDetail;
+const getEventDetail = (state: IState) => state.eventDetail;
 
 export const selectEventDetail = createSelector(
-  getEvent,
-  eventsDetail => eventsDetail
+  getEventDetail,
+  eventsDetail => eventsDetail.result
+);
+
+export const selectEventDetailLoading = createSelector(
+  getEventDetail,
+  eventsDetail => eventsDetail.isLoading
+);
+
+export const selectEventDetailError = createSelector(
+  getEventDetail,
+  eventsDetail => eventsDetail.error
 );
 
 export const selectSimilarEvents = createSelector(
-  getEvent,
+  getEventDetail,
   eventDetail => get(eventDetail, "result.similarEvents", [])
 );
