@@ -91,3 +91,8 @@ export const updateUserSuccess = (user: any) => ({
 export const updateUserError = () => ({
   type: actionTypes.UPDATE_USER_ERROR
 });
+
+export const setNewPassword = (password: string, token: string) => ({
+  type: actionTypes.SET_NEW_PASSWORD,
+  payload: { password, token }
+});

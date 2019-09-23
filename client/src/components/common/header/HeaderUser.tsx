@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { history } from "App";
 
 // Actions
 import { logout } from "redux/user/actions";
@@ -18,15 +19,16 @@ const HeaderUser = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/login");
+  };
+
   if (!user) {
     return <Link to="/login">Login</Link>;
   }
 
-  return (
-    <StyledLogoutLink onClick={() => dispatch(logout())}>
-      Logout
-    </StyledLogoutLink>
-  );
+  return <StyledLogoutLink onClick={handleLogout}>Logout</StyledLogoutLink>;
 };
 
 export default HeaderUser;

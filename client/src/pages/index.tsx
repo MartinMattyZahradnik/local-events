@@ -5,3 +5,5 @@ export { default as PasswordReset } from "./passwordReset/PasswordReset";
 export { default as RegisterUser } from "./registerUser/RegisterUser";
 export { default as UpdateUser } from "./updateUser/UpdateUser";
 export { default as CreateEvent } from "./createEvent/CreateEvent";
+export { default as UpdateEvent } from "./updateEvent/UpdateEvent";
+export { default as SetNewPassword } from "./setNewPassword/SetNewPassword";

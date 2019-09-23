@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
+import { history } from "App";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
@@ -12,7 +13,7 @@ import { Card, Grid } from "@material-ui/core";
 import { IRegisterUserActionPayload } from "redux/user/types";
 
 const StyledRegisterUserWrapper = styled(Card)`
-  padding: 5rem;
+  padding: 3.5rem 5rem;
   width: 80rem;
   position: absolute;
   top: 50%;
@@ -38,10 +39,21 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
+const StyledLink = styled.span`
+  display: inline-block;
+  color: #8c7b6b;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  font-weight: bolder;
+  cursor: pointer;
+  margin-top: auto;
+`;
+
 interface IUserFormValues extends IRegisterUserActionPayload {}
 
 interface IRegisterUserProps extends IUserFormValues {
   onSubmit: (formValues: IRegisterUserActionPayload) => any;
+  submitButtonLabel: string;
 }
 
 const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
@@ -198,11 +210,15 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
         </Grid>
 
         <Grid container>
-          <StyledButton type="submit" disabled={isSubmitting}>
+          <StyledLink onClick={history.goBack}>
+            {" "}
             {intl.formatMessage({
-              id: "Auth.register",
-              defaultMessage: "Register"
+              id: "General.back",
+              defaultMessage: "Back"
             })}
+          </StyledLink>
+          <StyledButton type="submit" disabled={isSubmitting}>
+            {props.submitButtonLabel}
           </StyledButton>
         </Grid>
       </Form>

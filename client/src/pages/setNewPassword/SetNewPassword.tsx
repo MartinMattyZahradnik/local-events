@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { useIntl } from "react-intl";
+import { RouteComponentProps } from "react-router-dom";
+import { history } from "App";
+import qs from "qs";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
 import { Grid, Card } from "@material-ui/core";
 import { FormField } from "components/common";
-import { Link } from "react-router-dom";
 import { Button } from "bricks";
 
 // Actions
-import { login } from "redux/user/actions";
-
-// Types
-import { ILoginActionPayload } from "redux/user/types";
+import { setNewPassword } from "redux/user/actions";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -32,24 +31,11 @@ const StyledLoginFormWrapper = styled(Card)`
   transform: translate(-50%, 50%);
 `;
 
-const StyledLink = styled(Link)`
-  display: inline-block;
-  color: ${({ theme }) => theme.color.primary};
-  font-size: ${({ theme }) => theme.text.fontSize.small};
-  text-transform: capitalize;
-  font-weight: bolder;
-`;
-
 const StyledFieldWrapper = styled(Grid)`
   margin-bottom: 2rem;
   &:last-of-type {
     margin-bottom: 3.5rem;
   }
-`;
-
-const StyledRegisterText = styled.span`
-  font-size: ${({ theme }) => theme.text.fontSize.small};
-  margin-left: auto;
 `;
 
 const StyledButton = styled(Button)`
@@ -62,30 +48,38 @@ interface ILoginFormValues {
   password: string;
 }
 
-interface ILoginFormProps extends ILoginFormValues {
-  login: (email: string, password: string) => ILoginActionPayload;
+type RouteParams = {
+  location: string;
+};
+
+interface ILoginFormProps
+  extends RouteComponentProps<RouteParams>,
+    ILoginFormValues {
+  setNewPassword: (password: string, token: string) => any;
 }
 
-const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
-  const { touched, errors, isSubmitting, values, handleSubmit } = props;
+const SetNewPasswordPage = (
+  props: ILoginFormProps & FormikProps<ILoginFormValues>
+) => {
+  useEffect(() => {
+    if (!props.location.search) {
+      history.push("/");
+    }
+  }, []);
+  const { touched, errors, isSubmitting, values } = props;
   const intl = useIntl();
-
-  const handleFormSubmit = (e: any, values: any) => {
-    e.preventDefault();
-    handleSubmit();
-  };
 
   return (
     <StyledFormWrapper container>
       <StyledLoginFormWrapper>
-        <Form onSubmit={handleFormSubmit}>
+        <Form>
           {touched.email && errors.email && <div>{errors.email}</div>}
           <StyledFieldWrapper>
             <Field
-              name="email"
-              type="email"
-              label="email"
-              placeholder="Type your password password"
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="Type new password"
               component={FormField}
             />
           </StyledFieldWrapper>
@@ -93,40 +87,21 @@ const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
           <StyledFieldWrapper>
             <Field
               component={FormField}
-              name="password"
+              name="passwordConfirm"
               type="password"
               value={values.password}
-              label="Password"
-              placeholder="Type your password password"
+              label="Confirm Password"
+              placeholder="Confirm new  password"
             />
           </StyledFieldWrapper>
 
           <Grid container justify="space-between">
             <StyledButton type="submit" disabled={isSubmitting}>
               {intl.formatMessage({
-                id: "Auth.login",
-                defaultMessage: "Login"
+                id: "Auth.reset",
+                defaultMessage: "Reset"
               })}
             </StyledButton>
-
-            <Grid container alignContent="space-between">
-              <StyledLink to="/password-reset">
-                {intl.formatMessage({
-                  id: "Auth.passwordReset",
-                  defaultMessage: "Password reset"
-                })}
-              </StyledLink>
-
-              <StyledRegisterText>
-                New User?{" "}
-                <StyledLink to="/register-user">
-                  {intl.formatMessage({
-                    id: "Auth.register",
-                    defaultMessage: "Register"
-                  })}
-                </StyledLink>
-              </StyledRegisterText>
-            </Grid>
           </Grid>
         </Form>
       </StyledLoginFormWrapper>
@@ -135,9 +110,10 @@ const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
 };
 
 const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
-  displayName: "Login form",
+  displayName: "Set New password form",
   handleSubmit(values, { props, setSubmitting }) {
-    props.login(values.email, values.password);
+    const { token } = qs.parse(props.location.search.substr(1));
+    props.setNewPassword(values.password, token);
     setSubmitting(false);
   },
   mapPropsToValues(props) {
@@ -146,9 +122,9 @@ const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
       password: props.password || ""
     };
   }
-})(LoginPage);
+})(SetNewPasswordPage);
 
 export default connect(
   null,
-  { login }
+  { setNewPassword }
 )(WithFormikLoginPage);

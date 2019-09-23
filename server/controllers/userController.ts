@@ -1,17 +1,37 @@
 import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export const createUserController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const { email, password } = req.body;
   try {
-    const user = await User.create(req.body);
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      res.status(400).send({
+        message: `Users with email: ${email} already exist. please use another email`
+      });
+    }
+
+    const hashedPw = await bcrypt.hash(password, 12);
+    const userData = {
+      ...req.body,
+      password: hashedPw
+    };
+
+    const user = await User.create(userData);
 
     res.status(201).json({
       message: "User has been created successfully.",
-      user
+      userId: user._id
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -147,10 +167,9 @@ export const loginController = async (
       });
     }
 
-    const user = await User.findOne({
+    const user: any = await User.findOne({
       email
     });
-    console.log(user, "user");
 
     if (!user) {
       res.status(404).json({
@@ -158,20 +177,102 @@ export const loginController = async (
       });
     }
 
-    if (user.password !== password) {
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
       res.status(403).json({
-        message: `Invalid combination of username and password, please try again`
+        message: `Invalid combination of username and password`
       });
     }
 
+    const token = jwt.sign(
+      {
+        email
+      },
+      process.env.API_TOKEN_SECRET,
+      { expiresIn: "1h" }
+    );
+
     res.status(200).json({
       message: "Login success",
-      user
+      user,
+      token
     });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
     next(err);
+  }
+};
+
+export const passwordResetController = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email } = req.body;
+  try {
+    const buffer = await crypto.randomBytes(32);
+    const token = buffer.toString("hex");
+    const user = await User.findOne({
+      email
+    });
+
+    if (!user) {
+      res
+        .status(404)
+        .send({ message: `Unable to find user with email ${email}` });
+    }
+
+    user.resetToken = token;
+    user.resetTokenExpiration = Date.now() + 3600000;
+    const link = `http://localhost:3000/set-new-password?token=${token}`;
+    await user.save();
+    await sgMail.send({
+      to: email,
+      from: "support@localevents.com",
+      subject: "Local Events - password reset",
+      html: `<p>Please use this link to reset the password. </p><a href="${link}">${link}</a>`
+    });
+    res.status(200).send({ message: "Password has been reset successfully" });
+  } catch (err) {
+    console.error(JSON.stringify(err, null, 2));
+  }
+};
+
+export const setNewPasswordController = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  const { token, password } = req.body;
+  if (!token || !password) {
+    res.status(400).send({ message: "Password and token are required params" });
+  }
+
+  try {
+    const user = await User.findOne({
+      resetToken: token
+    });
+
+    if (!user) {
+      res.status(404).send({ message: "Unable to find user with given token" });
+    }
+
+    if (user.resetTokenExpiration < Date.now()) {
+      res.status(403).send({ message: "Token expired" });
+    }
+
+    const hashedPw = await bcrypt.hash(password, 12);
+    await user.update({
+      password: hashedPw,
+      resetToken: null,
+      resetTokenExpiration: null
+    });
+
+    res.status(200).send({ message: "User password has been reset" });
+  } catch (err) {
+    console.error(err);
   }
 };

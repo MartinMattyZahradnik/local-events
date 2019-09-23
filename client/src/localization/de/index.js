@@ -13,6 +13,7 @@ export default {
   "General.submit": "einreichen",
   "General.create": "erstellen",
   "General.update": "aktualisieren",
+  "General.back": "zurück",
 
   // Auth
   "Auth.passwordReset": "Passwort zurücksetzen",

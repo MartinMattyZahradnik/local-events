@@ -12,7 +12,7 @@ import { Card, Grid } from "@material-ui/core";
 import { ICreateEventActionPayload } from "redux/events/types";
 
 const StyledRegisterUserWrapper = styled(Card)`
-  padding: 5rem;
+  padding: 3.5rem 5rem;
   width: 80rem;
   position: absolute;
   top: 50%;
@@ -219,6 +219,7 @@ export default withFormik<ICreateEventProps, ICreateEventActionPayload>({
   displayName: "Event form",
   handleSubmit(values, { props, setSubmitting }) {
     props.onSubmit(values);
+    setSubmitting(false);
   },
   mapPropsToValues({
     name,

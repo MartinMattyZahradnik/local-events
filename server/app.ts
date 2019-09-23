@@ -3,6 +3,8 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Routes
 import eventRoutes from "./routes/evets";

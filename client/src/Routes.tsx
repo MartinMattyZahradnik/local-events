@@ -9,9 +9,10 @@ import {
   PasswordReset,
   RegisterUser,
   UpdateUser,
-  CreateEvent
+  CreateEvent,
+  UpdateEvent,
+  SetNewPassword
 } from "pages";
-import UpdateEventPage from "pages/updateEvent/UpdateEvent";
 
 const Routes = () => {
   return (
@@ -20,10 +21,12 @@ const Routes = () => {
       <Route exact path="/event/:id" component={EventDetail} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/password-reset" component={PasswordReset} />
+      <Route exact path="/set-new-password" component={SetNewPassword} />
       <Route exact path="/register-user" component={RegisterUser} />
       <Route exact path="/update-user" component={UpdateUser} />
       <Route exact path="/create-event" component={CreateEvent} />
-      <Route exact path="/event/:id/update" component={UpdateEventPage} />
+      <Route exact path="/event/:id/update" component={UpdateEvent} />
+
       <Redirect to="/" />
     </Switch>
   );

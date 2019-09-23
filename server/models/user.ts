@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcryptjs";
 
 type AvailableUserRoles = "admin" | "visitor" | "user";
 type Gender = "male" | "female" | "other";
@@ -13,6 +14,8 @@ export interface IUserModel extends mongoose.Document {
   userRole: AvailableUserRoles;
   gender: Gender;
   password: String;
+  resetToken: String | null;
+  resetTokenExpiration: number | null;
   address: {
     street: string;
     postalCode: string;
@@ -65,8 +68,16 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    resetToken: String,
-    resetTokenExpiration: Date,
+    resetToken: {
+      type: String,
+      required: false,
+      default: null
+    },
+    resetTokenExpiration: {
+      type: Number,
+      required: false,
+      default: null
+    },
     address: {
       street: { type: String, required: true, trim: true },
       postalCode: { type: String, trim: true },

@@ -27,6 +27,7 @@ const StyledBackLink = styled(Link)`
   color: ${({ theme }) => theme.color.primary};
   font-size: ${({ theme }) => theme.text.fontSize.small};
   font-weight: bolder;
+  margin-top: auto;
 `;
 
 const StyledFormWrapper = styled(Grid)`
@@ -37,7 +38,7 @@ const StyledFormWrapper = styled(Grid)`
 `;
 
 const StyledLoginFormWrapper = styled(Card)`
-  padding: 5rem;
+  padding: 3.5rem 5rem;
   width: 40rem;
   position: absolute;
   top: 50%;
@@ -56,19 +57,13 @@ interface IPasswordResetFormProps extends IPasswordResetFormValues {
 const PasswordReset = (
   props: IPasswordResetFormProps & FormikProps<IPasswordResetFormValues>
 ) => {
-  const { touched, errors, isSubmitting, values, handleSubmit } = props;
+  const { touched, errors, isSubmitting, passwordReset } = props;
   const intl = useIntl();
-
-  const handleFormSubmit = (e: any, values: any) => {
-    e.preventDefault();
-    console.log("???", values);
-    handleSubmit();
-  };
 
   return (
     <StyledFormWrapper container>
       <StyledLoginFormWrapper>
-        <Form onSubmit={handleFormSubmit}>
+        <Form>
           {touched.email && errors.email && <div>{errors.email}</div>}
           <StyledFieldWrapper>
             <Field
@@ -105,11 +100,10 @@ const WithFormikPasswordResetPage = withFormik<
   IPasswordResetFormProps,
   IPasswordResetFormValues
 >({
-  displayName: "Login form",
+  displayName: "Password reset form",
   handleSubmit(values, { props, setSubmitting }) {
-    console.log(props, "!!!");
-    console.log(values);
     props.passwordReset(values.email);
+    setSubmitting(false);
   },
   mapPropsToValues(props) {
     return {

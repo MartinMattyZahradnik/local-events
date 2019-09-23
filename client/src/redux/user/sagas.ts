@@ -99,7 +99,22 @@ function* passwordResetSagaWatcher({
 }) {
   try {
     const { email } = payload;
-    const resp = yield request.post(`/password-reset`, email);
+    const resp = yield request.post(`/user/password-reset`, { email });
+
+    yield put(passwordResetSuccess());
+  } catch (e) {
+    passwordResetError();
+    console.error(e);
+  }
+}
+
+function* setNewPasswordWatcher({ payload }: { type: string; payload: any }) {
+  try {
+    const { password, token } = payload;
+    yield request.post(`/user/set-new-password`, {
+      password,
+      token
+    });
 
     yield put(passwordResetSuccess());
   } catch (e) {
@@ -114,4 +129,5 @@ export default function* userSaga() {
   yield takeLatest(userActionTypes.UPDATE_USER, updateUserWatcher);
   yield takeLatest(userActionTypes.LOGIN, loginSagaWatcher);
   yield takeLatest(userActionTypes.PASSWORD_RESET, passwordResetSagaWatcher);
+  yield takeLatest(userActionTypes.SET_NEW_PASSWORD, setNewPasswordWatcher);
 }
