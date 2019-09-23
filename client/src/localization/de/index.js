@@ -14,6 +14,8 @@ export default {
   "General.create": "erstellen",
   "General.update": "aktualisieren",
   "General.back": "zurück",
+  "General.of": "von",
+  "General.rowsPerPage": "Zeilen pro Seite",
 
   // Auth
   "Auth.passwordReset": "Passwort zurücksetzen",

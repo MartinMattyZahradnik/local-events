@@ -38,10 +38,7 @@ app.use(
 );
 
 mongoose
-  .connect(
-    // "mongodb+srv://maximilian:9u4biljMQc4jjqbe@cluster0-ntrwp.mongodb.net/messages?retryWrites=true"
-    "mongodb+srv://matty:DJZU4FfVwxrDqdUG@cluster0-dgbbx.mongodb.net/local-events?retryWrites=true"
-  )
+  .connect(process.env.DB_CONNECTION)
   .then(result => {
     app.listen(8080);
   })

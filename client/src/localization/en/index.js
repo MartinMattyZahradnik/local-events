@@ -14,6 +14,8 @@ export default {
   "General.create": "create",
   "General.update": "update",
   "General.back": "back",
+  "General.of": "of",
+  "General.rowsPerPage": "Rows Per Page",
 
   // Auth
   "Auth.passwordReset": "password reset",
