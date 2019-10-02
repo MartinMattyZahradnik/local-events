@@ -13,6 +13,5 @@
       "*": ["node_modules/*", "types/*"]
     }
   },
-  "include": ["src/**/*"],
-  "ignoreDefinitions": ["nodemailer-sendgrid-transport"]
+  "include": ["src/**/*"]
 }

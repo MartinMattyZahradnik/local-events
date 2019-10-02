@@ -10,7 +10,7 @@ export interface IUser {
   phone?: string;
   birthDate: Date;
   userRole: AvailableUserRoles;
-  gender: Gender;
+  gender?: Gender;
   address: {
     street: string;
     postalCode: string;
@@ -36,7 +36,7 @@ export interface IRegisterUserActionPayload {
   phone?: string;
   birthDate: Date;
   password: string;
-  gender: Gender;
+  gender?: Gender;
   address: {
     street: string;
     postalCode: string;

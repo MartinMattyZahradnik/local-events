@@ -20,6 +20,22 @@ const StyledFormWrapper = styled(Grid)`
   height: calc(100vh - 10.4rem);
 `;
 
+const emptyUser = {
+  firstName: "",
+  lastName: "",
+  userName: "",
+  email: "",
+  birthDate: new Date(),
+  password: "",
+
+  address: {
+    street: "",
+    postalCode: "",
+    city: "",
+    country: ""
+  }
+};
+
 const RegisterUser: React.FC = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -35,7 +51,11 @@ const RegisterUser: React.FC = () => {
 
   return (
     <StyledFormWrapper container>
-      <UserForm onSubmit={handleSubmit} submitButtonLabel={submitButtonLabel} />
+      <UserForm
+        {...emptyUser}
+        onSubmit={handleSubmit}
+        submitButtonLabel={submitButtonLabel}
+      />
     </StyledFormWrapper>
   );
 };

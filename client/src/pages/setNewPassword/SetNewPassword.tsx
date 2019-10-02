@@ -65,7 +65,7 @@ const SetNewPasswordPage = (
     if (!props.location.search) {
       history.push("/");
     }
-  }, []);
+  }, [props.location.search]);
   const { touched, errors, isSubmitting, values } = props;
   const intl = useIntl();
 

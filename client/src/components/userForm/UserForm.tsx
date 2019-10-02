@@ -57,17 +57,12 @@ interface IRegisterUserProps extends IUserFormValues {
 }
 
 const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
-  const { isSubmitting, handleSubmit, setFieldValue } = props;
+  const { isSubmitting, setFieldValue } = props;
   const intl = useIntl();
-
-  const handleFormSubmit = (e: any, values: any) => {
-    e.preventDefault();
-    handleSubmit();
-  };
 
   return (
     <StyledRegisterUserWrapper>
-      <Form onSubmit={handleFormSubmit}>
+      <Form>
         <Grid container>
           <StyledFieldWrapper item xs={6}>
             <Field

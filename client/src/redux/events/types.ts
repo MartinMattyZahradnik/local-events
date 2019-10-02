@@ -36,8 +36,8 @@ export interface ICreateEventActionPayload {
   description: string;
   date: number;
   imageUrl: string;
-  images?: string;
-  category: string;
+  images?: string[];
+  category: string[];
   address: {
     street: string;
     postalCode: string;
@@ -50,8 +50,8 @@ export interface ICreateEventActionPayload {
     currency: string;
     locale: string;
   };
-  tags: string;
-  coordinates?: string;
+  tags: string[];
+  coordinates?: [number, number];
   socialLinks?: {
     facebook?: string;
     twitter?: string;

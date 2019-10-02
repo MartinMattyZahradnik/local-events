@@ -51,13 +51,15 @@ interface IPasswordResetFormValues {
 }
 
 interface IPasswordResetFormProps extends IPasswordResetFormValues {
-  passwordReset: (email: string) => IPasswordResetActionPayload;
+  passwordReset: (
+    email: string
+  ) => { payload: IPasswordResetActionPayload; type: string };
 }
 
 const PasswordReset = (
   props: IPasswordResetFormProps & FormikProps<IPasswordResetFormValues>
 ) => {
-  const { touched, errors, isSubmitting, passwordReset } = props;
+  const { touched, errors, isSubmitting } = props;
   const intl = useIntl();
 
   return (

@@ -48,22 +48,12 @@ interface ICreateEventProps extends IEventFormValues {
 const EventForm = (
   props: ICreateEventProps & FormikProps<IEventFormValues>
 ) => {
-  const {
-    isSubmitting,
-    handleSubmit,
-    setFieldValue,
-    actionButtonLabel
-  } = props;
+  const { isSubmitting, setFieldValue, actionButtonLabel } = props;
   const intl = useIntl();
-
-  const handleFormSubmit = (e: any, values: any) => {
-    e.preventDefault();
-    handleSubmit();
-  };
 
   return (
     <StyledRegisterUserWrapper>
-      <Form onSubmit={handleFormSubmit}>
+      <Form>
         <Grid container>
           <StyledFieldWrapper item xs={6}>
             <Field

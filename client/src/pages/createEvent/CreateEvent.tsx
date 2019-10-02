@@ -21,6 +21,27 @@ const StyledFormWrapper = styled(Grid)`
   height: calc(100vh - 10.4rem);
 `;
 
+const emptyEvent = {
+  name: "",
+  description: "",
+  imageUrl: "",
+  date: Date.now(),
+  category: [],
+  price: {
+    price: 0,
+    currency: "EUR",
+    locale: "en"
+  },
+  tags: [],
+  address: {
+    street: "",
+    postalCode: "",
+    city: "",
+    countryCode: "",
+    country: ""
+  }
+};
+
 const CreateEvent: React.FC = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -32,6 +53,7 @@ const CreateEvent: React.FC = () => {
   return (
     <StyledFormWrapper container>
       <EventForm
+        {...emptyEvent}
         onSubmit={handleSubmit}
         actionButtonLabel={intl.formatMessage({
           id: "General.create",

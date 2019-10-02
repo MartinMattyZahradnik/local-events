@@ -63,22 +63,20 @@ interface ILoginFormValues {
 }
 
 interface ILoginFormProps extends ILoginFormValues {
-  login: (email: string, password: string) => ILoginActionPayload;
+  login: (
+    email: string,
+    password: string
+  ) => { type: string; payload: ILoginActionPayload };
 }
 
 const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
   const { touched, errors, isSubmitting, values, handleSubmit } = props;
   const intl = useIntl();
 
-  const handleFormSubmit = (e: any, values: any) => {
-    e.preventDefault();
-    handleSubmit();
-  };
-
   return (
     <StyledFormWrapper container>
       <StyledLoginFormWrapper>
-        <Form onSubmit={handleFormSubmit}>
+        <Form>
           {touched.email && errors.email && <div>{errors.email}</div>}
           <StyledFieldWrapper>
             <Field
