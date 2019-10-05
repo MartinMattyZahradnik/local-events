@@ -24,5 +24,8 @@ export default {
   "Auth.backToLogin": "Back to login",
 
   // Event List
-  "Eventlist.heading": "Popular Events in"
+  "EventList.heading": "Popular Events in",
+
+  // User
+  "User.profile": "User profile"
 };

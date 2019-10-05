@@ -14,14 +14,15 @@ export interface IUserModel extends mongoose.Document {
   userRole: AvailableUserRoles;
   gender: Gender;
   password: String;
-  resetToken: String | null;
-  resetTokenExpiration: number | null;
+  image?: String;
   address: {
     street: string;
     postalCode: string;
     city: string;
     country: string;
   };
+  resetToken: String | null;
+  resetTokenExpiration: number | null;
 }
 
 const availableUserRoles = ["admin", "visitor", "user"];
@@ -63,6 +64,10 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       trim: true
+    },
+    image: {
+      type: String,
+      required: false
     },
     password: {
       type: String,

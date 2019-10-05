@@ -23,5 +23,8 @@ export default {
   "Auth.register": "registrieren",
   "Auth.backToLogin": "Zurück zur Anmeldung",
 
-  "Eventlist.heading": "Beliebte Veranstaltungen in"
+  "EventList.heading": "Beliebte Veranstaltungen in",
+
+  // User
+  "User.profile": "Benutzerprofil"
 };

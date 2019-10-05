@@ -11,6 +11,7 @@ export interface IUser {
   birthDate: Date;
   userRole: AvailableUserRoles;
   gender?: Gender;
+  image?: string;
   address: {
     street: string;
     postalCode: string;

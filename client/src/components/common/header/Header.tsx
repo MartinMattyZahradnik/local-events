@@ -3,15 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // Components
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  InputBase,
-  Grid
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import { AppMenu } from "components/common";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import HeaderUser from "./HeaderUser";
 
 // Selectors
@@ -25,38 +17,50 @@ const StyledAppBar = styled(AppBar)`
   font-size: ${({ theme }) => theme.color.background};
 `;
 
-const ToolTipWrapper = styled(Grid)`
+const StyledLanguageSelectorWrapper = styled.div`
   margin-left: auto;
-  display: flex;
-  align-items: center;
+  margin-right: 0.5rem;s
 `;
 
-const StyledLanguageSelector = styled(LanguageSelector)`
-  margin-left: auto;
+const Logo = styled(Typography)`
+  text-transform: uppercase;
+  font-size: 2.2rem;
+  font-weight: bolder;
+`;
+
+const StyledLogoLocal = styled.span`
+  margin-right: 0.8rem;
+  color: white;
+`;
+
+const StyledLogoEvents = styled.span`
+  padding: 0.2rem 0.6rem;
+  background: white;
+  color: ${({ theme }) => theme.color.primary};
+`;
+
+const StyledToolBar = styled(Toolbar)`
+  width: 120rem;
+  margin: auto;
+  padding: 0;
 `;
 
 const Header = () => {
   return (
     <StyledAppBar>
-      <Toolbar>
+      <StyledToolBar>
         <Link to="/">
-          <Typography variant="h4" noWrap>
-            LocalEvents
-          </Typography>
+          <Logo variant="h1">
+            <StyledLogoLocal>Local</StyledLogoLocal>
+            <StyledLogoEvents>Events</StyledLogoEvents>
+          </Logo>
         </Link>
 
-        <AppMenu />
-
-        <ToolTipWrapper>
-          <SearchIcon />
-          <InputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </ToolTipWrapper>
-        <StyledLanguageSelector />
+        <StyledLanguageSelectorWrapper>
+          <LanguageSelector />
+        </StyledLanguageSelectorWrapper>
         <HeaderUser />
-      </Toolbar>
+      </StyledToolBar>
     </StyledAppBar>
   );
 };

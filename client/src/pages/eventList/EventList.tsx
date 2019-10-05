@@ -29,8 +29,11 @@ const StyledEventCardList = styled.div`
 
 const StyledEventCardWrapper = styled.div`
   margin-right: 2%;
-  width: 23%;
+  width: 23.5%;
   margin-bottom: 2.5rem;
+  &:nth-of-type(4n) {
+    margin-right: 0;
+  }
 `;
 
 const StyledHeading = styled.h2`
@@ -70,7 +73,7 @@ const EventList: React.FC = () => {
       {/* @TODO preset unknow visitor with data from https://ipinfo.io - setup search */}
       <StyledHeading>
         <FormattedMessage
-          id="Eventlist.heading"
+          id="EventList.heading"
           defaultMessage="Popular Events in"
         />{" "}
         Bratislava

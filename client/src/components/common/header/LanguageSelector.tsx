@@ -5,6 +5,10 @@ import { useDispatch } from "react-redux";
 // Actions
 import { changeLocale } from "redux/localization/actions";
 
+// Others
+import GbFlag from "./images/flag_gb.png";
+import DeFlag from "./images/flag_de.png";
+
 const StyledLanguageList = styled.ul`
   list-style: none;
   display: flex;
@@ -15,16 +19,21 @@ const StyledLanguage = styled.li`
   cursor: pointer;
 `;
 
+const StyledFlag = styled.img`
+  width: 3rem;
+  height: 2rem;
+`;
+
 const LanguageSelector: React.FC = () => {
   const dispatch = useDispatch();
 
   return (
     <StyledLanguageList>
       <StyledLanguage onClick={() => dispatch(changeLocale("en"))}>
-        English
+        <StyledFlag src={GbFlag} />
       </StyledLanguage>
       <StyledLanguage onClick={() => dispatch(changeLocale("de"))}>
-        German
+        <StyledFlag src={DeFlag} />
       </StyledLanguage>
     </StyledLanguageList>
   );
