@@ -127,6 +127,18 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={3}>
+            <input
+              multiple
+              id="image"
+              onChange={(event: any) => {
+                setFieldValue("image", event.currentTarget.files[0]);
+              }}
+              type="file"
+              name="image"
+            />
+          </StyledFieldWrapper>
+
+          <StyledFieldWrapper item xs={3}>
             <Field
               required
               name="gender"
@@ -235,7 +247,8 @@ export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
     birthDate,
     address,
     gender,
-    password
+    password,
+    image
   }) {
     return {
       userName,
@@ -246,7 +259,8 @@ export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
       birthDate,
       address,
       gender,
-      password
+      password,
+      image
     };
   }
 })(UserForm);

@@ -38,6 +38,8 @@ export interface IRegisterUserActionPayload {
   birthDate: Date;
   password: string;
   gender?: Gender;
+  // image?: File | string;
+  image?: any;
   address: {
     street: string;
     postalCode: string;

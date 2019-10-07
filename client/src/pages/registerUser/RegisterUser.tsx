@@ -27,7 +27,7 @@ const emptyUser = {
   email: "",
   birthDate: new Date(),
   password: "",
-
+  image: "",
   address: {
     street: "",
     postalCode: "",

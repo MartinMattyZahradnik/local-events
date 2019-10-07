@@ -9,12 +9,31 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
-
-dotenv.config();
+import multer from "multer";
 
 // Routes
 import eventRoutes from "./routes/events";
 import userRoutes from "./routes/user";
+import uploadRoutes from "./routes/upload";
+
+dotenv.config();
+
+const fileStorage = multer.diskStorage({
+  destination: (req: Request, file, callback) => {
+    callback(null, "public/uploads");
+  },
+  filename: (req: Request, file: Express.Multer.File, callback: any) => {
+    callback(null, new Date().toISOString() + "-" + file.originalname);
+  }
+});
+
+const fileFilter = (req: Request, file: Express.Multer.File, callback: any) => {
+  // accept image only
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    return callback(new Error("Only image files are allowed!"), false);
+  }
+  callback(null, true);
+};
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "access.log"),
@@ -26,10 +45,13 @@ app.use(helmet());
 app.use(compression());
 app.use(morgan("combined", { stream: accessLogStream }));
 app.use(bodyParser.json());
+app.use(multer({ storage: fileStorage, fileFilter }).array("image", 10));
 app.use(cors());
+app.use(express.static("public"));
 
 app.use("/events", eventRoutes);
 app.use("/user", userRoutes);
+app.use("/upload", uploadRoutes);
 
 interface IErrorHandlerType extends Error {
   statusCode?: number;

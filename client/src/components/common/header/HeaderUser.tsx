@@ -23,7 +23,7 @@ const StyledUserAvatar = styled.div<any>`
   width: 4rem;
   height: 4rem;
   background: ${({ image }) => `url(${image}) center`};
-  background-size: contain;
+  background-size: cover;
   border-radius: 50%;
   cursor: pointer;
 `;
@@ -58,7 +58,11 @@ const HeaderUser = () => {
 
   return (
     <>
-      <StyledUserAvatar image={user.image} onClick={handleClick} />
+      {/* @TODO - define API_BASE url in constants */}
+      <StyledUserAvatar
+        image={`http://localhost:8080/${user.image}`}
+        onClick={handleClick}
+      />
 
       <Menu
         id="user-menu"

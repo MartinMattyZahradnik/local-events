@@ -46,9 +46,23 @@ function* registerUserWatcher({
   payload: { formData: IRegisterUserActionPayload };
 }) {
   const { formData } = payload;
+  const userData = { ...formData };
+
+  if (formData.image) {
+    try {
+      const data = new FormData();
+      data.append("image", formData.image);
+      const res = yield request.post(`http://localhost:8080/upload`, data, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+      userData.image = res.data.files[0].path;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   try {
-    const resp = yield request.post(`/user`, formData);
+    const resp = yield request.post(`/user`, userData);
     yield put(registerUserSuccess(resp.data.user));
     history.push("/user/login");
   } catch (e) {
