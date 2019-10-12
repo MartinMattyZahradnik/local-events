@@ -47,6 +47,10 @@ const UpdateUser: React.FC = () => {
         {...user}
         onSubmit={handleSubmit}
         submitButtonLabel={submitButtonLabel}
+        formHeading={intl.formatMessage({
+          id: "User.update",
+          defaultMessage: "Update user"
+        })}
       />
     </StyledFormWrapper>
   );

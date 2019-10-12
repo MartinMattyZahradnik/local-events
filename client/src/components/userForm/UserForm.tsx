@@ -13,7 +13,6 @@ import { Card, Grid } from "@material-ui/core";
 import { IRegisterUserActionPayload } from "redux/user/types";
 
 const StyledRegisterUserWrapper = styled(Card)`
-  padding: 3.5rem 5rem;
   width: 80rem;
   position: absolute;
   top: 50%;
@@ -23,7 +22,10 @@ const StyledRegisterUserWrapper = styled(Card)`
 
 const StyledFieldWrapper = styled(Grid)`
   margin-bottom: 2rem;
-  padding: 0 2rem;
+  padding: 1.2rem 2rem 0 2rem;
+  display: flex;
+  align-items: flex-end;
+  height: 4.5rem;
 `;
 
 const StyledHeading = styled.h2`
@@ -49,21 +51,57 @@ const StyledLink = styled.span`
   margin-top: auto;
 `;
 
+const StyledUploadBtn = styled(Button)`
+  margin-top: 0.8rem;
+  font-size: 14px;
+  width: 20rem;
+`;
+
+const StyledForm = styled(Form)`
+  padding: 3.5rem;
+`;
+
+const StyledFormHeader = styled.div`
+  height: 5.5rem;
+  background-color: ${({ theme }) => theme.color.secondary};
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+`;
+
+const StyledFormFooter = styled(Grid)`
+  padding: 0 2rem;
+`;
+
 interface IUserFormValues extends IRegisterUserActionPayload {}
 
 interface IRegisterUserProps extends IUserFormValues {
   onSubmit: (formValues: IRegisterUserActionPayload) => any;
   submitButtonLabel: string;
+  formHeading: string;
 }
 
 const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
-  const { isSubmitting, setFieldValue } = props;
-  const intl = useIntl();
+  const { isSubmitting, setFieldValue, formHeading } = props;
+  const { formatMessage } = useIntl();
 
   return (
     <StyledRegisterUserWrapper>
-      <Form>
+      <StyledFormHeader>
+        <h2>{formHeading}</h2>
+      </StyledFormHeader>
+      <StyledForm>
         <Grid container>
+          <StyledHeading>
+            {formatMessage({
+              id: "User.info",
+              defaultMessage: "User Info"
+            })}
+          </StyledHeading>
           <StyledFieldWrapper item xs={6}>
             <Field
               name="userName"
@@ -127,18 +165,6 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={3}>
-            <input
-              multiple
-              id="image"
-              onChange={(event: any) => {
-                setFieldValue("image", event.currentTarget.files[0]);
-              }}
-              type="file"
-              name="image"
-            />
-          </StyledFieldWrapper>
-
-          <StyledFieldWrapper item xs={3}>
             <Field
               required
               name="gender"
@@ -172,9 +198,34 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledHeading>Address</StyledHeading>
+          <StyledFieldWrapper>
+            <input
+              id="userImage"
+              onChange={(event: any) => {
+                setFieldValue("image", event.currentTarget.files[0]);
+              }}
+              type="file"
+              name="image"
+              hidden
+            />
+            <StyledUploadBtn>
+              <label htmlFor="userImage">
+                {formatMessage({
+                  id: "User.uploadPhoto",
+                  defaultMessage: "Upload photo"
+                })}
+              </label>
+            </StyledUploadBtn>
+          </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledHeading>
+            {formatMessage({
+              id: "User.address",
+              defaultMessage: "Address"
+            })}
+          </StyledHeading>
+
+          <StyledFieldWrapper item xs={4}>
             <Field
               name="address.street"
               type="text"
@@ -186,20 +237,20 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
 
           <StyledFieldWrapper item xs={3}>
             <Field
-              name="address.postalCode"
-              type="text"
-              label="Postal Code"
-              placeholder="Type Postal Code"
-              component={FormField}
-            />
-          </StyledFieldWrapper>
-
-          <StyledFieldWrapper item xs={3}>
-            <Field
               name="address.city"
               type="text"
               label="City"
               placeholder="Type City"
+              component={FormField}
+            />
+          </StyledFieldWrapper>
+
+          <StyledFieldWrapper item xs={2}>
+            <Field
+              name="address.postalCode"
+              type="text"
+              label="Zip Code"
+              placeholder="Type Zip Code"
               component={FormField}
             />
           </StyledFieldWrapper>
@@ -216,10 +267,10 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           </StyledFieldWrapper>
         </Grid>
 
-        <Grid container>
+        <StyledFormFooter container>
           <StyledLink onClick={history.goBack}>
             {" "}
-            {intl.formatMessage({
+            {formatMessage({
               id: "General.back",
               defaultMessage: "Back"
             })}
@@ -227,8 +278,8 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           <StyledButton type="submit" disabled={isSubmitting}>
             {props.submitButtonLabel}
           </StyledButton>
-        </Grid>
-      </Form>
+        </StyledFormFooter>
+      </StyledForm>
     </StyledRegisterUserWrapper>
   );
 };

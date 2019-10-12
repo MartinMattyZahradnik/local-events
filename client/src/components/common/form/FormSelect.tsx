@@ -11,6 +11,10 @@ import {
   FormHelperText
 } from "@material-ui/core";
 
+const StyledSelectWrapper = styled.div`
+  width: 100%;
+`;
+
 const StyledSelect = styled(Select)`
   width: 100%;
 `;
@@ -44,7 +48,7 @@ const Field: React.FC<IProps> = ({
   const hasError = dirty && touched[name] && errorText !== undefined;
 
   return (
-    <>
+    <StyledSelectWrapper>
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <StyledSelect
         value={value}
@@ -64,7 +68,7 @@ const Field: React.FC<IProps> = ({
         ))}
       </StyledSelect>
       {hasError && <FormHelperText>{errorText}</FormHelperText>}
-    </>
+    </StyledSelectWrapper>
   );
 };
 

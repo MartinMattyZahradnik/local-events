@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { FieldProps } from "formik";
 import DateFnsUtils from "@date-io/date-fns";
 import { getTime } from "date-fns";
+import styled from "styled-components";
 
 // Components
 import {
@@ -9,6 +10,25 @@ import {
   KeyboardDatePicker,
   MaterialUiPickersDate
 } from "@material-ui/pickers";
+
+const StyledMuiPickersUtilsProvider = styled(MuiPickersUtilsProvider)``;
+
+const StyledKeyboardDatePicker = styled(KeyboardDatePicker)`
+  margin: 0;
+
+  .MuiInputBase-input,
+  .MuiInputLabel-root {
+    font-size: 1.4rem;
+  }
+
+  .MuiInputLabel-root {
+    color: ${({ theme }) => theme.color.primary};
+  }
+
+  .MuiSvgIcon-root {
+    font-size: 1.8rem;
+  }
+`;
 
 interface IProps extends FieldProps {
   label: string;
@@ -35,8 +55,8 @@ const Field: React.FC<IProps> = ({
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
+    <StyledMuiPickersUtilsProvider utils={DateFnsUtils}>
+      <StyledKeyboardDatePicker
         margin="normal"
         id={`id-${name}`}
         label="Date picker dialog"
@@ -48,7 +68,7 @@ const Field: React.FC<IProps> = ({
         onChange={handleDateChange}
         {...other}
       />
-    </MuiPickersUtilsProvider>
+    </StyledMuiPickersUtilsProvider>
   );
 };
 

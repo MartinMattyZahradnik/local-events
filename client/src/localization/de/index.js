@@ -26,5 +26,10 @@ export default {
   "EventList.heading": "Beliebte Veranstaltungen in",
 
   // User
-  "User.profile": "Benutzerprofil"
+  "User.profile": "Benutzerprofil",
+  "User.register": "Benutzer registrieren",
+  "User.update": "Benutzer aktualisieren",
+  "User.uploadPhoto": "Foto hochladen",
+  "User.address": "Adresse",
+  "User.info": "Benutzerinformation"
 };

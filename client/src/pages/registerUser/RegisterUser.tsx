@@ -55,6 +55,10 @@ const RegisterUser: React.FC = () => {
         {...emptyUser}
         onSubmit={handleSubmit}
         submitButtonLabel={submitButtonLabel}
+        formHeading={intl.formatMessage({
+          id: "User.register",
+          defaultMessage: "Register user"
+        })}
       />
     </StyledFormWrapper>
   );
