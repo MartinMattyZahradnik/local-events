@@ -15,13 +15,9 @@ import locales from "localization";
 import { AvailableLocales } from "redux/localization/types";
 
 const StyledApp = styled.div`
-  margin-top: 6.4rem;
-  padding: 4rem 0;
+  padding: 9rem 0 4rem 0;
   background-color: ${({ theme }) => theme.color.background};
-`;
-
-const StyledAppWrapper = styled.div`
-  max-width: 120rem;
+  max-width: 128rem;
   margin: auto;
 `;
 
@@ -35,9 +31,7 @@ const App: React.FC = () => {
       <Router history={history}>
         <StyledApp>
           <Header />
-          <StyledAppWrapper>
-            <Routes />
-          </StyledAppWrapper>
+          <Routes />
         </StyledApp>
       </Router>
     </IntlProvider>

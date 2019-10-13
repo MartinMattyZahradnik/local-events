@@ -19,13 +19,16 @@ const StyledAppBar = styled(AppBar)`
 
 const StyledLanguageSelectorWrapper = styled.div`
   margin-left: auto;
-  margin-right: 0.5rem;s
+  margin-right: 0.5rem;
 `;
 
 const Logo = styled(Typography)`
   text-transform: uppercase;
   font-size: 2.2rem;
   font-weight: bolder;
+  @media screen and (max-width: 599px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const StyledLogoLocal = styled.span`
@@ -40,9 +43,22 @@ const StyledLogoEvents = styled.span`
 `;
 
 const StyledToolBar = styled(Toolbar)`
-  width: 120rem;
+  max-width: 128rem;
+  width: 100%;
   margin: auto;
   padding: 0;
+
+  @media screen and (min-width: 1280px) {
+    padding: 0;
+  }
+
+  @media screen and (max-width: 1279px) {
+    padding: 0 3.5rem;
+  }
+
+  @media screen and (max-width: 599px) {
+    padding: 0 2rem;
+  }
 `;
 
 const Header = () => {

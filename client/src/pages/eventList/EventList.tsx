@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 // Components
 import { EventCard } from "components";
 import { Pagination } from "components/common";
-
+import { Grid } from "@material-ui/core";
 // Actions
 import { fetchEvents } from "redux/events/actions";
 
@@ -22,17 +22,17 @@ import {
 // Types
 import { IEvent } from "redux/events/types";
 
-const StyledEventCardList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
+const StyledEventList = styled.div`
+  @media screen and (min-width: 1280px) {
+    padding: 0;
+  }
 
-const StyledEventCardWrapper = styled.div`
-  margin-right: 2%;
-  width: 23.5%;
-  margin-bottom: 2.5rem;
-  &:nth-of-type(4n) {
-    margin-right: 0;
+  @media screen and (max-width: 1279px) {
+    padding: 0 3.5rem;
+  }
+
+  @media screen and (max-width: 599px) {
+    padding: 0 2rem;
   }
 `;
 
@@ -42,6 +42,16 @@ const StyledHeading = styled.h2`
   color: ${({ theme }) => theme.color.primary};
   font-size: ${({ theme }) => theme.text.fontSize.big};
   line-height: ${({ theme }) => theme.text.lineHeight.big};
+`;
+
+const StyledPaginationWrapper = styled.div`
+  @media screen and (max-width: 1279px) {
+    margin-top: 4.5rem;
+  }
+
+  @media screen and (max-width: 599px) {
+    margin-top: 3.5rem;
+  }
 `;
 
 const EventList: React.FC = () => {
@@ -69,7 +79,7 @@ const EventList: React.FC = () => {
   };
 
   return (
-    <>
+    <StyledEventList>
       {/* @TODO preset unknow visitor with data from https://ipinfo.io - setup search */}
       <StyledHeading>
         <FormattedMessage
@@ -78,18 +88,19 @@ const EventList: React.FC = () => {
         />{" "}
         Bratislava
       </StyledHeading>
-      <StyledEventCardList>
+      <Grid container spacing={5}>
         {events.map((event: IEvent) => (
-          <StyledEventCardWrapper key={event._id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={event._id}>
             <Link to={`/event/${event._id}`}>
               <EventCard event={event} />
             </Link>
-          </StyledEventCardWrapper>
+          </Grid>
         ))}
-      </StyledEventCardList>
-
-      <Pagination onChange={handlePaginationChange} total={total} />
-    </>
+      </Grid>
+      <StyledPaginationWrapper>
+        <Pagination onChange={handlePaginationChange} total={total} />
+      </StyledPaginationWrapper>
+    </StyledEventList>
   );
 };
 
