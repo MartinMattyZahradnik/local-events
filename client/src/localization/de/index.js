@@ -23,7 +23,12 @@ export default {
   "Auth.register": "registrieren",
   "Auth.backToLogin": "Zurück zur Anmeldung",
 
+  // Event
+  "Event.create": "Event erstellen",
+  "Event.update": "Ereignis aktualisieren",
   "EventList.heading": "Beliebte Veranstaltungen in",
+  "Event.details": "Veranstaltungsdetails",
+  "Event.uploadImages": "Bilder hochladen",
 
   // User
   "User.profile": "Benutzerprofil",

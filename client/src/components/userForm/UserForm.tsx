@@ -5,7 +5,12 @@ import { history } from "App";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
-import { FormField, FormSelect, FormDatePiker } from "components/common";
+import {
+  FormField,
+  FormSelect,
+  FormDatePiker,
+  FormHeader
+} from "components/common";
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
 
@@ -18,6 +23,10 @@ const StyledRegisterUserWrapper = styled(Card)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const StyledForm = styled(Form)`
+  padding: 3.5rem;
 `;
 
 const StyledFieldWrapper = styled(Grid)`
@@ -57,22 +66,6 @@ const StyledUploadBtn = styled(Button)`
   width: 20rem;
 `;
 
-const StyledForm = styled(Form)`
-  padding: 3.5rem;
-`;
-
-const StyledFormHeader = styled.div`
-  height: 5.5rem;
-  background-color: ${({ theme }) => theme.color.secondary};
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  text-transform: uppercase;
-  letter-spacing: 6px;
-`;
-
 const StyledFormFooter = styled(Grid)`
   padding: 0 2rem;
 `;
@@ -91,9 +84,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
 
   return (
     <StyledRegisterUserWrapper>
-      <StyledFormHeader>
-        <h2>{formHeading}</h2>
-      </StyledFormHeader>
+      <FormHeader formHeading={formHeading} />
       <StyledForm>
         <Grid container>
           <StyledHeading>

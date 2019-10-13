@@ -43,4 +43,9 @@ export default createGlobalStyle`
   
   .MuiTextField-root {
     width: 100%;
+  }
+  
+  .MuiMenuItem-root {
+    font-size: 1.4rem;
+    justify-content: center;
   }`;

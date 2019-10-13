@@ -4,7 +4,12 @@ import { useIntl } from "react-intl";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
-import { FormField, FormSelect, FormDatePiker } from "components/common";
+import {
+  FormField,
+  FormSelect,
+  FormDatePiker,
+  FormHeader
+} from "components/common";
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
 
@@ -12,7 +17,6 @@ import { Card, Grid } from "@material-ui/core";
 import { ICreateEventActionPayload } from "redux/events/types";
 
 const StyledRegisterUserWrapper = styled(Card)`
-  padding: 3.5rem 5rem;
   width: 80rem;
   position: absolute;
   top: 50%;
@@ -20,9 +24,16 @@ const StyledRegisterUserWrapper = styled(Card)`
   transform: translate(-50%, -50%);
 `;
 
+const StyledForm = styled(Form)`
+  padding: 3.5rem;
+`;
+
 const StyledFieldWrapper = styled(Grid)`
   margin-bottom: 2rem;
-  padding: 0 2rem;
+  padding: 1.2rem 2rem 0 2rem;
+  display: flex;
+  align-items: flex-end;
+  height: 4.5rem;
 `;
 
 const StyledHeading = styled.h2`
@@ -38,23 +49,37 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
+const StyledUploadBtn = styled(Button)`
+  margin: 2rem 0 1rem 0;
+  font-size: 14px;
+  width: 20rem;
+`;
+
 interface IEventFormValues extends ICreateEventActionPayload {}
 
 interface ICreateEventProps extends IEventFormValues {
   onSubmit: (formValues: ICreateEventActionPayload) => any;
   actionButtonLabel: string;
+  formHeading: string;
 }
 
 const EventForm = (
   props: ICreateEventProps & FormikProps<IEventFormValues>
 ) => {
-  const { isSubmitting, setFieldValue, actionButtonLabel } = props;
-  const intl = useIntl();
+  const { isSubmitting, setFieldValue, actionButtonLabel, formHeading } = props;
+  const { formatMessage } = useIntl();
 
   return (
     <StyledRegisterUserWrapper>
-      <Form>
+      <FormHeader formHeading={formHeading} />
+      <StyledForm>
         <Grid container>
+          <StyledHeading>
+            {formatMessage({
+              id: "Event.details",
+              defaultMessage: "Event details"
+            })}
+          </StyledHeading>
           <StyledFieldWrapper item xs={6}>
             <Field
               name="name"
@@ -90,28 +115,34 @@ const EventForm = (
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12}>
             <Field
-              required
-              name="imageUrl"
+              multiline
+              name="description"
               type="text"
-              label="Image url"
-              placeholder="Type image url"
-              component={FormField}
-            />
-          </StyledFieldWrapper>
-          <StyledFieldWrapper item xs={6}>
-            <Field
-              required
-              name="images"
-              type="text"
-              label="Images urls"
-              placeholder="Type images urls ,"
+              label="Event description"
+              placeholder="Type Event description"
               component={FormField}
             />
           </StyledFieldWrapper>
 
-          <StyledHeading>Address</StyledHeading>
+          <Grid container justify="center">
+            <StyledUploadBtn>
+              <label htmlFor="userImage">
+                {formatMessage({
+                  id: "Event.uploadImages",
+                  defaultMessage: "Upload images"
+                })}
+              </label>
+            </StyledUploadBtn>
+          </Grid>
+
+          <StyledHeading>
+            {formatMessage({
+              id: "User.address",
+              defaultMessage: "Address"
+            })}
+          </StyledHeading>
           <StyledFieldWrapper item xs={6}>
             <Field
               name="address.street"
@@ -125,8 +156,8 @@ const EventForm = (
             <Field
               name="address.postalCode"
               type="text"
-              label="Postal Code"
-              placeholder="Type Postal Code"
+              label="Zip Code"
+              placeholder="Type Zip Code"
               component={FormField}
             />
           </StyledFieldWrapper>
@@ -182,17 +213,6 @@ const EventForm = (
               component={FormField}
             />
           </StyledFieldWrapper>
-
-          <StyledFieldWrapper item xs={12}>
-            <Field
-              multiline
-              name="description"
-              type="text"
-              label="Event description"
-              placeholder="Type Event description"
-              component={FormField}
-            />
-          </StyledFieldWrapper>
         </Grid>
 
         <Grid container>
@@ -200,7 +220,7 @@ const EventForm = (
             {actionButtonLabel}
           </StyledButton>
         </Grid>
-      </Form>
+      </StyledForm>
     </StyledRegisterUserWrapper>
   );
 };

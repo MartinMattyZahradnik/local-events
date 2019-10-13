@@ -44,7 +44,7 @@ const emptyEvent = {
 
 const CreateEvent: React.FC = () => {
   const dispatch = useDispatch();
-  const intl = useIntl();
+  const { formatMessage } = useIntl();
 
   const handleSubmit = (values: any) => {
     dispatch(createEvent(values));
@@ -55,9 +55,13 @@ const CreateEvent: React.FC = () => {
       <EventForm
         {...emptyEvent}
         onSubmit={handleSubmit}
-        actionButtonLabel={intl.formatMessage({
+        actionButtonLabel={formatMessage({
           id: "General.create",
           defaultMessage: "Create"
+        })}
+        formHeading={formatMessage({
+          id: "Event.create",
+          defaultMessage: "Create Event"
         })}
       />
     </StyledFormWrapper>

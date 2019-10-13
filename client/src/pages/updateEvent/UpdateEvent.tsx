@@ -31,7 +31,7 @@ type MatchParams = {
 interface IUpdateEventPageProps extends RouteComponentProps<MatchParams> {}
 
 const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
-  const intl = useIntl();
+  const { formatMessage } = useIntl();
   const { id } = match.params;
   const dispatch = useDispatch();
   const event = useSelector(selectEventDetail);
@@ -52,11 +52,15 @@ const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
     <StyledFormWrapper container>
       <EventForm
         onSubmit={handleSubmit}
-        actionButtonLabel={intl.formatMessage({
+        actionButtonLabel={formatMessage({
           id: "General.update",
           defaultMessage: "Update"
         })}
         {...event}
+        formHeading={formatMessage({
+          id: "Event.update",
+          defaultMessage: "Update Event"
+        })}
       />
     </StyledFormWrapper>
   );

@@ -23,8 +23,12 @@ export default {
   "Auth.register": "register",
   "Auth.backToLogin": "Back to login",
 
-  // Event List
+  // Event
+  "Event.create": "Create event",
+  "Event.update": "Update event",
   "EventList.heading": "Popular Events in",
+  "Event.details": "Event details",
+  "Event.uploadImages": "Upload images",
 
   // User
   "User.profile": "User profile",
