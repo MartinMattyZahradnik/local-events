@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // Components
@@ -16,12 +15,6 @@ import { selectSimilarEvents } from "redux/eventDetail/selectors";
 // Types
 import { IEvent } from "redux/eventDetail/types";
 
-const StyledEventCardWrapper = styled.div`
-  margin-right: 2%;
-  width: 23%;
-  margin-bottom: 2.5rem;
-`;
-
 interface ISimilarEventsProps {
   eventId: string;
   limit?: number;
@@ -35,13 +28,13 @@ const SimilarEvents = ({ eventId, limit = 4 }: ISimilarEventsProps) => {
   }, [dispatch, eventId, limit]);
 
   return (
-    <Grid container>
+    <Grid container spacing={3}>
       {similarEvents.map((event: IEvent) => (
-        <StyledEventCardWrapper key={event._id}>
+        <Grid item xs={12} sm={6} md={3} key={event._id}>
           <Link to={`/event/${event._id}`}>
             <EventCard event={event} />
           </Link>
-        </StyledEventCardWrapper>
+        </Grid>
       ))}
     </Grid>
   );

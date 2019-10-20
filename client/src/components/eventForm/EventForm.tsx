@@ -16,16 +16,17 @@ import { Card, Grid } from "@material-ui/core";
 // Types
 import { ICreateEventActionPayload } from "redux/events/types";
 
-const StyledRegisterUserWrapper = styled(Card)`
-  width: 80rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+const StyledEventFormWrapper = styled(Card)`
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    box-shadow: none;
+  }
 `;
 
 const StyledForm = styled(Form)`
   padding: 3.5rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    padding: 2rem;
+  }
 `;
 
 const StyledFieldWrapper = styled(Grid)`
@@ -51,7 +52,7 @@ const StyledButton = styled(Button)`
 
 const StyledUploadBtn = styled(Button)`
   margin: 2rem 0 1rem 0;
-  font-size: 14px;
+  font-size: 1.4rem;
   width: 20rem;
 `;
 
@@ -70,7 +71,7 @@ const EventForm = (
   const { formatMessage } = useIntl();
 
   return (
-    <StyledRegisterUserWrapper>
+    <StyledEventFormWrapper>
       <FormHeader formHeading={formHeading} />
       <StyledForm>
         <Grid container>
@@ -80,7 +81,7 @@ const EventForm = (
               defaultMessage: "Event details"
             })}
           </StyledHeading>
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="name"
               type="text"
@@ -90,7 +91,7 @@ const EventForm = (
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               name="date"
@@ -101,7 +102,7 @@ const EventForm = (
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               name="category"
@@ -115,9 +116,9 @@ const EventForm = (
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={12}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
-              multiline
+              multiline={true}
               name="description"
               type="text"
               label="Event description"
@@ -143,7 +144,7 @@ const EventForm = (
               defaultMessage: "Address"
             })}
           </StyledHeading>
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="address.street"
               type="text"
@@ -152,7 +153,7 @@ const EventForm = (
               component={FormField}
             />
           </StyledFieldWrapper>
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="address.postalCode"
               type="text"
@@ -161,7 +162,7 @@ const EventForm = (
               component={FormField}
             />
           </StyledFieldWrapper>
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="address.city"
               type="text"
@@ -170,7 +171,7 @@ const EventForm = (
               component={FormField}
             />
           </StyledFieldWrapper>
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               name="address.country"
@@ -181,7 +182,7 @@ const EventForm = (
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               type="number"
@@ -192,7 +193,7 @@ const EventForm = (
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               type="text"
@@ -203,7 +204,7 @@ const EventForm = (
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               type="text"
@@ -211,6 +212,7 @@ const EventForm = (
               label="Coordinates"
               placeholder="Type comma-separated coordinates"
               component={FormField}
+              multiline
             />
           </StyledFieldWrapper>
         </Grid>
@@ -221,7 +223,7 @@ const EventForm = (
           </StyledButton>
         </Grid>
       </StyledForm>
-    </StyledRegisterUserWrapper>
+    </StyledEventFormWrapper>
   );
 };
 

@@ -27,11 +27,11 @@ const StyledEventList = styled.div`
     padding: 0;
   }
 
-  @media screen and (max-width: 1279px) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: 0 3.5rem;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
     padding: 0 2rem;
   }
 `;
@@ -49,7 +49,7 @@ const StyledPaginationWrapper = styled.div`
     margin-top: 4.5rem;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
     margin-top: 3.5rem;
   }
 `;

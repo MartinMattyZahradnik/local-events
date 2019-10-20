@@ -26,7 +26,7 @@ const Logo = styled(Typography)`
   text-transform: uppercase;
   font-size: 2.2rem;
   font-weight: bolder;
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
     font-size: 1.6rem;
   }
 `;
@@ -52,11 +52,11 @@ const StyledToolBar = styled(Toolbar)`
     padding: 0;
   }
 
-  @media screen and (max-width: 1279px) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: 0 3.5rem;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
     padding: 0 2rem;
   }
 `;

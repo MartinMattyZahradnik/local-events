@@ -17,16 +17,17 @@ import { Card, Grid } from "@material-ui/core";
 // Types
 import { IRegisterUserActionPayload } from "redux/user/types";
 
-const StyledRegisterUserWrapper = styled(Card)`
-  width: 80rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+const StyledUserFormWrapper = styled(Card)`
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    box-shadow: none;
+  }
 `;
 
 const StyledForm = styled(Form)`
   padding: 3.5rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    padding: 2rem;
+  }
 `;
 
 const StyledFieldWrapper = styled(Grid)`
@@ -62,7 +63,7 @@ const StyledLink = styled.span`
 
 const StyledUploadBtn = styled(Button)`
   margin-top: 0.8rem;
-  font-size: 14px;
+  font-size: 1.4rem;
   width: 20rem;
 `;
 
@@ -83,7 +84,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
   const { formatMessage } = useIntl();
 
   return (
-    <StyledRegisterUserWrapper>
+    <StyledUserFormWrapper>
       <FormHeader formHeading={formHeading} />
       <StyledForm>
         <Grid container>
@@ -93,7 +94,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               defaultMessage: "User Info"
             })}
           </StyledHeading>
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="userName"
               type="text"
@@ -103,7 +104,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="firstName"
               type="text"
@@ -113,7 +114,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="lastName"
               type="text"
@@ -123,7 +124,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="email"
               type="email"
@@ -133,7 +134,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="phone"
               type="text"
@@ -143,7 +144,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               name="birthDate"
@@ -155,7 +156,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
               name="gender"
@@ -169,7 +170,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="password"
               type="password"
@@ -179,7 +180,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={6}>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="passwordConfirm"
               type="password"
@@ -216,7 +217,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             })}
           </StyledHeading>
 
-          <StyledFieldWrapper item xs={4}>
+          <StyledFieldWrapper item xs={12} sm={3}>
             <Field
               name="address.street"
               type="text"
@@ -226,7 +227,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={3}>
             <Field
               name="address.city"
               type="text"
@@ -236,7 +237,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={2}>
+          <StyledFieldWrapper item xs={12} sm={3}>
             <Field
               name="address.postalCode"
               type="text"
@@ -246,7 +247,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             />
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={3}>
+          <StyledFieldWrapper item xs={12} sm={3}>
             <Field
               required
               name="address.country"
@@ -271,7 +272,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           </StyledButton>
         </StyledFormFooter>
       </StyledForm>
-    </StyledRegisterUserWrapper>
+    </StyledUserFormWrapper>
   );
 };
 

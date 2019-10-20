@@ -9,21 +9,44 @@ import { Grid, Card, Chip } from "@material-ui/core";
 import EventHeader from "./EventHeader";
 import SimilarEvents from "./SimilarEvents";
 import { Map } from "components/common";
+
 // Actions
 import { fetchEventDetail, resetEventDetail } from "redux/eventDetail/actions";
 
 // Selectors
 import { selectEventDetail } from "redux/eventDetail/selectors";
 
+const StyledEventDetail = styled(Grid)`
+  @media screen and (min-width: 1280px) {
+    padding: 0;
+  }
+
+  @media screen and (max-width: 1279px) {
+    padding: 0 3.5rem;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    padding: 0 2rem;
+  }
+`;
+
 const StyledEventContent = styled(Card)`
   width: 70%;
   margin-right: 5%;
   padding: 2rem;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const StyledEventImage = styled.img`
   width: 100%;
   margin-bottom: 2.5rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
 const StyledTag = styled(Chip)`
@@ -39,6 +62,9 @@ const StyledSideBar = styled(Card)`
   padding: 2rem;
   margin-bottom: 5rem;
   height: fit-content;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
 const StyledHeading = styled.h2`
@@ -69,7 +95,7 @@ type MatchParams = {
 interface IEventDetailProps extends RouteComponentProps<MatchParams> {}
 
 const EventDetail = ({ match }: IEventDetailProps) => {
-  const intl = useIntl();
+  const { formatMessage } = useIntl();
   const { id } = match.params;
   const event = useSelector(selectEventDetail);
 
@@ -86,14 +112,14 @@ const EventDetail = ({ match }: IEventDetailProps) => {
   }
 
   return (
-    <Grid container>
+    <StyledEventDetail container>
       <EventHeader event={event} />
       <StyledEventContent>
         <StyledEventImage src={event.imageUrl} />
         <StyledHeading>{event.name}</StyledHeading>
         <StyledDescription>{event.description}</StyledDescription>
         <StyledHeading>
-          {intl.formatMessage({ id: "General.tags", defaultMessage: "Tags" })}
+          {formatMessage({ id: "General.tags", defaultMessage: "Tags" })}
         </StyledHeading>
         <StyledTags>
           {event.tags.map(tag => (
@@ -113,17 +139,23 @@ const EventDetail = ({ match }: IEventDetailProps) => {
       </StyledEventContent>
 
       <StyledSideBar>
-        <h3>More Events In {event.address.city}</h3>
+        <h3>
+          {formatMessage({
+            id: "Event.moreEventsIn",
+            defaultMessage: "More Events In"
+          })}{" "}
+          {event.address.city}
+        </h3>
       </StyledSideBar>
 
       <StyledSimilarEventsHeading>
-        {intl.formatMessage({
+        {formatMessage({
           id: "General.similarEvents",
           defaultMessage: "Similar Events"
         })}
       </StyledSimilarEventsHeading>
       <SimilarEvents eventId={event._id} />
-    </Grid>
+    </StyledEventDetail>
   );
 };
 

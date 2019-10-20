@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useIntl } from "react-intl";
 import { history } from "App";
 
 // Components
@@ -16,6 +17,11 @@ import { selectUser } from "redux/user/selectors";
 
 const StyledLogoutLink = styled.span`
   cursor: pointer;
+  text-transform: uppercase;
+`;
+
+const StyledLoginLink = styled(Link)`
+  color: white;
   text-transform: uppercase;
 `;
 
@@ -38,6 +44,7 @@ const HeaderUser = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const { formatMessage } = useIntl();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -53,7 +60,14 @@ const HeaderUser = () => {
   };
 
   if (!user) {
-    return <Link to="/login">Login</Link>;
+    return (
+      <StyledLoginLink to="/login">
+        {formatMessage({
+          id: "General.login",
+          defaultMessage: "Login"
+        })}
+      </StyledLoginLink>
+    );
   }
 
   return (
@@ -76,7 +90,12 @@ const HeaderUser = () => {
           </StyledMenuLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <StyledLogoutLink onClick={handleLogout}>Logout</StyledLogoutLink>
+          <StyledLogoutLink onClick={handleLogout}>
+            {formatMessage({
+              id: "General.logout",
+              defaultMessage: "Logout"
+            })}
+          </StyledLogoutLink>
         </MenuItem>
       </Menu>
     </>

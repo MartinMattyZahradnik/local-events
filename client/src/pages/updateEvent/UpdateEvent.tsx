@@ -18,10 +18,20 @@ import { selectEventDetail } from "redux/eventDetail/selectors";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
+  width: 80rem;
   align-items: center;
   justify-content: center;
   position: relative;
   height: calc(100vh - 10.4rem);
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 100%;
+    padding: 0 3.5rem;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    padding: 0;
+    height: auto;
+  }
 `;
 
 type MatchParams = {

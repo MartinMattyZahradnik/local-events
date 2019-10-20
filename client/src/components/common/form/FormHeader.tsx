@@ -11,6 +11,9 @@ const StyledFormHeader = styled.div`
   font-size: 1.8rem;
   text-transform: uppercase;
   letter-spacing: 0.6rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    display: none;
+  }
 `;
 
 interface FormHeaderProps {

@@ -13,6 +13,10 @@ const StyledEventHeader = styled(Card)`
   display: flex;
   width: 100%;
   margin-bottom: 5rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: 3rem;
+    flex-direction: column;
+  }
 `;
 
 const StyledEventImage = styled.img`
@@ -21,11 +25,19 @@ const StyledEventImage = styled.img`
   width: 22rem;
   margin-right: 1.5rem;
   object-fit: cover;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-right: 0;
+    width: 100%;
+  }
 `;
 
 const StyledContentWrapper = styled(Grid)`
   padding: 2rem 3rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: 1rem 1.5rem;
+  }
 `;
+
 const StyledEventTitle = styled.h1`
   font-size: 2.6rem;
   text-align: left;
@@ -39,19 +51,28 @@ const StyledHeaderRow = styled.div`
   &:last-of-type {
     margin-bottom: 0;
   }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
 `;
 
 const StyledLabel = styled.span`
   padding: 1rem;
-  height: 3.5rem;
   width: 12rem;
   text-align: center;
   display: block;
   text-transform: uppercase;
   background: ${({ theme }) => theme.color.secondary};
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: bold;
   margin-right: 2rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
 interface IEventHeaderProps {

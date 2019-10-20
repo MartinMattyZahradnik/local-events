@@ -35,15 +35,35 @@ const StyledFormWrapper = styled(Grid)`
   align-items: center;
   justify-content: center;
   position: relative;
+  height: calc(100vh - 14rem);
 `;
 
-const StyledLoginFormWrapper = styled(Card)`
+const StyledPasswordResetWrapper = styled(Card)`
   padding: 3.5rem 5rem;
   width: 40rem;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, -50%);
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    width: 100%;
+    padding: 2rem;
+    top: -3.3rem;
+    left: 0;
+    height: calc(100vh - 6rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: none;
+  }
+`;
+
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 30rem;
 `;
 
 interface IPasswordResetFormValues {
@@ -64,8 +84,8 @@ const PasswordReset = (
 
   return (
     <StyledFormWrapper container>
-      <StyledLoginFormWrapper>
-        <Form>
+      <StyledPasswordResetWrapper>
+        <StyledForm>
           {touched.email && errors.email && <div>{errors.email}</div>}
           <StyledFieldWrapper>
             <Field
@@ -92,8 +112,8 @@ const PasswordReset = (
               })}
             </Button>
           </Grid>
-        </Form>
-      </StyledLoginFormWrapper>
+        </StyledForm>
+      </StyledPasswordResetWrapper>
     </StyledFormWrapper>
   );
 };

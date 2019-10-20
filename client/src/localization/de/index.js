@@ -29,6 +29,7 @@ export default {
   "EventList.heading": "Beliebte Veranstaltungen in",
   "Event.details": "Veranstaltungsdetails",
   "Event.uploadImages": "Bilder hochladen",
+  "Event.moreEventsIn": "Weitere Veranstaltungen",
 
   // User
   "User.profile": "Benutzerprofil",

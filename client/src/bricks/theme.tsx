@@ -1,3 +1,5 @@
+import { breakpoints } from "@material-ui/system";
+
 export default {
   color: {
     primary: "#8C7B6B",
@@ -19,5 +21,11 @@ export default {
       bigger: "2.7rem",
       big: "3.9rem"
     }
+  },
+  breakpoints: {
+    xs: "599px",
+    sm: "959px",
+    md: "1279px",
+    lg: "1919px"
   }
 };
