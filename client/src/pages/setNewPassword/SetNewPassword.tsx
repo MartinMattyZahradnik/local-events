@@ -9,11 +9,14 @@ import qs from "qs";
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
 import { Grid, Card } from "@material-ui/core";
-import { FormField } from "components/common";
+import { FormField, FormError } from "components/common";
 import { Button } from "bricks";
 
 // Actions
 import { setNewPassword } from "redux/user/actions";
+
+// Others
+import validationSchema from "./SetNewPasswordValidationSchema";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -60,8 +63,8 @@ const StyledButton = styled(Button)`
 `;
 
 interface ILoginFormValues {
-  email: string;
   password: string;
+  passwordConfirm: string;
 }
 
 type RouteParams = {
@@ -72,6 +75,7 @@ interface ILoginFormProps
   extends RouteComponentProps<RouteParams>,
     ILoginFormValues {
   setNewPassword: (password: string, token: string) => any;
+  isValid: boolean;
 }
 
 const SetNewPasswordPage = (
@@ -89,7 +93,6 @@ const SetNewPasswordPage = (
     <StyledFormWrapper container>
       <StyledLoginFormWrapper>
         <StyledForm>
-          {touched.email && errors.email && <div>{errors.email}</div>}
           <StyledFieldWrapper>
             <Field
               name="password"
@@ -97,6 +100,10 @@ const SetNewPasswordPage = (
               label="Password"
               placeholder="Type new password"
               component={FormField}
+            />
+            <FormError
+              touched={touched.password}
+              errorMsgId={errors.password}
             />
           </StyledFieldWrapper>
 
@@ -108,6 +115,10 @@ const SetNewPasswordPage = (
               value={values.password}
               label="Confirm Password"
               placeholder="Confirm new  password"
+            />
+            <FormError
+              touched={touched.passwordConfirm}
+              errorMsgId={errors.passwordConfirm}
             />
           </StyledFieldWrapper>
 
@@ -127,14 +138,19 @@ const SetNewPasswordPage = (
 
 const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
   displayName: "Set New password form",
+  validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
+    if (!props.isValid) {
+      return;
+    }
+
     const { token } = qs.parse(props.location.search.substr(1));
     props.setNewPassword(values.password, token);
     setSubmitting(false);
   },
   mapPropsToValues(props) {
     return {
-      email: props.email || "",
+      passwordConfirm: props.passwordConfirm || "",
       password: props.password || ""
     };
   }

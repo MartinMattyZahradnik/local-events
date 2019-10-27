@@ -90,7 +90,6 @@ const PasswordReset = (
     <StyledFormWrapper container>
       <StyledPasswordResetWrapper>
         <StyledForm>
-          ß
           <StyledFieldWrapper>
             <Field
               name="email"

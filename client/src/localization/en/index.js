@@ -44,5 +44,6 @@ export default {
   "Form.validations.required": "This field is required",
   "Form.validations.max": "Maximum of 255 characters are allowed",
   "Form.validations.min": "Minimum of 5 characters are required",
-  "Form.validations.string": "Has to be string value"
+  "Form.validations.string": "Has to be string value",
+  "Form.validations.passwordMatch": "Password must match"
 };
