@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
+import get from "lodash.get";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
@@ -8,13 +9,17 @@ import {
   FormField,
   FormSelect,
   FormDatePiker,
-  FormHeader
+  FormHeader,
+  FormError
 } from "components/common";
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
 
 // Types
 import { ICreateEventActionPayload } from "redux/events/types";
+
+// Others
+import validationSchema from "./EventFormValidationSchema";
 
 const StyledEventFormWrapper = styled(Card)`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
@@ -35,6 +40,7 @@ const StyledFieldWrapper = styled(Grid)`
   display: flex;
   align-items: flex-end;
   height: 4.5rem;
+  position: relative;
 `;
 
 const StyledHeading = styled.h2`
@@ -56,6 +62,12 @@ const StyledUploadBtn = styled(Button)`
   width: 20rem;
 `;
 
+const StyledFormErrorWrapper = styled.div`
+  position: absolute;
+  top: -1.2rem;
+  right: 2rem;
+`;
+
 interface IEventFormValues extends ICreateEventActionPayload {}
 
 interface ICreateEventProps extends IEventFormValues {
@@ -67,7 +79,14 @@ interface ICreateEventProps extends IEventFormValues {
 const EventForm = (
   props: ICreateEventProps & FormikProps<IEventFormValues>
 ) => {
-  const { isSubmitting, setFieldValue, actionButtonLabel, formHeading } = props;
+  const {
+    isSubmitting,
+    setFieldValue,
+    actionButtonLabel,
+    formHeading,
+    touched,
+    errors
+  } = props;
   const { formatMessage } = useIntl();
 
   return (
@@ -89,6 +108,10 @@ const EventForm = (
               placeholder="Type Event Name"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError touched={touched.name} errorMsgId={errors.name} />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -100,6 +123,10 @@ const EventForm = (
               component={FormDatePiker}
               onChange={setFieldValue}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError touched={touched.date} errorMsgId={errors.date} />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -125,6 +152,12 @@ const EventForm = (
               placeholder="Type Event description"
               component={FormField}
             />
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={touched.description}
+                errorMsgId={errors.description}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <Grid container justify="center">
@@ -152,7 +185,14 @@ const EventForm = (
               placeholder="Type street"
               component={FormField}
             />
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.street")}
+                errorMsgId={get(errors, "address.street")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
+
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="address.postalCode"
@@ -161,7 +201,14 @@ const EventForm = (
               placeholder="Type Zip Code"
               component={FormField}
             />
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.postalCode")}
+                errorMsgId={get(errors, "address.postalCode")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
+
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="address.city"
@@ -170,7 +217,14 @@ const EventForm = (
               placeholder="Type City"
               component={FormField}
             />
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.city")}
+                errorMsgId={get(errors, "address.city")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
+
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
@@ -180,11 +234,16 @@ const EventForm = (
               component={FormSelect}
               options={[{ value: "US", label: "United States" }]}
             />
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.country")}
+                errorMsgId={get(errors, "address.country")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
-              required
               type="number"
               name="price"
               label="Price"
@@ -229,6 +288,7 @@ const EventForm = (
 
 export default withFormik<ICreateEventProps, ICreateEventActionPayload>({
   displayName: "Event form",
+  validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
     props.onSubmit(values);
     setSubmitting(false);
