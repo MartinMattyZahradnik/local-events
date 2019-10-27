@@ -37,5 +37,12 @@ export default {
   "User.update": "Benutzer aktualisieren",
   "User.uploadPhoto": "Foto hochladen",
   "User.address": "Adresse",
-  "User.info": "Benutzerinformation"
+  "User.info": "Benutzerinformation",
+
+  // Form
+  "Form.validations.invalidEmail": "Ungültige e-mail",
+  "Form.validations.required": "Dieses Feld wird benötigt",
+  "Form.validations.max": "Maximal 255 Zeichen sind zulässig",
+  "Form.validations.min": "Es sind mindestens 5 Zeichen erforderlich",
+  "Form.validations.string": "Muss ein String sein"
 };

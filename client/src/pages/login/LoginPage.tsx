@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
 import { Grid, Card } from "@material-ui/core";
-import { FormField } from "components/common";
+import { FormField, FormError } from "components/common";
 import { Link } from "react-router-dom";
 import { Button } from "bricks";
 
@@ -15,6 +15,9 @@ import { login } from "redux/user/actions";
 
 // Types
 import { ILoginActionPayload } from "redux/user/types";
+
+// Others
+import validationSchema from "./LoginFormValidationSchema";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -80,25 +83,26 @@ interface ILoginFormProps extends ILoginFormValues {
     email: string,
     password: string
   ) => { type: string; payload: ILoginActionPayload };
+  isValid: boolean;
 }
 
 const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
-  const { touched, errors, isSubmitting, values, handleSubmit } = props;
+  const { touched, errors, isSubmitting, values } = props;
   const intl = useIntl();
 
   return (
     <StyledFormWrapper container>
       <StyledLoginFormWrapper>
         <Form>
-          {touched.email && errors.email && <div>{errors.email}</div>}
           <StyledFieldWrapper>
             <Field
               name="email"
-              type="email"
+              type="text"
               label="email"
               placeholder="Type your password password"
               component={FormField}
             />
+            <FormError touched={touched.email} errorMsgId={errors.email} />
           </StyledFieldWrapper>
 
           <StyledFieldWrapper>
@@ -109,6 +113,10 @@ const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
               value={values.password}
               label="Password"
               placeholder="Type your password password"
+            />
+            <FormError
+              touched={touched.password}
+              errorMsgId={errors.password}
             />
           </StyledFieldWrapper>
 
@@ -147,7 +155,12 @@ const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
 
 const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
   displayName: "Login form",
+  validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
+    if (!props.isValid) {
+      return;
+    }
+
     props.login(values.email, values.password);
     setSubmitting(false);
   },

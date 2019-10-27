@@ -37,5 +37,12 @@ export default {
   "User.update": "Update user",
   "User.uploadPhoto": "Upload photo",
   "User.address": "Address",
-  "User.info": "User Info"
+  "User.info": "User Info",
+
+  // Form
+  "Form.validations.invalidEmail": "Invalid email",
+  "Form.validations.required": "This field is required",
+  "Form.validations.max": "Maximum of 255 characters are allowed",
+  "Form.validations.min": "Minimum of 5 characters are required",
+  "Form.validations.string": "Has to be string value"
 };
