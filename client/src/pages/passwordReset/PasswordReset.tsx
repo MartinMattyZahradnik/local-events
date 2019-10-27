@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
 import { Grid, Card } from "@material-ui/core";
-import { FormField } from "components/common";
+import { FormField, FormError } from "components/common";
 import { Link } from "react-router-dom";
 import { Button } from "bricks";
 
@@ -15,6 +15,9 @@ import { passwordReset } from "redux/user/actions";
 
 // Types
 import { IPasswordResetActionPayload } from "redux/user/types";
+
+// Others
+import validationSchema from "./PasswordResetValidationSchema";
 
 const StyledFieldWrapper = styled(Grid)`
   margin-bottom: 2rem;
@@ -74,6 +77,7 @@ interface IPasswordResetFormProps extends IPasswordResetFormValues {
   passwordReset: (
     email: string
   ) => { payload: IPasswordResetActionPayload; type: string };
+  isValid: boolean;
 }
 
 const PasswordReset = (
@@ -86,7 +90,7 @@ const PasswordReset = (
     <StyledFormWrapper container>
       <StyledPasswordResetWrapper>
         <StyledForm>
-          {touched.email && errors.email && <div>{errors.email}</div>}
+          ß
           <StyledFieldWrapper>
             <Field
               name="email"
@@ -95,8 +99,8 @@ const PasswordReset = (
               placeholder="Type your email"
               component={FormField}
             />
+            <FormError touched={touched.email} errorMsgId={errors.email} />
           </StyledFieldWrapper>
-
           <Grid container justify="space-between">
             <StyledBackLink to="/login">
               {intl.formatMessage({
@@ -123,7 +127,12 @@ const WithFormikPasswordResetPage = withFormik<
   IPasswordResetFormValues
 >({
   displayName: "Password reset form",
+  validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
+    if (!props.isValid) {
+      return;
+    }
+
     props.passwordReset(values.email);
     setSubmitting(false);
   },
