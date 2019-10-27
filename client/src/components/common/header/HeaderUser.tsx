@@ -83,6 +83,7 @@ const HeaderUser = () => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        anchorEl={anchorEl}
       >
         <MenuItem onClick={handleClose}>
           <StyledMenuLink to={`/user/${user._id}/profile`}>
