@@ -10,6 +10,7 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import multer from "multer";
+import sgMail from "@sendgrid/mail";
 
 // Routes
 import eventRoutes from "./routes/events";
@@ -78,6 +79,7 @@ mongoose
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-dgbbx.mongodb.net/${process.env.DB_NAME}?retryWrites=true`
   )
   .then(result => {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     app.listen(process.env.PORT || 8080);
   })
   .catch(err => console.log(err));

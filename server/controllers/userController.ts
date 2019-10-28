@@ -5,8 +5,6 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
 export const createUserController = async (
   req: Request,
   res: Response,
