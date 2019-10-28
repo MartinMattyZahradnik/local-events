@@ -77,7 +77,6 @@ interface IPasswordResetFormProps extends IPasswordResetFormValues {
   passwordReset: (
     email: string
   ) => { payload: IPasswordResetActionPayload; type: string };
-  isValid: boolean;
 }
 
 const PasswordReset = (
@@ -128,10 +127,6 @@ const WithFormikPasswordResetPage = withFormik<
   displayName: "Password reset form",
   validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
-    if (!props.isValid) {
-      return;
-    }
-
     props.passwordReset(values.email);
     setSubmitting(false);
   },

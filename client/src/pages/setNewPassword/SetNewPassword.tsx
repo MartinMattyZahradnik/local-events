@@ -75,7 +75,6 @@ interface ILoginFormProps
   extends RouteComponentProps<RouteParams>,
     ILoginFormValues {
   setNewPassword: (password: string, token: string) => any;
-  isValid: boolean;
 }
 
 const SetNewPasswordPage = (
@@ -140,10 +139,6 @@ const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
   displayName: "Set New password form",
   validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
-    if (!props.isValid) {
-      return;
-    }
-
     const { token } = qs.parse(props.location.search.substr(1));
     props.setNewPassword(values.password, token);
     setSubmitting(false);

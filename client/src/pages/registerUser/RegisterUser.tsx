@@ -37,6 +37,7 @@ const emptyUser = {
   email: "",
   birthDate: new Date(),
   password: "",
+  passwordConfirm: "",
   image: "",
   address: {
     street: "",

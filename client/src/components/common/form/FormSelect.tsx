@@ -40,12 +40,9 @@ const Field: React.FC<IProps> = ({
   field,
   options = [],
   field: { name, onChange, value = "" },
-  form: { dirty, touched, errors },
   ...other
 }) => {
   const id = `sel_${name}`;
-  const errorText = errors[name];
-  const hasError = dirty && touched[name] && errorText !== undefined;
 
   return (
     <StyledSelectWrapper>
@@ -67,7 +64,6 @@ const Field: React.FC<IProps> = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      {hasError && <FormHelperText>{errorText}</FormHelperText>}
     </StyledSelectWrapper>
   );
 };

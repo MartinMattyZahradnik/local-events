@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
 import { history } from "App";
+import get from "lodash.get";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
@@ -9,13 +10,17 @@ import {
   FormField,
   FormSelect,
   FormDatePiker,
-  FormHeader
+  FormHeader,
+  FormError
 } from "components/common";
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
 
 // Types
 import { IRegisterUserActionPayload } from "redux/user/types";
+
+// Others
+import validationSchema from "./UserFormValidationSchema";
 
 const StyledUserFormWrapper = styled(Card)`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
@@ -36,6 +41,7 @@ const StyledFieldWrapper = styled(Grid)`
   display: flex;
   align-items: flex-end;
   height: 4.5rem;
+  position: relative;
 `;
 
 const StyledHeading = styled.h2`
@@ -71,6 +77,12 @@ const StyledFormFooter = styled(Grid)`
   padding: 0 2rem;
 `;
 
+const StyledFormErrorWrapper = styled.div`
+  position: absolute;
+  top: -1.2rem;
+  right: 2rem;
+`;
+
 interface IUserFormValues extends IRegisterUserActionPayload {}
 
 interface IRegisterUserProps extends IUserFormValues {
@@ -80,7 +92,7 @@ interface IRegisterUserProps extends IUserFormValues {
 }
 
 const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
-  const { isSubmitting, setFieldValue, formHeading } = props;
+  const { isSubmitting, setFieldValue, formHeading, touched, errors } = props;
   const { formatMessage } = useIntl();
 
   return (
@@ -102,6 +114,12 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type User Name"
               component={FormField}
             />
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={touched.userName}
+                errorMsgId={errors.userName}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -112,6 +130,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type First Name"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={touched.firstName}
+                errorMsgId={errors.firstName}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -122,6 +147,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type Last Name"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={touched.lastName}
+                errorMsgId={errors.lastName}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -132,6 +164,10 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type your email"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError touched={touched.email} errorMsgId={errors.email} />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -142,6 +178,10 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type your phone"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError touched={touched.phone} errorMsgId={errors.phone} />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -158,7 +198,6 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
 
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
-              required
               name="gender"
               label="Gender"
               placeholder="Select gender"
@@ -168,6 +207,10 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
                 { value: "female", label: "Female" }
               ]}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError touched={touched.gender} errorMsgId={errors.gender} />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -178,6 +221,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type your password"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={touched.password}
+                errorMsgId={errors.password}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -188,6 +238,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Confirm your password"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={touched.passwordConfirm}
+                errorMsgId={errors.passwordConfirm}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper>
@@ -225,6 +282,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type street"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.street")}
+                errorMsgId={get(errors, "address.street")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={3}>
@@ -235,6 +299,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type City"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.city")}
+                errorMsgId={get(errors, "address.city")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={3}>
@@ -245,6 +316,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               placeholder="Type Zip Code"
               component={FormField}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.postalCode")}
+                errorMsgId={get(errors, "address.postalCode")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={3}>
@@ -256,6 +334,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               component={FormSelect}
               options={[{ value: "US", label: "United States" }]}
             />
+
+            <StyledFormErrorWrapper>
+              <FormError
+                touched={get(touched, "address.country")}
+                errorMsgId={get(errors, "address.country")}
+              />
+            </StyledFormErrorWrapper>
           </StyledFieldWrapper>
         </Grid>
 
@@ -278,6 +363,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
 
 export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
   displayName: "User form",
+  validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
     props.onSubmit(values);
   },
@@ -291,6 +377,7 @@ export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
     address,
     gender,
     password,
+    passwordConfirm,
     image
   }) {
     return {
@@ -303,6 +390,7 @@ export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
       address,
       gender,
       password,
+      passwordConfirm,
       image
     };
   }

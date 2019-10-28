@@ -83,7 +83,6 @@ interface ILoginFormProps extends ILoginFormValues {
     email: string,
     password: string
   ) => { type: string; payload: ILoginActionPayload };
-  isValid: boolean;
 }
 
 const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
@@ -157,10 +156,6 @@ const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
   displayName: "Login form",
   validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
-    if (!props.isValid) {
-      return;
-    }
-
     props.login(values.email, values.password);
     setSubmitting(false);
   },

@@ -37,6 +37,7 @@ export interface IRegisterUserActionPayload {
   phone?: string;
   birthDate: Date;
   password: string;
+  passwordConfirm: string;
   gender?: Gender;
   // image?: File | string;
   image?: any;

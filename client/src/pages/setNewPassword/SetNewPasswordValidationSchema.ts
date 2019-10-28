@@ -5,8 +5,7 @@ export default object().shape({
     .min(5, "Form.validations.min")
     .max(255, "Form.validations.max")
     .required("Form.validations.required"),
-  passwordConfirm: string().oneOf(
-    [ref("password") || null],
-    "Form.validations.passwordMatch"
-  )
+  passwordConfirm: string()
+    .required("Form.validations.required")
+    .oneOf([ref("password") || null], "Form.validations.passwordMatch")
 });
