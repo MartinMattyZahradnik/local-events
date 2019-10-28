@@ -1,4 +1,5 @@
 import Event from "../models/event";
+import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
 
 export const getEventsController = async (
@@ -15,7 +16,7 @@ export const getEventsController = async (
       .skip(parseInt(offset))
       .limit(parseInt(limit));
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Fetched events successfully.",
       events: events,
       totalItems: totalItems
@@ -38,7 +39,7 @@ export const createEventController = async (
 
   try {
     await newEvent.save();
-    res.status(200).json(body);
+    return res.status(200).json(body);
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -67,7 +68,7 @@ export const getEventDetailController = async (
       throw error;
     }
 
-    res.status(200).json({ event, message: "Fetch event successfull" });
+    return res.status(200).json({ event, message: "Fetch event successful" });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -81,19 +82,24 @@ export const deleteEventController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { eventId } = req.params;
+  const {
+    params: { eventId },
+    token: { email }
+  } = req;
 
   try {
-    const event = await Event.findById(eventId);
-
+    const event: any = await Event.findById(eventId).populate("owner");
     if (!event) {
-      const error: ErrorWithStatusCode = new Error("Could not find Event.");
-      error.statusCode = 404;
-      throw error;
+      return res.send(404).send(`Could not find Event ${eventId}`);
+    }
+
+    const user = await User.findOne({ email });
+    if (!user || !user._id.equals(event.owner._id)) {
+      return res.send(403).send("Forbidden");
     }
 
     await Event.findByIdAndRemove(eventId);
-    res.status(200).json({ message: "Deleted post." });
+    return res.status(200).json({ message: "Deleted post." });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -124,7 +130,7 @@ export const getSimilarEventsController = async (
       country: event.country
     }).limit(parseInt(limit));
 
-    res
+    return res
       .status(200)
       .json({ similarEvents, message: "Fetch similar events successfull" });
   } catch (err) {

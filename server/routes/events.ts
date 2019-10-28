@@ -1,5 +1,5 @@
 import express from "express";
-import { body } from "express-validator/check";
+import { verifyToken } from "../middleware/verifyToken";
 
 import {
   getEventsController,
@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/", getEventsController);
 router.post("/", createEventController);
 router.get("/:eventId", getEventDetailController);
-router.delete("/:eventId", deleteEventController);
+router.delete("/:eventId", verifyToken, deleteEventController);
 
 // GET /events/eventId/similar
 router.get("/:eventId/similar", getSimilarEventsController);
