@@ -97,6 +97,8 @@ function* loginSagaWatcher({
 }) {
   try {
     const resp = yield request.post(`/auth/login`, payload);
+    sessionStorage.setItem("jwtToken", resp.data.token);
+    request.defaults.headers.Authorization = resp.data.token;
     yield put(loginSuccess(resp.data.user));
     history.push("/");
   } catch (e) {

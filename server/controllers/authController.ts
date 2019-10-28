@@ -47,7 +47,7 @@ export const loginController = async (
     res.status(200).json({
       message: "Login success",
       user,
-      token
+      token: `Bearer ${token}`
     });
   } catch (err) {
     if (!err.statusCode) {

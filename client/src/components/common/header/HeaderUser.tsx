@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { history } from "App";
+import { request } from "utils/request";
 
 // Components
 import { Menu, MenuItem } from "@material-ui/core";
@@ -48,6 +49,8 @@ const HeaderUser = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    sessionStorage.removeItem("jwtToken");
+    delete request.defaults.headers.Authorization;
     history.push("/login");
   };
 
