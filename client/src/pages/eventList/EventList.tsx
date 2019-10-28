@@ -45,9 +45,7 @@ const StyledHeading = styled.h2`
 `;
 
 const StyledPaginationWrapper = styled.div`
-  @media screen and (max-width: 1279px) {
-    margin-top: 4.5rem;
-  }
+  margin-top: 4.5rem;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
     margin-top: 3.5rem;

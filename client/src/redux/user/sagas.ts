@@ -96,7 +96,7 @@ function* loginSagaWatcher({
   payload: ILoginActionPayload;
 }) {
   try {
-    const resp = yield request.post(`/user/login`, payload);
+    const resp = yield request.post(`/auth/login`, payload);
     yield put(loginSuccess(resp.data.user));
     history.push("/");
   } catch (e) {
@@ -113,7 +113,7 @@ function* passwordResetSagaWatcher({
 }) {
   try {
     const { email } = payload;
-    const resp = yield request.post(`/user/password-reset`, { email });
+    const resp = yield request.post(`/auth/password-reset`, { email });
 
     yield put(passwordResetSuccess());
   } catch (e) {
@@ -125,7 +125,7 @@ function* passwordResetSagaWatcher({
 function* setNewPasswordWatcher({ payload }: { type: string; payload: any }) {
   try {
     const { password, token } = payload;
-    yield request.post(`/user/set-new-password`, {
+    yield request.post(`/auth/set-new-password`, {
       password,
       token
     });

@@ -16,6 +16,7 @@ import sgMail from "@sendgrid/mail";
 import eventRoutes from "./routes/events";
 import userRoutes from "./routes/user";
 import uploadRoutes from "./routes/upload";
+import authRoutes from "./routes/auth";
 
 dotenv.config();
 
@@ -50,6 +51,7 @@ app.use(multer({ storage: fileStorage, fileFilter }).array("image", 10));
 app.use(cors());
 app.use(express.static("public"));
 
+app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
 app.use("/user", userRoutes);
 app.use("/upload", uploadRoutes);
