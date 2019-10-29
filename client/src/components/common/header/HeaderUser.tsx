@@ -76,10 +76,7 @@ const HeaderUser = () => {
   return (
     <>
       {/* @TODO - define API_BASE url in constants */}
-      <StyledUserAvatar
-        image={`http://localhost:8080/${user.image}`}
-        onClick={handleClick}
-      />
+      <StyledUserAvatar image={`/${user.image}`} onClick={handleClick} />
 
       <Menu
         id="user-menu"

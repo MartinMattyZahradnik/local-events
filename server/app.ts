@@ -61,28 +61,26 @@ interface IErrorHandlerType extends Error {
   data: any;
 }
 // Last middleware serve as general Error handler
-app.use(
-  (
-    error: IErrorHandlerType,
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    console.log(error);
-    const status = error.statusCode || 500;
-    const message = error.message;
-    const data = error.data;
-    res.status(status).json({ message: message, data: data });
-  }
-);
+// app.use(
+//   (
+//     error: IErrorHandlerType,
+//     req: Request,
+//     res: Response,
+//     next: NextFunction
+//   ) => {
+//     console.log(error);
+//     const status = error.statusCode || 500;
+//     const message = error.message;
+//     const data = error.data;
+//     res.status(status).json({ message: message, data: data });
+//   }
+// );
 
 if (process.env.NODE_ENV === "production") {
   // All remaining requests return the React app, so it can handle routing.
-  console.log("--- production ---");
-  app.use(express.static(path.resolve(__dirname, "../client/build")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
+  app.use(express.static(path.join(__dirname, "../../client/build")));
+  app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
   });
 }
 
