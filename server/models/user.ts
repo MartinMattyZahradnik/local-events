@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcryptjs";
 
 type AvailableUserRoles = "admin" | "visitor" | "user";
 type Gender = "male" | "female" | "other";

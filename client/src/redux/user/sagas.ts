@@ -52,7 +52,7 @@ function* registerUserWatcher({
     try {
       const data = new FormData();
       data.append("image", formData.image);
-      const res = yield request.post(`http://localhost:8080/upload`, data, {
+      const res = yield request.post(`/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       userData.image = res.data.files[0].path;

@@ -3,15 +3,16 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es6",
+    "target": "es5",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*", "types/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["*/", ".env"],
+  "'exclude": ["dist"]
 }

@@ -4,12 +4,7 @@ import styled from "styled-components";
 
 // Components
 
-import {
-  Select,
-  InputLabel,
-  MenuItem,
-  FormHelperText
-} from "@material-ui/core";
+import { Select, InputLabel, MenuItem } from "@material-ui/core";
 
 const StyledSelectWrapper = styled.div`
   width: 100%;
