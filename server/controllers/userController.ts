@@ -1,9 +1,6 @@
 import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import crypto from "crypto";
-import sgMail from "@sendgrid/mail";
 
 export const createUserController = async (
   req: Request,
