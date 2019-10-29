@@ -101,9 +101,10 @@ function* loginSagaWatcher({
     request.defaults.headers.Authorization = resp.data.token;
     yield put(loginSuccess(resp.data.user));
     history.push("/");
-  } catch (e) {
-    loginError();
-    console.error(e);
+  } catch (error) {
+    if (error.response.status === 404 || error.response.status === 403) {
+      yield put(loginError(error.response.status));
+    }
   }
 }
 
@@ -115,8 +116,7 @@ function* passwordResetSagaWatcher({
 }) {
   try {
     const { email } = payload;
-    const resp = yield request.post(`/auth/password-reset`, { email });
-
+    yield request.post(`/auth/password-reset`, { email });
     yield put(passwordResetSuccess());
   } catch (e) {
     passwordResetError();

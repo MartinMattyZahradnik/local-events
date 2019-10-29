@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 import { actionTypes as userActionsTypes } from "redux/user/constants";
 
-function error(state = null, { type, payload }: any) {
+function error(state = false, { type, payload }: any) {
   switch (type) {
     case userActionsTypes.FETCH_USER_ERROR:
       return payload;
@@ -12,6 +12,9 @@ function error(state = null, { type, payload }: any) {
     case userActionsTypes.LOGIN_SUCCESS:
     case userActionsTypes.LOGOUT:
       return false;
+
+    case userActionsTypes.LOGIN_ERROR:
+      return payload.statusCode;
 
     default:
       return state;
@@ -39,6 +42,7 @@ function isLoading(state = {}, { type }: any) {
       return true;
 
     case userActionsTypes.LOGIN_SUCCESS:
+    case userActionsTypes.LOGIN_ERROR:
     case userActionsTypes.LOGOUT:
       return false;
 

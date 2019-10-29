@@ -22,6 +22,10 @@ export default {
   "Auth.login": "login",
   "Auth.register": "register",
   "Auth.backToLogin": "Back to login",
+  "Auth.login.403": "Wrong user credentials",
+  "Auth.login.404": "Unable to find user with given email address",
+  "Auth.passwordResetSent":
+    "Email with instructions has been sent to your email address.",
 
   // Event
   "Event.create": "Create event",

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { useIntl } from "react-intl";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import { history } from "App";
 import qs from "qs";
 
@@ -58,8 +58,14 @@ const StyledFieldWrapper = styled(Grid)`
 `;
 
 const StyledButton = styled(Button)`
-  margin-bottom: 1.2rem;
   margin-left: auto;
+`;
+
+const StyledBackLink = styled(Link)`
+  color: ${({ theme }) => theme.color.primary};
+  font-size: ${({ theme }) => theme.text.fontSize.small};
+  font-weight: bolder;
+  margin-top: auto;
 `;
 
 interface ILoginFormValues {
@@ -122,6 +128,12 @@ const SetNewPasswordPage = (
           </StyledFieldWrapper>
 
           <Grid container justify="space-between">
+            <StyledBackLink to="/login">
+              {intl.formatMessage({
+                id: "Auth.backToLogin",
+                defaultMessage: "Back to login"
+              })}
+            </StyledBackLink>
             <StyledButton type="submit" disabled={isSubmitting}>
               {intl.formatMessage({
                 id: "Auth.reset",

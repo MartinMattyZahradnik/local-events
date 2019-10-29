@@ -39,8 +39,9 @@ export const loginSuccess = (user: IUser) => ({
   payload: { user }
 });
 
-export const loginError = () => ({
-  type: actionTypes.LOGIN_ERROR
+export const loginError = (statusCode: number) => ({
+  type: actionTypes.LOGIN_ERROR,
+  payload: { statusCode }
 });
 
 /*** ===  LOGOUT === ***/

@@ -69,6 +69,12 @@ const StyledForm = styled(Form)`
   max-width: 30rem;
 `;
 
+const StyledInfoMsg = styled.p`
+  color: ${({ theme }) => theme.color.primary};
+  font-size: ${({ theme }) => theme.text.fontSize.small};
+  margin-bottom: 1.5rem;
+`;
+
 interface IPasswordResetFormValues {
   email: string;
 }
@@ -77,12 +83,13 @@ interface IPasswordResetFormProps extends IPasswordResetFormValues {
   passwordReset: (
     email: string
   ) => { payload: IPasswordResetActionPayload; type: string };
+  submitCount: number;
 }
 
 const PasswordReset = (
   props: IPasswordResetFormProps & FormikProps<IPasswordResetFormValues>
 ) => {
-  const { touched, errors, isSubmitting } = props;
+  const { touched, errors, isSubmitting, submitCount } = props;
   const intl = useIntl();
 
   return (
@@ -99,6 +106,17 @@ const PasswordReset = (
             />
             <FormError touched={touched.email} errorMsgId={errors.email} />
           </StyledFieldWrapper>
+
+          {submitCount > 0 && (
+            <StyledInfoMsg>
+              {intl.formatMessage({
+                id: "Auth.passwordResetSent",
+                defaultMessage:
+                  "Email with instructions has been sent to your email address."
+              })}
+            </StyledInfoMsg>
+          )}
+
           <Grid container justify="space-between">
             <StyledBackLink to="/login">
               {intl.formatMessage({
@@ -127,6 +145,10 @@ const WithFormikPasswordResetPage = withFormik<
   displayName: "Password reset form",
   validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
+    if (props.submitCount > 0) {
+      return;
+    }
+
     props.passwordReset(values.email);
     setSubmitting(false);
   },

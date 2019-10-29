@@ -16,8 +16,12 @@ import { login } from "redux/user/actions";
 // Types
 import { ILoginActionPayload } from "redux/user/types";
 
+// Selectors
+import { selectUserError } from "redux/user/selectors";
+
 // Others
 import validationSchema from "./LoginFormValidationSchema";
+import { IState } from "redux/rootReducer";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -73,6 +77,12 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
+const StyledLoginError = styled.p`
+  color: ${({ theme }) => theme.color.error};
+  font-size: ${({ theme }) => theme.text.fontSize.small};
+  margin-bottom: 1.2rem;
+`;
+
 interface ILoginFormValues {
   email: string;
   password: string;
@@ -83,10 +93,11 @@ interface ILoginFormProps extends ILoginFormValues {
     email: string,
     password: string
   ) => { type: string; payload: ILoginActionPayload };
+  loginErrorCode: number | null;
 }
 
 const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
-  const { touched, errors, isSubmitting, values } = props;
+  const { touched, errors, isSubmitting, values, loginErrorCode } = props;
   const intl = useIntl();
 
   return (
@@ -118,6 +129,15 @@ const LoginPage = (props: ILoginFormProps & FormikProps<ILoginFormValues>) => {
               errorMsgId={errors.password}
             />
           </StyledFieldWrapper>
+
+          {loginErrorCode && (
+            <StyledLoginError>
+              {intl.formatMessage({
+                id: `Auth.login.${loginErrorCode}`,
+                defaultMessage: "Wrong user credentials"
+              })}
+            </StyledLoginError>
+          )}
 
           <Grid container justify="space-between">
             <StyledButton type="submit" disabled={isSubmitting}>
@@ -168,6 +188,8 @@ const WithFormikLoginPage = withFormik<ILoginFormProps, ILoginFormValues>({
 })(LoginPage);
 
 export default connect(
-  null,
+  (state: IState) => ({
+    loginErrorCode: selectUserError(state)
+  }),
   { login }
 )(WithFormikLoginPage);

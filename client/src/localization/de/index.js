@@ -22,6 +22,11 @@ export default {
   "Auth.login": "einloggen",
   "Auth.register": "registrieren",
   "Auth.backToLogin": "Zurück zur Anmeldung",
+  "Auth.login.403": "Falsche Benutzeranmeldeinformationen",
+  "Auth.login.404":
+    "Benutzer mit der angegebenen E-Mail-Adresse konnte nicht gefunden werden",
+  "Auth.passwordResetSent":
+    "E-Mail mit Anweisungen wurde an Ihre E-Mail-Adresse gesendet.",
 
   // Event
   "Event.create": "Event erstellen",

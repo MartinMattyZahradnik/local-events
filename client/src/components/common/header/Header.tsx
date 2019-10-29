@@ -14,7 +14,6 @@ const StyledAppBar = styled(AppBar)`
   top: 0;
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.background};
-  font-size: ${({ theme }) => theme.color.background};
 `;
 
 const StyledLanguageSelectorWrapper = styled.div`

@@ -1,12 +1,11 @@
-import { breakpoints } from "@material-ui/system";
-
 export default {
   color: {
     primary: "#8C7B6B",
     secondary: "#D8C2AF",
     background: "#FFFFFF",
     subHeading: "#999999",
-    text: "#595959"
+    text: "#595959",
+    error: "red"
   },
   text: {
     fontSize: {

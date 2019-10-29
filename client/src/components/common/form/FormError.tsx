@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import { Typography } from "@material-ui/core";
 
 const StyledErrorMsg = styled(Typography)`
-  color: red;
+  color: ${({ theme }) => theme.color.error};
   margin-top: 1rem;
 `;
 
