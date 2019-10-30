@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/dist/app.js",
-    "server:dev": "npm run dev --prefix server",
-    "client:dev": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
-    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+    "start-server-dev": "npm run dev --prefix server",
+    "start-client-dev": "npm run start --prefix client",
+    "start-dev": "concurrently \"npm run start-server-dev\" \"npm run start-client-dev\"",
+    "build-client": "npm install --prefix client && npm run build --prefix client",
+    "build-server": "npm install --prefix server && node server/dist/app.js",
+    "heroku-postbuild": "npm run build-client && npm run build-server"
   },
   "repository": {
     "type": "git",

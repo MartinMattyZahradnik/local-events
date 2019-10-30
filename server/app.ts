@@ -76,13 +76,11 @@ interface IErrorHandlerType extends Error {
 //   }
 // );
 
-if (process.env.NODE_ENV === "production") {
-  // All remaining requests return the React app, so it can handle routing.
-  app.use(express.static(path.join(__dirname, "../../client/build")));
-  app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
-  });
-}
+// All remaining requests return the React app, so it can handle routing.
+app.use(express.static(path.join(__dirname, "../../client/build")));
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
+});
 
 mongoose
   .connect(
