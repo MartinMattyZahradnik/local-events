@@ -12,7 +12,7 @@ export const uploadFileController = async (
   if (Array.isArray(req.files)) {
     const normalizedResponse = req.files.map((file: any) => ({
       ...file,
-      path: file.path.substring(7)
+      path: file.path.substring(7) // remove "public/" from path
     }));
     return res.status(201).send({ files: normalizedResponse });
   }
