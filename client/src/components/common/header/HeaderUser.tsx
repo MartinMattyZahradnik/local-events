@@ -14,10 +14,9 @@ import { FormattedMessage } from "react-intl";
 import { logout } from "redux/user/actions";
 
 // Selectors
-import { selectUser } from "redux/user/selectors";
+import { selectUser, selectUserImage } from "redux/user/selectors";
 
 const StyledLogoutLink = styled.span`
-  cursor: pointer;
   text-transform: uppercase;
 `;
 
@@ -45,14 +44,8 @@ const HeaderUser = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const userImage = useSelector(selectUserImage);
   const { formatMessage } = useIntl();
-
-  const handleLogout = () => {
-    dispatch(logout());
-    sessionStorage.removeItem("jwtToken");
-    delete request.defaults.headers.Authorization;
-    history.push("/login");
-  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,6 +53,14 @@ const HeaderUser = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    dispatch(logout());
+    sessionStorage.removeItem("jwtToken");
+    delete request.defaults.headers.Authorization;
+    history.push("/login");
   };
 
   if (!user) {
@@ -75,8 +76,7 @@ const HeaderUser = () => {
 
   return (
     <>
-      {/* @TODO - define API_BASE url in constants */}
-      <StyledUserAvatar image={`/${user.image}`} onClick={handleClick} />
+      <StyledUserAvatar image={userImage} onClick={handleClick} />
 
       <Menu
         id="user-menu"
@@ -90,12 +90,9 @@ const HeaderUser = () => {
             <FormattedMessage id="User.profile" defaultMessage="User profile" />
           </StyledMenuLink>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <StyledLogoutLink onClick={handleLogout}>
-            {formatMessage({
-              id: "General.logout",
-              defaultMessage: "Logout"
-            })}
+        <MenuItem onClick={handleLogout}>
+          <StyledLogoutLink>
+            <FormattedMessage id="General.logout" defaultMessage="Logout" />
           </StyledLogoutLink>
         </MenuItem>
       </Menu>

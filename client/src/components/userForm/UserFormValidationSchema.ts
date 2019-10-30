@@ -44,6 +44,5 @@ export default object().shape({
     postalCode: string(),
     city: string().required("Form.validations.required"),
     country: string().required("Form.validations.required")
-  }),
-  date: number().required("Form.validations.required")
+  })
 });

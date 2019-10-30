@@ -17,3 +17,26 @@ export const selectUserError = createSelector(
   getUserData,
   userData => userData.error
 );
+
+export const selectUserImage = createSelector(
+  selectUser,
+  user => {
+    if (!user) {
+      return "defaultUserAvatarOther.png";
+    }
+
+    if (!user.image && user.gender === "male") {
+      return "defaultUserAvatarMale.jpg";
+    }
+
+    if (!user.image && user.gender === "female") {
+      return "defaultUserAvatarFemale.png";
+    }
+
+    if (!user.image && user.gender === "other") {
+      return "defaultUserAvatarOther.png";
+    }
+
+    return user.image;
+  }
+);

@@ -64,7 +64,7 @@ function* registerUserWatcher({
   try {
     const resp = yield request.post(`/user`, userData);
     yield put(registerUserSuccess(resp.data.user));
-    history.push("/user/login");
+    history.push("/login");
   } catch (e) {
     registerUserError();
     console.error(e);
