@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
+import { RouteComponentProps } from "react-router-dom";
 
 // Components
 import { Grid } from "@material-ui/core";
@@ -22,11 +23,17 @@ const StyledFormWrapper = styled(Grid)`
   height: calc(100vh - 10.4rem);
 `;
 
-const UpdateUser: React.FC = () => {
+type MatchParams = {
+  id: string;
+};
+
+interface IUpdateUserProps extends RouteComponentProps<MatchParams> {}
+
+const UpdateUser: React.FC<IUpdateUserProps> = ({ match }) => {
   const dispatch = useDispatch();
   const intl = useIntl();
 
-  const userId = "5d700df7dd776d0a9d0c0e17";
+  const userId = match.params.id;
   const user = useSelector(selectUser);
   useEffect(() => {
     dispatch(fetchUser(userId));

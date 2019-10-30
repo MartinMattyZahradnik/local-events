@@ -1,7 +1,7 @@
 export const actionTypes = {
   FETCH_USER: "user/FETCH_USER",
   FETCH_USER_SUCCESS: "user/FETCH_USER_SUCCESS",
-  FETCH_USER_ERROR: "user/FETCH_USER_SUCCESS",
+  FETCH_USER_ERROR: "user/FETCH_USER_ERROR",
 
   // LOGIN
   LOGIN: "user/LOGIN",

@@ -23,7 +23,7 @@ const Routes = () => {
       <Route exact path="/password-reset" component={PasswordReset} />
       <Route exact path="/set-new-password" component={SetNewPassword} />
       <Route exact path="/register-user" component={RegisterUser} />
-      <Route exact path="/update-user" component={UpdateUser} />
+      <Route exact path="/user/:id/update" component={UpdateUser} />
       <Route exact path="/create-event" component={CreateEvent} />
       <Route exact path="/event/:id/update" component={UpdateEvent} />
 

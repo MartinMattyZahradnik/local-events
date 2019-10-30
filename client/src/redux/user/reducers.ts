@@ -4,9 +4,6 @@ import { actionTypes as userActionsTypes } from "redux/user/constants";
 
 function error(state = false, { type, payload }: any) {
   switch (type) {
-    case userActionsTypes.FETCH_USER_ERROR:
-      return payload;
-
     case userActionsTypes.FETCH_USER:
     case userActionsTypes.FETCH_USER_SUCCESS:
     case userActionsTypes.LOGIN_SUCCESS:
@@ -14,6 +11,7 @@ function error(state = false, { type, payload }: any) {
       return false;
 
     case userActionsTypes.LOGIN_ERROR:
+    case userActionsTypes.FETCH_USER_ERROR:
       return payload.statusCode;
 
     default:
@@ -42,6 +40,7 @@ function isLoading(state = {}, { type }: any) {
       return true;
 
     case userActionsTypes.LOGIN_SUCCESS:
+    case userActionsTypes.FETCH_USER_ERROR:
     case userActionsTypes.LOGIN_ERROR:
     case userActionsTypes.LOGOUT:
       return false;

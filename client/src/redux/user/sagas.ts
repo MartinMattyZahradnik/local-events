@@ -32,10 +32,9 @@ function* fetchUserSagaWatcher({
     const userId = payload.userId;
     const resp = yield request.get(`/user/${userId}`);
 
-    yield put(fetchUserSuccess(resp.data.user));
-  } catch (e) {
-    fetchUserError();
-    console.error(e);
+    yield put(fetchUserSuccess(resp.data));
+  } catch (error) {
+    fetchUserError(error.response.status);
   }
 }
 

@@ -18,8 +18,9 @@ export const fetchUserSuccess = (payload: IUser[]) => ({
   payload
 });
 
-export const fetchUserError = () => ({
-  type: actionTypes.FETCH_USER_ERROR
+export const fetchUserError = (statusCode: number) => ({
+  type: actionTypes.FETCH_USER_ERROR,
+  payload: { statusCode }
 });
 
 const getUser = (state: IState) => state.user.result;
@@ -79,9 +80,9 @@ export const registerUserError = () => ({
 });
 
 /*** ===  UPDATE USER  === ***/
-export const updateUser = (userID: string, formData: any) => ({
+export const updateUser = (userId: string, formData: any) => ({
   type: actionTypes.UPDATE_USER,
-  payload: { formData }
+  payload: { userId, formData }
 });
 
 export const updateUserSuccess = (user: any) => ({
