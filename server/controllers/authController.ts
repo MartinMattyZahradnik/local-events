@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import sgMail from "@sendgrid/mail";
+import { getAppBaseUrl } from "../utils/utils";
 
 export const loginController = async (
   req: any,
@@ -78,7 +79,7 @@ export const passwordResetController = async (
 
     user.resetToken = token;
     user.resetTokenExpiration = Date.now() + 3600000;
-    const link = `http://localhost:3000/set-new-password?token=${token}`;
+    const link = `${getAppBaseUrl()}/set-new-password?token=${token}`;
     await user.save();
     await sgMail.send({
       to: email,
