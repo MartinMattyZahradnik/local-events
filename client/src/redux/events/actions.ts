@@ -25,7 +25,7 @@ export const createEvent = (eventData: any) => ({
   payload: { eventData }
 });
 
-export const createEventSuccess = (eventData: any) => ({
+export const createEventSuccess = (eventData: IEvent) => ({
   type: actionTypes.CREATE_EVENT_SUCCESS,
   payload: { eventData }
 });

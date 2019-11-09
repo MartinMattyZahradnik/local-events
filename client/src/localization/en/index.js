@@ -35,6 +35,23 @@ export default {
   "Event.uploadImages": "Upload images",
   "Event.moreEventsIn": "More events in",
 
+  // Event categories
+  "Event.category.music": "Music",
+  "Event.category.art": "Art",
+  "Event.category.business": "Business",
+  "Event.category.parties": "Parties",
+  "Event.category.classes": "Classes",
+  "Event.category.sport": "Sport",
+  "Event.category.wellness": "Wellness",
+  "Event.category.food": "Food",
+  "Event.category.fun": "Fun",
+  "Event.category.movie": "Movie",
+  "Event.category.party": "Party",
+  "Event.category.family": "Family",
+  "Event.category.outdoor": "Outdoor",
+  "Event.category.nature": "Nature",
+  "Event.category.other": "Other",
+
   // User
   "User.profile": "User profile",
   "User.register": "Register user",

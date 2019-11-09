@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
 import get from "lodash.get";
+import { useSelector, useDispatch } from "react-redux";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
@@ -15,8 +16,16 @@ import {
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
 
+// Actions
+import { fetchCountryList } from "redux/application/actions";
+import { ICountry } from "redux/application/types";
+
 // Types
 import { ICreateEventActionPayload } from "redux/events/types";
+
+// Selectors
+import { selectEventCategories } from "redux/events/selectors";
+import { selectCountryList } from "redux/application/selectors";
 
 // Others
 import validationSchema from "./EventFormValidationSchema";
@@ -59,13 +68,20 @@ const StyledButton = styled(Button)`
 const StyledUploadBtn = styled(Button)`
   margin: 2rem 0 1rem 0;
   font-size: 1.4rem;
-  width: 20rem;
+  width: 100%;
+  height: 4rem;
+  margin-bottom: 0;
 `;
 
 const StyledFormErrorWrapper = styled.div`
   position: absolute;
   top: -1.2rem;
   right: 2rem;
+`;
+
+const StyledDescriptionWrapper = styled(Grid)`
+  margin-bottom: 2rem;
+  padding: 1.2rem 2rem 0 2rem;
 `;
 
 interface IEventFormValues extends ICreateEventActionPayload {}
@@ -85,10 +101,17 @@ const EventForm = (
     actionButtonLabel,
     formHeading,
     touched,
-    errors
+    errors,
+    address
   } = props;
   const { formatMessage } = useIntl();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCountryList());
+  }, []);
 
+  const categories = useSelector(selectEventCategories);
+  const countries = useSelector(selectCountryList);
   return (
     <StyledEventFormWrapper>
       <FormHeader formHeading={formHeading} />
@@ -136,14 +159,29 @@ const EventForm = (
               label="Category"
               placeholder="Select category"
               component={FormSelect}
-              options={[
-                { value: "fun", label: "Fun" },
-                { value: "family", label: "Family" }
-              ]}
+              multiple
+              options={categories.map(category => ({
+                value: category,
+                label: formatMessage({
+                  id: `Event.category.${category}`,
+                  defaultMessage: category
+                })
+              }))}
             />
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
+            <StyledUploadBtn>
+              <label htmlFor="userImage">
+                {formatMessage({
+                  id: "Event.uploadImages",
+                  defaultMessage: "Upload images"
+                })}
+              </label>
+            </StyledUploadBtn>
+          </StyledFieldWrapper>
+
+          <StyledDescriptionWrapper item xs={12}>
             <Field
               multiline={true}
               name="description"
@@ -158,18 +196,7 @@ const EventForm = (
                 errorMsgId={errors.description}
               />
             </StyledFormErrorWrapper>
-          </StyledFieldWrapper>
-
-          <Grid container justify="center">
-            <StyledUploadBtn>
-              <label htmlFor="userImage">
-                {formatMessage({
-                  id: "Event.uploadImages",
-                  defaultMessage: "Upload images"
-                })}
-              </label>
-            </StyledUploadBtn>
-          </Grid>
+          </StyledDescriptionWrapper>
 
           <StyledHeading>
             {formatMessage({
@@ -228,11 +255,15 @@ const EventForm = (
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
-              name="address.country"
+              name="address.countryCode"
               label="Country"
               placeholder="Select country"
               component={FormSelect}
-              options={[{ value: "US", label: "United States" }]}
+              defaultValue={address.countryCode}
+              options={countries.map((country: ICountry) => ({
+                value: country.code,
+                label: country.name
+              }))}
             />
             <StyledFormErrorWrapper>
               <FormError

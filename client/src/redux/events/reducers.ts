@@ -29,11 +29,18 @@ const ResultDefaultState = {
 
 function result(
   state: IResultState = ResultDefaultState,
-  { type, payload }: IAction<IResultState>
+  { type, payload }: { type: string; payload: any } | IAction<IResultState>
 ) {
   switch (type) {
     case eventsActions.FETCH_EVENTS_SUCCESS:
       return payload;
+
+    case eventsActions.CREATE_EVENT_SUCCESS: {
+      return {
+        events: [payload.eventData, ...state.events],
+        totalItems: state.totalItems + 1
+      };
+    }
 
     default:
       return state;

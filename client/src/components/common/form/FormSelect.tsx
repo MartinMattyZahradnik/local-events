@@ -26,6 +26,7 @@ interface IProps extends FieldProps {
   onChange: (value: any) => {};
   options: SelectOption[];
   required: boolean;
+  multiple: boolean;
 }
 
 const Field: React.FC<IProps> = ({
@@ -35,6 +36,7 @@ const Field: React.FC<IProps> = ({
   field,
   options = [],
   field: { name, onChange, value = "" },
+  multiple = false,
   ...other
 }) => {
   const id = `sel_${name}`;
@@ -43,6 +45,7 @@ const Field: React.FC<IProps> = ({
     <StyledSelectWrapper>
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <StyledSelect
+        multiple={multiple}
         value={value}
         onChange={onChange}
         placeholder={placeholder}

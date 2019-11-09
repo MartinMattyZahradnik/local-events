@@ -48,6 +48,24 @@ export const createEventController = async (
   }
 };
 
+export const updateEventController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { body } = req;
+
+  try {
+    await Event.findByIdAndUpdate(body._id, body);
+    return res.status(200).json(body);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
 interface ErrorWithStatusCode extends Error {
   statusCode?: number;
 }
@@ -58,7 +76,6 @@ export const getEventDetailController = async (
   next: NextFunction
 ) => {
   const { eventId } = req.params;
-
   try {
     const event = await Event.findById(eventId).populate("owner");
 

@@ -1,14 +1,24 @@
 import { request } from "utils/request";
-import { takeLatest, put } from "redux-saga/effects";
+import { takeLatest, put, select } from "redux-saga/effects";
 
 // Actions
-import { fetchEventsSuccess } from "./actions";
+import {
+  fetchEventsSuccess,
+  createEventSuccess,
+  createEventError,
+  updateEventSuccess,
+  updateEventError
+} from "./actions";
 
 // Types
 import { FetchEventsPayload } from "./types";
 
 // Constants
 import { actionTypes as eventsActionTypes } from "./constants";
+
+// Selectors
+import { selectUserId } from "redux/user/selectors";
+import { makeSelectCountryNameByCode } from "redux/application/selectors";
 
 function* fetchEventsWatcher({
   payload
@@ -33,6 +43,58 @@ function* fetchEventsWatcher({
   }
 }
 
+function* createEventWatcher({ payload }: { type: string; payload: any }) {
+  try {
+    const owner = yield select(selectUserId);
+    const country = yield select(
+      makeSelectCountryNameByCode(payload.eventData.address.countryCode)
+    );
+
+    const eventData = {
+      ...payload.eventData,
+      owner,
+      address: {
+        ...payload.eventData.address,
+        country
+      },
+      ...(payload.eventData.coordinates && {
+        coordinates: payload.eventData.coordinates.split(",")
+      }),
+      ...(payload.eventData.tags && { tags: payload.eventData.tags.split(",") })
+    };
+
+    const resp = yield request.post("/events", eventData);
+
+    yield put(createEventSuccess(resp.data.result));
+  } catch (error) {
+    if (error.response.status) {
+      yield put(createEventError(error.response.status));
+    }
+  }
+}
+
+function* updateEventWatcher({ payload }: { type: string; payload: any }) {
+  try {
+    const resp = yield request.put(
+      `/events/5dbaf614f5103a5ac4dc72fd`,
+      payload.eventData
+    );
+
+    yield put(
+      updateEventSuccess({
+        totalItems: resp.data.totalItems,
+        events: resp.data.events
+      })
+    );
+  } catch (error) {
+    if (error.response.status) {
+      yield put(updateEventError(error.response.status));
+    }
+  }
+}
+
 export default function* userSaga() {
   yield takeLatest(eventsActionTypes.FETCH_EVENTS, fetchEventsWatcher);
+  yield takeLatest(eventsActionTypes.CREATE_EVENT, createEventWatcher);
+  yield takeLatest(eventsActionTypes.UPDATE_EVENT, updateEventWatcher);
 }

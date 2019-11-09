@@ -43,7 +43,7 @@ export interface ICreateEventActionPayload {
     postalCode: string;
     city: string;
     countryCode: string;
-    country: string;
+    country?: string;
   };
   price: {
     price: number;

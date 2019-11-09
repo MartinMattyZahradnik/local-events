@@ -1,21 +1,20 @@
 import mongoose, { Schema } from "mongoose";
 
 const eventsCategory = [
+  "other",
   "music",
-  "arts",
+  "art",
   "business",
   "parties",
   "classes",
   "sport",
   "wellness",
-  "food and drink",
-
+  "food",
   "fun",
   "movie",
   "party",
   "family",
   "outdoor",
-  "art",
   "nature"
 ];
 
@@ -51,7 +50,7 @@ const eventSchema = new Schema(
     tags: [
       {
         type: String,
-        required: true
+        required: false
       }
     ],
     price: {

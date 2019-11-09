@@ -48,4 +48,8 @@ export default createGlobalStyle`
   .MuiMenuItem-root {
     font-size: 1.4rem;
     justify-content: center;
-  }`;
+  }
+  
+  .MuiInputBase-multiline {
+  line-height: 2.2rem
+}`;

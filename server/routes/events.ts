@@ -6,7 +6,8 @@ import {
   createEventController,
   getEventDetailController,
   deleteEventController,
-  getSimilarEventsController
+  getSimilarEventsController,
+  updateEventController
 } from "../controllers/eventsController";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ const router = express.Router();
 router.get("/", getEventsController);
 router.post("/", createEventController);
 router.get("/:eventId", getEventDetailController);
+router.put("/:eventId", updateEventController);
 router.delete("/:eventId", verifyToken, deleteEventController);
 
 // GET /events/eventId/similar

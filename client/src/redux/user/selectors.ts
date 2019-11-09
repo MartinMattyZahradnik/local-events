@@ -40,3 +40,8 @@ export const selectUserImage = createSelector(
     return user.image;
   }
 );
+
+export const selectUserId = createSelector(
+  selectUser,
+  user => (user ? user._id : null)
+);

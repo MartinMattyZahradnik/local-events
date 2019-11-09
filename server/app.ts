@@ -17,6 +17,7 @@ import eventRoutes from "./routes/events";
 import userRoutes from "./routes/user";
 import uploadRoutes from "./routes/upload";
 import authRoutes from "./routes/auth";
+import applicationRoutes from "./routes/app";
 
 dotenv.config();
 
@@ -51,6 +52,7 @@ app.use(multer({ storage: fileStorage, fileFilter }).array("image", 10));
 app.use(cors());
 app.use(express.static("public"));
 
+app.use("/app", applicationRoutes);
 app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
 app.use("/user", userRoutes);
@@ -76,11 +78,13 @@ interface IErrorHandlerType extends Error {
 //   }
 // );
 
-// All remaining requests return the React app, so it can handle routing.
-app.use(express.static(path.join(__dirname, "../../client/build")));
-app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
-});
+if (process.env.NODE_ENV === "production") {
+  // All remaining requests return the React app, so it can handle routing.
+  app.use(express.static(path.join(__dirname, "../../client/build")));
+  app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
+  });
+}
 
 mongoose
   .connect(

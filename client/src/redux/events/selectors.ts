@@ -21,3 +21,28 @@ export const selectEventsIsLoading = createSelector(
   getEvents,
   eventsState => eventsState.isLoading
 );
+
+export const selectEventCategories = createSelector(
+  getEvents,
+  () => {
+    // Todo - move this to separate DB table
+    // and load categories as API call
+    return [
+      "other",
+      "music",
+      "art",
+      "business",
+      "parties",
+      "classes",
+      "sport",
+      "wellness",
+      "food",
+      "fun",
+      "movie",
+      "party",
+      "family",
+      "outdoor",
+      "nature"
+    ];
+  }
+);

@@ -8,8 +8,8 @@
     "postinstall": "npm run build",
     "build": "npm-run-all clean tsc",
     "tsc": "tsc",
-    "dev": "nodemon app.ts",
-    "start": "node ./dist/app.js",
+    "dev": "NODE_ENV=development nodemon app.ts",
+    "start": "NODE_ENV=production node ./dist/app.js",
     "prod": "npm run build && npm run start"
   },
   "engines": {
