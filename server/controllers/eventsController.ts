@@ -14,7 +14,8 @@ export const getEventsController = async (
     const events = await Event.find()
       .sort({ createdAt: -1 })
       .skip(parseInt(offset))
-      .limit(parseInt(limit));
+      .limit(parseInt(limit))
+      .populate("owner");
 
     return res.status(200).json({
       message: "Fetched events successfully.",
@@ -53,10 +54,24 @@ export const updateEventController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { body } = req;
+  const {
+    body,
+    token: { _id },
+    params: { eventId }
+  } = req;
 
   try {
-    await Event.findByIdAndUpdate(body._id, body);
+    const event: any = await Event.findById(eventId)
+      .populate("owner")
+      .exec();
+
+    if (_id !== event.owner._id.toString()) {
+      return res
+        .status(403)
+        .send({ message: "You don't have access rights to update this event" });
+    }
+
+    await Event.findByIdAndUpdate(eventId, body);
     return res.status(200).json(body);
   } catch (err) {
     if (!err.statusCode) {

@@ -16,7 +16,7 @@ const router = express.Router();
 router.get("/", getEventsController);
 router.post("/", createEventController);
 router.get("/:eventId", getEventDetailController);
-router.put("/:eventId", updateEventController);
+router.put("/:eventId", verifyToken, updateEventController);
 router.delete("/:eventId", verifyToken, deleteEventController);
 
 // GET /events/eventId/similar

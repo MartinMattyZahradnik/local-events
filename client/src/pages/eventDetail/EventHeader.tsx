@@ -116,7 +116,7 @@ const EventHeader = ({ event }: IEventHeaderProps) => {
               defaultMessage: "Created By"
             })}
           </StyledLabel>
-          <span>Matty</span>
+          <span>{event.owner.userName}</span>
         </StyledHeaderRow>
       </StyledContentWrapper>
     </StyledEventHeader>

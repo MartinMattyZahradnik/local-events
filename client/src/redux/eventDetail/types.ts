@@ -1,3 +1,4 @@
+import { IUser } from "redux/user/types";
 export interface IEvent {
   _id: string;
   name: string;
@@ -15,6 +16,7 @@ export interface IEvent {
     countryCode: string;
     country: string;
   };
+  owner: IUser;
   price: {
     price: number;
     currency: string;

@@ -51,7 +51,7 @@ const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
   }, [dispatch, id]);
 
   const handleSubmit = (values: any) => {
-    dispatch(updateEvent(values));
+    dispatch(updateEvent(id, values));
   };
 
   if (!event) {

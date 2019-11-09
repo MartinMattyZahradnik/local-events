@@ -20,7 +20,7 @@ const StyledLogoutLink = styled.span`
   text-transform: uppercase;
 `;
 
-const StyledLoginLink = styled(Link)`
+const StyledLink = styled(Link)`
   color: white;
   text-transform: uppercase;
 `;
@@ -65,12 +65,23 @@ const HeaderUser = () => {
 
   if (!user) {
     return (
-      <StyledLoginLink to="/login">
-        {formatMessage({
-          id: "General.login",
-          defaultMessage: "Login"
-        })}
-      </StyledLoginLink>
+      <>
+        <StyledLink to="/login">
+          {formatMessage({
+            id: "General.login",
+            defaultMessage: "Login"
+          })}
+        </StyledLink>
+
+        <span style={{ margin: "0 0.5rem" }}> / </span>
+
+        <StyledLink to="/register-user">
+          {formatMessage({
+            id: "General.register",
+            defaultMessage: "Register"
+          })}
+        </StyledLink>
+      </>
     );
   }
 

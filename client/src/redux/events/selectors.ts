@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 
 import { IState } from "redux/rootReducer";
+import { selectUserRole, selectUserId } from "redux/user/selectors";
 
 const getEvents = (state: IState) => state.events;
 
@@ -21,6 +22,23 @@ export const selectEventsIsLoading = createSelector(
   getEvents,
   eventsState => eventsState.isLoading
 );
+
+export const makeSelectHasRightToEditEvent = (ownerId: string) =>
+  createSelector(
+    selectUserId,
+    selectUserRole,
+    (userId, userRole) => {
+      if (!userId) {
+        return false;
+      }
+
+      if (userRole === "admin" || userId === ownerId) {
+        return true;
+      }
+
+      return false;
+    }
+  );
 
 export const selectEventCategories = createSelector(
   getEvents,

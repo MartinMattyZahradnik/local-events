@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // Components
 import { Card, CardContent, Grid } from "@material-ui/core";
@@ -9,6 +10,9 @@ import EditIcon from "@material-ui/icons/Edit";
 
 // Types
 import { IEvent } from "redux/events/types";
+
+// Selectors
+import { makeSelectHasRightToEditEvent } from "redux/events/selectors";
 
 // Other
 import { localizePrice } from "localization";
@@ -96,13 +100,21 @@ const EventCard = ({ event }: IEventCardProps) => {
     description,
     date,
     price,
-    address: { city, street }
+    address: { city, street },
+    owner
   } = event;
+
+  const hasRightToEditEvent = useSelector(
+    makeSelectHasRightToEditEvent(owner._id)
+  );
+
   return (
     <StyledCard>
-      <Link to={`/event/${_id}/update`}>
-        <StyledEditIcon />
-      </Link>
+      {hasRightToEditEvent && (
+        <Link to={`/event/${_id}/update`}>
+          <StyledEditIcon />
+        </Link>
+      )}
       <StyledImage src={imageUrl} />
       <StyledCardContent>
         <StyledHeading>{name}</StyledHeading>

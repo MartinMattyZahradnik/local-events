@@ -45,3 +45,10 @@ export const selectUserId = createSelector(
   selectUser,
   user => (user ? user._id : null)
 );
+
+export const selectUserRole = createSelector(
+  selectUser,
+  user => {
+    return user && user.userRole ? user.userRole : "visitor";
+  }
+);

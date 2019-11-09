@@ -39,7 +39,9 @@ export const loginController = async (
 
     const token = jwt.sign(
       {
-        email
+        email,
+        _id: user._id,
+        userRole: user.userRole
       },
       process.env.API_TOKEN_SECRET,
       { expiresIn: "1h" }

@@ -73,12 +73,14 @@ function* createEventWatcher({ payload }: { type: string; payload: any }) {
   }
 }
 
-function* updateEventWatcher({ payload }: { type: string; payload: any }) {
+function* updateEventWatcher({
+  payload: { eventId, eventData }
+}: {
+  type: string;
+  payload: any;
+}) {
   try {
-    const resp = yield request.put(
-      `/events/5dbaf614f5103a5ac4dc72fd`,
-      payload.eventData
-    );
+    const resp = yield request.put(`/events/${eventId}`, eventData);
 
     yield put(
       updateEventSuccess({

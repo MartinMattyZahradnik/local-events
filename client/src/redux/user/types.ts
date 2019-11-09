@@ -1,8 +1,8 @@
-type AvailableUserRoles = "admin" | "user" | "visitor";
+export type AvailableUserRoles = "admin" | "user" | "visitor";
 type Gender = "male" | "female" | "other";
 
 export interface IUser {
-  id: string;
+  _id: string;
   name: string;
   firstName: string;
   userName: string;
