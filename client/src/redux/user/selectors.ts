@@ -41,6 +41,11 @@ export const selectUserImage = createSelector(
   }
 );
 
+export const selectIsUserLoggedIn = createSelector(
+  selectUser,
+  user => Boolean(user)
+);
+
 export const selectUserId = createSelector(
   selectUser,
   user => (user ? user._id : null)

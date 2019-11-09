@@ -67,5 +67,9 @@ export default {
   "Form.validations.max": "Maximal 255 Zeichen sind zulässig",
   "Form.validations.min": "Es sind mindestens 5 Zeichen erforderlich",
   "Form.validations.string": "Muss ein String sein",
-  "Form.validations.passwordMatch": "Passwort muss übereinstimmen"
+  "Form.validations.passwordMatch": "Passwort muss übereinstimmen",
+
+  // Messages
+  "Messages.signUpRequired":
+    "Sie müssen angemeldet sein, bevor Sie ein Ereignis erstellen können."
 };

@@ -1,24 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useIntl } from "react-intl";
 
 // Components
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import HeaderUser from "./HeaderUser";
+import LanguageSelector from "./LanguageSelector";
+import { Button } from "bricks";
 
 // Selectors
-import LanguageSelector from "./LanguageSelector";
+import { selectIsUserLoggedIn } from "redux/user/selectors";
+
+// Other
+import { history } from "App";
 
 const StyledAppBar = styled(AppBar)`
   position: fixed;
   top: 0;
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.background};
-`;
-
-const StyledLanguageSelectorWrapper = styled.div`
-  margin-left: auto;
-  margin-right: 0.5rem;
 `;
 
 const Logo = styled(Typography)`
@@ -60,7 +62,24 @@ const StyledToolBar = styled(Toolbar)`
   }
 `;
 
+const StyledCreateEventButton = styled(Button)`
+  &${Button} {
+    margin: 0 2.5rem 0 auto;
+  }
+`;
+
 const Header = () => {
+  const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
+  const { formatMessage } = useIntl();
+
+  const handleCreateEventClick = () => {
+    if (isUserLoggedIn) {
+      return history.push("/create-event");
+    }
+
+    history.push("/login");
+  };
+
   return (
     <StyledAppBar>
       <StyledToolBar>
@@ -71,9 +90,15 @@ const Header = () => {
           </Logo>
         </Link>
 
-        <StyledLanguageSelectorWrapper>
-          <LanguageSelector />
-        </StyledLanguageSelectorWrapper>
+        <StyledCreateEventButton onClick={handleCreateEventClick}>
+          {formatMessage({
+            id: "Event.create",
+            defaultMessage: "Create Event"
+          })}
+        </StyledCreateEventButton>
+
+        <LanguageSelector />
+
         <HeaderUser />
       </StyledToolBar>
     </StyledAppBar>

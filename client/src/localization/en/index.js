@@ -66,5 +66,9 @@ export default {
   "Form.validations.max": "Maximum of 255 characters are allowed",
   "Form.validations.min": "Minimum of 5 characters are required",
   "Form.validations.string": "Has to be string value",
-  "Form.validations.passwordMatch": "Password must match"
+  "Form.validations.passwordMatch": "Password must match",
+
+  // Messages
+  "Messages.signUpRequired":
+    "You need to be logged in before you can create event"
 };
