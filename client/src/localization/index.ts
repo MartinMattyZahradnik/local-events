@@ -2,7 +2,7 @@ import en from "localization/en/index";
 import de from "localization/de/index";
 
 export const localizePrice = (
-  price: number,
+  price: number = 0,
   locale: string = "en-US",
   currency: string = "USD"
 ): string => {
