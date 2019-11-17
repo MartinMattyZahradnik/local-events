@@ -23,7 +23,7 @@ export default object().shape({
 
   phone: string()
     .min(8, "Form.validations.min")
-    .max(12, "Form.validations.max")
+    .max(15, "Form.validations.max")
     .notRequired(),
 
   birthDate: number().required("Form.validations.required"),

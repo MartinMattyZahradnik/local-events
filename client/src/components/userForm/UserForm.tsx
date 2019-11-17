@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
 import { history } from "App";
 import get from "lodash.get";
+import { useSelector, useDispatch } from "react-redux";
 
 // Components
 import { Form, FormikProps, withFormik, Field } from "formik";
@@ -18,6 +19,13 @@ import { Card, Grid } from "@material-ui/core";
 
 // Types
 import { IRegisterUserActionPayload } from "redux/user/types";
+import { ICountry } from "redux/application/types";
+
+// Actions
+import { fetchCountryList } from "redux/application/actions";
+
+// Selectors
+import { selectCountryList } from "redux/application/selectors";
 
 // Others
 import validationSchema from "./UserFormValidationSchema";
@@ -94,6 +102,11 @@ interface IRegisterUserProps extends IUserFormValues {
 const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
   const { isSubmitting, setFieldValue, formHeading, touched, errors } = props;
   const { formatMessage } = useIntl();
+  const dispatch = useDispatch();
+  const countries = useSelector(selectCountryList);
+  useEffect(() => {
+    dispatch(fetchCountryList());
+  }, []);
 
   return (
     <StyledUserFormWrapper>
@@ -332,7 +345,10 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               label="Country"
               placeholder="Select country"
               component={FormSelect}
-              options={[{ value: "US", label: "United States" }]}
+              options={countries.map((country: ICountry) => ({
+                value: country.code,
+                label: country.name
+              }))}
             />
 
             <StyledFormErrorWrapper>

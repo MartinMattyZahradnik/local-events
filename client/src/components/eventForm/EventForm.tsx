@@ -82,6 +82,7 @@ const StyledFormErrorWrapper = styled.div`
 const StyledDescriptionWrapper = styled(Grid)`
   margin-bottom: 2rem;
   padding: 1.2rem 2rem 0 2rem;
+  position: relative;
 `;
 
 interface IEventFormValues extends ICreateEventActionPayload {}

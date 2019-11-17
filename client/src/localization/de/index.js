@@ -68,6 +68,7 @@ export default {
   "Form.validations.min": "Es sind mindestens 5 Zeichen erforderlich",
   "Form.validations.string": "Muss ein String sein",
   "Form.validations.passwordMatch": "Passwort muss übereinstimmen",
+  "Form.validations.pattern": "Please type phone number in pattern",
 
   // Messages
   "Messages.signUpRequired":
