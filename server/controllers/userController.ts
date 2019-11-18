@@ -1,6 +1,9 @@
-import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
+
+// Models
+import User from "../models/user";
+import Event from "../models/event";
 
 export const createUserController = async (
   req: Request,
@@ -140,6 +143,45 @@ export const deleteUserController = async (
     res.status(201).json({
       message: "User has been deleted successfully.",
       user
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+export const getUserEventsController = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  const {
+    params: { id },
+    token: { _id, userRole }
+  } = req;
+
+  if (id !== _id && userRole !== "admin") {
+    res.status(403).json({
+      message: `Don't have access to user events`
+    });
+  }
+
+  try {
+    const events = await Event.find({
+      owner: id
+    });
+
+    if (!events) {
+      res.status(404).json({
+        message: `Unable to events for user`
+      });
+    }
+
+    res.status(201).json({
+      message: "",
+      events
     });
   } catch (err) {
     if (!err.statusCode) {
