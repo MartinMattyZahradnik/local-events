@@ -9,13 +9,21 @@ export default {
   "General.place": "ort",
   "General.createdBy": "Erstellt von",
   "General.similarEvents": "Ähnliche Veranstaltungen",
-  "General.tags": "stichworte",
   "General.submit": "einreichen",
   "General.create": "erstellen",
   "General.update": "aktualisieren",
   "General.back": "zurück",
   "General.of": "von",
   "General.rowsPerPage": "Zeilen pro Seite",
+  "General.price": "Preis",
+  "General.typePrice": "Preis eingeben",
+  "General.tags": "Stichworte",
+  "General.typeTags": "Tags eingeben",
+  "General.coordinates": "Koordinaten",
+  "General.typeCoordinates": "Koordinaten eingeben",
+  "General.register": "Registrieren",
+  "General.gender": "Geschlecht",
+  "General.birthDate": "Geburtsdatum",
 
   // Auth
   "Auth.passwordReset": "Passwort zurücksetzen",
@@ -35,6 +43,13 @@ export default {
   "Event.details": "Veranstaltungsdetails",
   "Event.uploadImages": "Bilder hochladen",
   "Event.moreEventsIn": "Weitere Veranstaltungen",
+  "Event.name": "Veranstaltungsname",
+  "Event.typeName": "Geben Sie den Ereignisnamen ein",
+  "Event.date": "Veranstaltungsdatum",
+  "Event.dateSelect": "Ereignisdatum auswählen",
+  "Event.category": "Kategorie",
+  "Event.description": "Beschreibung",
+  "Event.typeDescription": "Typbeschreibung",
 
   // Event categories
   "Event.category.music": "Musik",
@@ -60,6 +75,20 @@ export default {
   "User.uploadPhoto": "Foto hochladen",
   "User.address": "Adresse",
   "User.info": "Benutzerinformation",
+  "User.userName": "User name",
+  "User.typeUserName": "Type user name",
+  "User.firstName": "First name",
+  "User.typeFirstName": "Type first name",
+  "User.lastName": "Last name",
+  "User.typeLastName": "Type last name",
+  "User.email": "Email",
+  "User.typeEmail": "Type email",
+  "User.phone": "Phone",
+  "User.typePhone": "Type phone",
+  "User.password": "Password",
+  "User.typePassword": "Type password",
+  "User.confirmPassword": "Confirm password",
+  "User.typeConfirmPassword": "Type confirm password",
 
   // Form
   "Form.validations.invalidEmail": "Ungültige e-mail",
@@ -69,6 +98,15 @@ export default {
   "Form.validations.string": "Muss ein String sein",
   "Form.validations.passwordMatch": "Passwort muss übereinstimmen",
   "Form.validations.pattern": "Please type phone number in pattern",
+
+  "From.address.street": "Straße",
+  "From.address.typeStreet": "Straße eingeben",
+  "From.address.zipCode": "Postleitzahl",
+  "From.address.typeZipCode": "Geben Sie die Postleitzahl ein",
+  "From.address.city": "Stadt",
+  "From.address.typeCity": "Geben Sie city ein",
+  "From.address.country": "Land",
+  "From.address.typeCountry": "Land eingeben",
 
   // Messages
   "Messages.signUpRequired":

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useIntl } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 import get from "lodash.get";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -128,8 +128,13 @@ const EventForm = (
             <Field
               name="name"
               type="text"
-              label="Event Name"
-              placeholder="Type Event Name"
+              label={
+                <FormattedMessage id="Event.name" defaultMessage="Event Name" />
+              }
+              placeholder={formatMessage({
+                id: "Event.typeName",
+                defaultMessage: "Enter event name"
+              })}
               component={FormField}
             />
 
@@ -142,8 +147,13 @@ const EventForm = (
             <Field
               required
               name="date"
-              label="Event Date"
-              placeholder="Select event date"
+              label={
+                <FormattedMessage id="Event.date" defaultMessage="Event date" />
+              }
+              placeholder={formatMessage({
+                id: "Event.dateSelect",
+                defaultMessage: "Select event date"
+              })}
               component={FormDatePiker}
               onChange={setFieldValue}
             />
@@ -157,7 +167,12 @@ const EventForm = (
             <Field
               required
               name="category"
-              label="Category"
+              label={
+                <FormattedMessage
+                  id="Event.category"
+                  defaultMessage="Event category"
+                />
+              }
               placeholder="Select category"
               component={FormSelect}
               multiple
@@ -187,8 +202,16 @@ const EventForm = (
               multiline={true}
               name="description"
               type="text"
-              label="Event description"
-              placeholder="Type Event description"
+              label={
+                <FormattedMessage
+                  id="Event.description"
+                  defaultMessage="Description"
+                />
+              }
+              placeholder={formatMessage({
+                id: "Event.typeDescription",
+                defaultMessage: "Type event description"
+              })}
               component={FormField}
             />
             <StyledFormErrorWrapper>
@@ -209,10 +232,19 @@ const EventForm = (
             <Field
               name="address.street"
               type="text"
-              label="Street"
-              placeholder="Type street"
+              label={
+                <FormattedMessage
+                  id="From.address.street"
+                  defaultMessage="Street"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeStreet",
+                defaultMessage: "Type street"
+              })}
               component={FormField}
             />
+
             <StyledFormErrorWrapper>
               <FormError
                 touched={get(touched, "address.street")}
@@ -225,8 +257,16 @@ const EventForm = (
             <Field
               name="address.postalCode"
               type="text"
-              label="Zip Code"
-              placeholder="Type Zip Code"
+              label={
+                <FormattedMessage
+                  id="From.address.zipCode"
+                  defaultMessage="Zip Code"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeZipCode",
+                defaultMessage: "Type Zip Code"
+              })}
               component={FormField}
             />
             <StyledFormErrorWrapper>
@@ -241,8 +281,16 @@ const EventForm = (
             <Field
               name="address.city"
               type="text"
-              label="City"
-              placeholder="Type City"
+              label={
+                <FormattedMessage
+                  id="From.address.city"
+                  defaultMessage="City"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeCity",
+                defaultMessage: "Type city"
+              })}
               component={FormField}
             />
             <StyledFormErrorWrapper>
@@ -257,8 +305,16 @@ const EventForm = (
             <Field
               required
               name="address.countryCode"
-              label="Country"
-              placeholder="Select country"
+              label={
+                <FormattedMessage
+                  id="From.address.country"
+                  defaultMessage="Country"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeCountry",
+                defaultMessage: "Type country"
+              })}
               component={FormSelect}
               defaultValue={address.countryCode}
               options={countries.map((country: ICountry) => ({
@@ -278,8 +334,13 @@ const EventForm = (
             <Field
               type="number"
               name="price"
-              label="Price"
-              placeholder="Type Event Price"
+              label={
+                <FormattedMessage id="General.price" defaultMessage="Pride" />
+              }
+              placeholder={formatMessage({
+                id: "General.typePrice",
+                defaultMessage: "Type price"
+              })}
               component={FormField}
             />
           </StyledFieldWrapper>
@@ -289,8 +350,13 @@ const EventForm = (
               required
               type="text"
               name="tags"
-              label="Tags"
-              placeholder="Type Tags"
+              label={
+                <FormattedMessage id="General.tags" defaultMessage="Tags" />
+              }
+              placeholder={formatMessage({
+                id: "General.typeTags",
+                defaultMessage: "Type tags"
+              })}
               component={FormField}
             />
           </StyledFieldWrapper>
@@ -300,8 +366,16 @@ const EventForm = (
               required
               type="text"
               name="coordinates"
-              label="Coordinates"
-              placeholder="Type comma-separated coordinates"
+              label={
+                <FormattedMessage
+                  id="General.coordinates"
+                  defaultMessage="Coordinates"
+                />
+              }
+              placeholder={formatMessage({
+                id: "General.typeCoordinates",
+                defaultMessage: "Type coordinates"
+              })}
               component={FormField}
               multiline
             />

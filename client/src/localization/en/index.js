@@ -9,13 +9,21 @@ export default {
   "General.place": "place",
   "General.createdBy": "created by",
   "General.similarEvents": "Similar Events",
-  "General.tags": "tags",
   "General.submit": "submit",
   "General.create": "create",
   "General.update": "update",
   "General.back": "back",
   "General.of": "of",
   "General.rowsPerPage": "Rows Per Page",
+  "General.price": "Price",
+  "General.typePrice": "Type price",
+  "General.tags": "Tags",
+  "General.typeTags": "Type tags",
+  "General.coordinates": "Coordinates",
+  "General.typeCoordinates": "Type coordinates",
+  "General.register": "Register",
+  "General.gender": "Gender",
+  "General.birthDate": "Birth date",
 
   // Auth
   "Auth.passwordReset": "password reset",
@@ -34,6 +42,13 @@ export default {
   "Event.details": "Event details",
   "Event.uploadImages": "Upload images",
   "Event.moreEventsIn": "More events in",
+  "Event.name": "Event name",
+  "Event.typeName": "Type event name",
+  "Event.date": "Event date",
+  "Event.dateSelect": "Select event date",
+  "Event.category": "Category",
+  "Event.description": "Description",
+  "Event.typeDescription": "Type description",
 
   // Event categories
   "Event.category.music": "Music",
@@ -59,6 +74,20 @@ export default {
   "User.uploadPhoto": "Upload photo",
   "User.address": "Address",
   "User.info": "User Info",
+  "User.userName": "Nutzername",
+  "User.typeUserName": "Geben Sie den Benutzernamen ein",
+  "User.firstName": "Vorname",
+  "User.typeFirstName": "Vorname eingeben",
+  "User.lastName": "Nachname",
+  "User.typeLastName": "Nachname eingeben",
+  "User.email": "Email",
+  "User.typeEmail": "E-Mail eingeben",
+  "User.phone": "Telefon",
+  "User.typePhone": "Geben Sie Telefon ein",
+  "User.password": "Passwort",
+  "User.typePassword": "Passwort eingeben",
+  "User.confirmPassword": "Passwort bestätigen",
+  "User.typeConfirmPassword": "Geben Sie Confirm password ein",
 
   // Form
   "Form.validations.invalidEmail": "Invalid email",
@@ -68,6 +97,15 @@ export default {
   "Form.validations.string": "Has to be string value",
   "Form.validations.passwordMatch": "Password must match",
   "Form.validations.pattern": "Please type phone number in pattern",
+
+  "From.address.street": "Street",
+  "From.address.typeStreet": "Type street",
+  "From.address.zipCode": "Zip Code",
+  "From.address.typeZipCode": "Type Zip Code",
+  "From.address.city": "City",
+  "From.address.typeCity": "Type city",
+  "From.address.country": "Country",
+  "From.address.typeCountry": "Type country",
 
   // Messages
   "Messages.signUpRequired":

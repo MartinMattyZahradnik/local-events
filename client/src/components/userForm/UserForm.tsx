@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useIntl } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 import { history } from "App";
 import get from "lodash.get";
 import { useSelector, useDispatch } from "react-redux";
@@ -123,8 +123,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="userName"
               type="text"
-              label="User Name"
-              placeholder="Type User Name"
+              label={
+                <FormattedMessage
+                  id="User.userName"
+                  defaultMessage="User name"
+                />
+              }
+              placeholder={formatMessage({
+                id: "User.typeUserName",
+                defaultMessage: "Type user name"
+              })}
               component={FormField}
             />
             <StyledFormErrorWrapper>
@@ -139,8 +147,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="firstName"
               type="text"
-              label="First Name"
-              placeholder="Type First Name"
+              label={
+                <FormattedMessage
+                  id="User.firstName"
+                  defaultMessage="First name"
+                />
+              }
+              placeholder={formatMessage({
+                id: "User.typeFirstName",
+                defaultMessage: "Type first name"
+              })}
               component={FormField}
             />
 
@@ -156,8 +172,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="lastName"
               type="text"
-              label="Last Name"
-              placeholder="Type Last Name"
+              label={
+                <FormattedMessage
+                  id="User.lastName"
+                  defaultMessage="Last name"
+                />
+              }
+              placeholder={formatMessage({
+                id: "User.typeLastName",
+                defaultMessage: "Type last name"
+              })}
               component={FormField}
             />
 
@@ -173,8 +197,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="email"
               type="email"
-              label="Email"
-              placeholder="Type your email"
+              label={
+                <FormattedMessage id="User.email" defaultMessage="Email" />
+              }
+              placeholder={formatMessage({
+                id: "User.typeEmail",
+                defaultMessage: "Type email"
+              })}
               component={FormField}
             />
 
@@ -187,8 +216,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="phone"
               type="text"
-              label="Phone"
-              placeholder="Type your phone"
+              label={
+                <FormattedMessage id="User.phone" defaultMessage="Phone" />
+              }
+              placeholder={formatMessage({
+                id: "User.typePhone",
+                defaultMessage: "Type phone"
+              })}
               component={FormField}
             />
 
@@ -201,8 +235,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               required
               name="birthDate"
-              label="Birth Date"
-              placeholder="Select your birth date"
+              label={
+                <FormattedMessage
+                  id="General.birthDate"
+                  defaultMessage="Birth date"
+                />
+              }
+              placeholder={formatMessage({
+                id: "General.birthDate",
+                defaultMessage: "Select birth date"
+              })}
               component={FormDatePiker}
               onChange={setFieldValue}
               disableFuture={true}
@@ -212,8 +254,13 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               name="gender"
-              label="Gender"
-              placeholder="Select gender"
+              label={
+                <FormattedMessage id="General.gender" defaultMessage="Gender" />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeCountry",
+                defaultMessage: "Select gender"
+              })}
               component={FormSelect}
               options={[
                 { value: "male", label: "Male" },
@@ -230,8 +277,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="password"
               type="password"
-              label="Password"
-              placeholder="Type your password"
+              label={
+                <FormattedMessage
+                  id="User.password"
+                  defaultMessage="Password"
+                />
+              }
+              placeholder={formatMessage({
+                id: "User.typePassword",
+                defaultMessage: "Type password"
+              })}
               component={FormField}
             />
 
@@ -247,8 +302,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="passwordConfirm"
               type="password"
-              label="Confirm Password"
-              placeholder="Confirm your password"
+              label={
+                <FormattedMessage
+                  id="User.confirmPassword"
+                  defaultMessage="Confirm password"
+                />
+              }
+              placeholder={formatMessage({
+                id: "User.typeConfirmPassword",
+                defaultMessage: "Type password confirm"
+              })}
               component={FormField}
             />
 
@@ -291,8 +354,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="address.street"
               type="text"
-              label="Street"
-              placeholder="Type street"
+              label={
+                <FormattedMessage
+                  id="From.address.street"
+                  defaultMessage="Street"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeStreet",
+                defaultMessage: "Type street"
+              })}
               component={FormField}
             />
 
@@ -308,8 +379,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="address.city"
               type="text"
-              label="City"
-              placeholder="Type City"
+              label={
+                <FormattedMessage
+                  id="From.address.city"
+                  defaultMessage="City"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeCity",
+                defaultMessage: "Type city"
+              })}
               component={FormField}
             />
 
@@ -325,8 +404,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               name="address.postalCode"
               type="text"
-              label="Zip Code"
-              placeholder="Type Zip Code"
+              label={
+                <FormattedMessage
+                  id="From.address.zipCode"
+                  defaultMessage="Zip Code"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeZipCode",
+                defaultMessage: "Type Zip Code"
+              })}
               component={FormField}
             />
 
@@ -342,8 +429,16 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             <Field
               required
               name="address.country"
-              label="Country"
-              placeholder="Select country"
+              label={
+                <FormattedMessage
+                  id="From.address.country"
+                  defaultMessage="Country"
+                />
+              }
+              placeholder={formatMessage({
+                id: "From.address.typeCountry",
+                defaultMessage: "Type country"
+              })}
               component={FormSelect}
               options={countries.map((country: ICountry) => ({
                 value: country.code,
