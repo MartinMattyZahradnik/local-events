@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 
 import { IState } from "redux/rootReducer";
 import { selectUserRole, selectUserId } from "redux/user/selectors";
+import { selectEventDetail } from "redux/eventDetail/selectors";
 
 const getEvents = (state: IState) => state.events;
 
@@ -24,43 +25,39 @@ export const selectEventsIsLoading = createSelector(
 );
 
 export const makeSelectHasRightToEditEvent = (ownerId: string) =>
-  createSelector(
-    selectUserId,
-    selectUserRole,
-    (userId, userRole) => {
-      if (!userId) {
-        return false;
-      }
+  createSelector(selectUserId, selectUserRole, (userId, userRole) => {
+    return userRole === "admin" || userId === ownerId;
+  });
 
-      if (userRole === "admin" || userId === ownerId) {
-        return true;
-      }
-
+export const selectHasAccessPermission = createSelector(
+  [selectUserId, selectUserRole, selectEventDetail],
+  (userId, userRole, event) => {
+    if (!event) {
       return false;
     }
-  );
 
-export const selectEventCategories = createSelector(
-  getEvents,
-  () => {
-    // Todo - move this to separate DB table
-    // and load categories as API call
-    return [
-      "other",
-      "music",
-      "art",
-      "business",
-      "parties",
-      "classes",
-      "sport",
-      "wellness",
-      "food",
-      "fun",
-      "movie",
-      "party",
-      "family",
-      "outdoor",
-      "nature"
-    ];
+    return userRole === "admin" || event.owner._id === userId;
   }
 );
+
+export const selectEventCategories = createSelector(getEvents, () => {
+  // Todo - move this to separate DB table
+  // and load categories as API call
+  return [
+    "other",
+    "music",
+    "art",
+    "business",
+    "parties",
+    "classes",
+    "sport",
+    "wellness",
+    "food",
+    "fun",
+    "movie",
+    "party",
+    "family",
+    "outdoor",
+    "nature"
+  ];
+});

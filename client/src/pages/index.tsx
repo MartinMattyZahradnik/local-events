@@ -7,3 +7,4 @@ export { default as UpdateUser } from "./updateUser/UpdateUser";
 export { default as CreateEvent } from "./createEvent/CreateEvent";
 export { default as UpdateEvent } from "./updateEvent/UpdateEvent";
 export { default as SetNewPassword } from "./setNewPassword/SetNewPassword";
+export { default as MyEvents } from "./myEvents/MyEvents";

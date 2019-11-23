@@ -52,4 +52,13 @@ export default createGlobalStyle`
   
   .MuiInputBase-multiline {
   line-height: 2.2rem
-}`;
+  }
+
+  .MuiTableCell-root {
+    font-size: 1.2rem;
+    &.MuiTableCell-head  {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+  }
+`;

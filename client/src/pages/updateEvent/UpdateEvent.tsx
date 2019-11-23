@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 // Components
 
@@ -14,7 +15,9 @@ import { fetchEventDetail } from "redux/eventDetail/actions";
 import { updateEvent } from "redux/events/actions";
 
 // Selectors
+import { selectHasAccessPermission } from "redux/events/selectors";
 import { selectEventDetail } from "redux/eventDetail/selectors";
+import { selectUserId } from "redux/user/selectors";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -45,6 +48,8 @@ const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
   const { id } = match.params;
   const dispatch = useDispatch();
   const event = useSelector(selectEventDetail);
+  const userId = useSelector(selectUserId);
+  const hasAccessPermission = useSelector(selectHasAccessPermission);
 
   useEffect(() => {
     dispatch(fetchEventDetail(id));
@@ -56,6 +61,10 @@ const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
 
   if (!event) {
     return null;
+  }
+
+  if (!hasAccessPermission) {
+    return <Redirect to={`/user/${userId}/events`} />;
   }
 
   return (

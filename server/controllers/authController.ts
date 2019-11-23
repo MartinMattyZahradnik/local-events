@@ -47,9 +47,35 @@ export const loginController = async (
       { expiresIn: "1h" }
     );
 
+    const {
+      address,
+      userRole,
+      _id,
+      firstName,
+      lastName,
+      userName,
+      birthDate,
+      phone,
+      image,
+      gender,
+      createdAt
+    } = user;
     res.status(200).json({
       message: "Login success",
-      user,
+      user: {
+        address,
+        userRole,
+        _id,
+        firstName,
+        lastName,
+        userName,
+        birthDate,
+        phone,
+        image,
+        email,
+        gender,
+        createdAt
+      },
       token: `Bearer ${token}`
     });
   } catch (err) {

@@ -50,3 +50,35 @@ export const updateEventError = (eventData: any) => ({
   type: actionTypes.UPDATE_EVENT_ERROR,
   payload: { eventData }
 });
+
+/*** ===  FETCH EVENTS BY USER ID  === ***/
+export const fetchEventsByUserId = (userId: string) => ({
+  type: actionTypes.FETCH_EVENTS_BY_USER_ID,
+  payload: { userId }
+});
+
+export const fetchEventsByUserIdSuccess = (events: IEvent[]) => ({
+  type: actionTypes.FETCH_EVENTS_BY_USER_ID_SUCCESS,
+  payload: { events }
+});
+
+export const fetchEventsByUserIdError = (statusCode: number) => ({
+  type: actionTypes.FETCH_EVENTS_BY_USER_ID_ERROR,
+  payload: { statusCode }
+});
+
+/*** ===  DELETE EVENT  === ***/
+export const deleteEvent = (id: string) => ({
+  type: actionTypes.DELETE_EVENT,
+  payload: { id }
+});
+
+export const deleteEventSuccess = (id: string) => ({
+  type: actionTypes.DELETE_EVENT_SUCCESS,
+  payload: { id }
+});
+
+export const deleteEventError = (id: string) => ({
+  type: actionTypes.DELETE_EVENT_ERROR,
+  payload: { id }
+});
