@@ -8,6 +8,7 @@ import { createBrowserHistory } from "history";
 // Components
 import { Header } from "components/common";
 import Routes from "./Routes";
+import { NotificationList } from "components";
 
 // Actions
 import { selectLocale } from "redux/localization/actions";
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         </StyledApp>
       </Router>
       <div id="modal-root" />
+      <NotificationList />
     </IntlProvider>
   );
 };

@@ -6,11 +6,14 @@ import eventDetailReducer from "redux/eventDetail/reducers";
 import eventsReducer from "redux/events/reducers";
 import localizationReducer from "redux/localization/reducers";
 import applicationReducer from "redux/application/reducers";
+import notificationsReducer from "redux/notifications/reducer";
+
 // Reducers Types
 import { IEventsReducerState } from "redux/events/reducers";
 import { IEventDetailReducerState } from "redux/eventDetail/types";
 import { ILocalizationReducerState } from "redux/localization/types";
 import { IApplicationReducerState } from "redux/application/types";
+import { INotificationReducerState } from "redux/notifications/types";
 
 export interface IState {
   localization: ILocalizationReducerState;
@@ -18,6 +21,7 @@ export interface IState {
   events: IEventsReducerState;
   eventDetail: IEventDetailReducerState;
   application: IApplicationReducerState;
+  notifications: INotificationReducerState;
 }
 
 export default combineReducers({
@@ -25,5 +29,6 @@ export default combineReducers({
   user: userReducer,
   events: eventsReducer,
   eventDetail: eventDetailReducer,
-  application: applicationReducer
+  application: applicationReducer,
+  notifications: notificationsReducer
 });
