@@ -25,6 +25,8 @@ export default {
   "General.gender": "Geschlecht",
   "General.birthDate": "Geburtsdatum",
   "General.delete": "Löschen",
+  "General.confirm": "Bestätigen",
+  "General.cancel": "Stornieren",
 
   // Auth
   "Auth.passwordReset": "Passwort zurücksetzen",
@@ -68,6 +70,9 @@ export default {
   "Event.category.outdoor": "Draussen",
   "Event.category.nature": "Natur",
   "Event.category.other": "Andere",
+
+  // Event messages
+  "Event.message.confirmDelete": "Möchten Sie das Ereignis wirklich löschen?",
 
   // User
   "User.profile": "Benutzerprofil",

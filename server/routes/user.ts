@@ -19,7 +19,7 @@ router.get("/:id", getUserController);
 router.put("/:id", updateUserController);
 router.delete("/:id", deleteUserController);
 
-// /user/events
+// /user/:id/events
 router.get("/:id/events", verifyToken, getUserEventsController);
 
 export default router;

@@ -40,6 +40,26 @@ export const selectHasAccessPermission = createSelector(
   }
 );
 
+export const selectMyEvents = createSelector(
+  [getEvents],
+  events => events.myEvents
+);
+
+export const selectMyEventsResult = createSelector(
+  [selectMyEvents],
+  myEvents => myEvents.result
+);
+
+export const selectMyEventsError = createSelector(
+  [selectMyEvents],
+  myEvents => myEvents.error
+);
+
+export const selectMyEventsIsLoading = createSelector(
+  [selectMyEvents],
+  myEvents => myEvents.isLoading
+);
+
 export const selectEventCategories = createSelector(getEvents, () => {
   // Todo - move this to separate DB table
   // and load categories as API call

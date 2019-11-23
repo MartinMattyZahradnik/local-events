@@ -34,6 +34,7 @@ const App: React.FC = () => {
           <Routes />
         </StyledApp>
       </Router>
+      <div id="modal-root" />
     </IntlProvider>
   );
 };

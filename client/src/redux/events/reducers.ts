@@ -35,12 +35,18 @@ function result(
     case eventsActions.FETCH_EVENTS_SUCCESS:
       return payload;
 
-    case eventsActions.CREATE_EVENT_SUCCESS: {
+    case eventsActions.CREATE_EVENT_SUCCESS:
       return {
         events: [payload.eventData, ...state.events],
         totalItems: state.totalItems + 1
       };
-    }
+
+    case eventsActions.DELETE_EVENT_SUCCESS:
+      return {
+        ...state,
+        events: state.events.filter(event => event._id !== payload.id),
+        totalItems: state.totalItems - 1
+      };
 
     default:
       return state;
@@ -63,6 +69,62 @@ export interface IEventsReducerState {
   isLoading: boolean;
   error: boolean;
   result: IResultState;
+  myEvents: {
+    isLoading: boolean;
+    error: boolean;
+    result: IEvent[];
+  };
 }
 
-export default combineReducers({ error, result, isLoading });
+export interface IMyEventsReducerState {
+  isLoading: boolean;
+  error: boolean;
+  result: IEvent[];
+}
+
+const MyEventsDefaultState = {
+  isLoading: false,
+  error: false,
+  result: []
+};
+
+function myEvents(
+  state: IMyEventsReducerState = MyEventsDefaultState,
+  { type, payload }: { type: string; payload: any } | IAction<IEvent[]>
+) {
+  switch (type) {
+    case eventsActions.DELETE_EVENT_SUCCESS:
+      return {
+        ...state,
+        result: state.result.filter(userEvent => userEvent._id !== payload.id)
+      };
+
+    case eventsActions.FETCH_EVENTS_BY_USER_ID:
+      return {
+        ...state,
+        isLoading: true,
+        error: false
+      };
+
+    case eventsActions.FETCH_EVENTS_BY_USER_ID_SUCCESS:
+      return {
+        ...state,
+        result: payload.events,
+        isLoading: false,
+        error: false
+      };
+
+    case eventsActions.FETCH_EVENTS_BY_USER_ID_ERROR:
+      return {
+        ...state,
+        result: [],
+        isLoading: false,
+        error: true
+      };
+
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ error, result, isLoading, myEvents });
