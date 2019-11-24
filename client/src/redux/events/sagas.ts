@@ -63,6 +63,23 @@ function* createEventWatcher({ payload }: { type: string; payload: any }) {
       makeSelectCountryNameByCode(payload.eventData.address.countryCode)
     );
 
+    if (payload.eventData.image) {
+      try {
+        const data = new FormData();
+        data.append("image", payload.eventData.image);
+        const res = yield request.post(`/upload`, data, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+        payload.eventData.imageUrl = `/${res.data.files[0].path}`;
+      } catch (e) {
+        yield put(
+          pushNotificationToStack(
+            "Something went wrong. Unable to upload image"
+          )
+        );
+      }
+    }
+
     const eventData = {
       ...payload.eventData,
       owner,
@@ -98,6 +115,21 @@ function* updateEventWatcher({
   type: string;
   payload: any;
 }) {
+  if (formValues.image) {
+    try {
+      const data = new FormData();
+      data.append("image", formValues.image);
+      const res = yield request.post(`/upload`, data, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+      formValues.imageUrl = `/${res.data.files[0].path}`;
+    } catch (e) {
+      yield put(
+        pushNotificationToStack("Something went wrong. Unable to upload image")
+      );
+    }
+  }
+
   try {
     const resp = yield request.put(`/events/${eventId}`, formValues);
     yield put(

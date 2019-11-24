@@ -331,6 +331,8 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               }}
               type="file"
               name="image"
+              accept="image/png, image/jpeg"
+              multiple
               hidden
             />
             <StyledUploadBtn>

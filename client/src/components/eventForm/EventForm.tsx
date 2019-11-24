@@ -187,8 +187,18 @@ const EventForm = (
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
+            <input
+              id="eventImage"
+              onChange={(event: any) => {
+                setFieldValue("image", event.currentTarget.files[0]);
+              }}
+              type="file"
+              name="image"
+              accept="image/png, image/jpeg"
+              hidden
+            />
             <StyledUploadBtn>
-              <label htmlFor="userImage">
+              <label htmlFor="eventImage">
                 {formatMessage({
                   id: "Event.uploadImages",
                   defaultMessage: "Upload images"

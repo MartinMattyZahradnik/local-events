@@ -18,42 +18,34 @@ export const selectUserError = createSelector(
   userData => userData.error
 );
 
-export const selectUserImage = createSelector(
-  selectUser,
-  user => {
-    if (!user) {
-      return "defaultUserAvatarOther.png";
-    }
-
-    if (!user.image && user.gender === "male") {
-      return "defaultUserAvatarMale.jpg";
-    }
-
-    if (!user.image && user.gender === "female") {
-      return "defaultUserAvatarFemale.png";
-    }
-
-    if (!user.image && user.gender === "other") {
-      return "defaultUserAvatarOther.png";
-    }
-
-    return user.image;
+export const selectUserImage = createSelector(selectUser, user => {
+  if (!user) {
+    return "/defaultUserAvatarOther.png";
   }
-);
 
-export const selectIsUserLoggedIn = createSelector(
-  selectUser,
-  user => Boolean(user)
-);
-
-export const selectUserId = createSelector(
-  selectUser,
-  user => (user ? user._id : null)
-);
-
-export const selectUserRole = createSelector(
-  selectUser,
-  user => {
-    return user && user.userRole ? user.userRole : "visitor";
+  if (!user.image && user.gender === "male") {
+    return "/defaultUserAvatarMale.jpg";
   }
+
+  if (!user.image && user.gender === "female") {
+    return "/defaultUserAvatarFemale.png";
+  }
+
+  if (!user.image && user.gender === "other") {
+    return "/defaultUserAvatarOther.png";
+  }
+
+  return user.image;
+});
+
+export const selectIsUserLoggedIn = createSelector(selectUser, user =>
+  Boolean(user)
 );
+
+export const selectUserId = createSelector(selectUser, user =>
+  user ? user._id : null
+);
+
+export const selectUserRole = createSelector(selectUser, user => {
+  return user && user.userRole ? user.userRole : "visitor";
+});

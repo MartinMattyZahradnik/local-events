@@ -100,13 +100,20 @@ export const updateUserController = async (
 ) => {
   try {
     const { id } = req.params;
+    const { password } = req.body;
     if (!id) {
       res.status(400).json({
         message: "Missing user Id."
       });
     }
 
-    const user = await User.findByIdAndUpdate(id, req.body, { new: true });
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { ...req.body, password: hashedPassword },
+      { new: true }
+    );
 
     if (!user) {
       res.status(404).json({

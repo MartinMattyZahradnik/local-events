@@ -89,7 +89,7 @@ function* updateUserWatcher({
   try {
     const resp = yield request.put(`/user/${userId}`, formData);
     yield put(updateUserSuccess(resp.data.user));
-    yield put(pushNotificationToStack("User has been created"));
+    yield put(pushNotificationToStack("User has been updated"));
   } catch (e) {
     yield put(updateUserError());
     yield put(
