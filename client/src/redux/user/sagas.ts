@@ -12,8 +12,11 @@ import {
   passwordResetSuccess,
   passwordResetError,
   registerUserSuccess,
-  registerUserError
+  registerUserError,
+  updateUserSuccess,
+  updateUserError
 } from "./actions";
+import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Types
 import {
@@ -63,10 +66,15 @@ function* registerUserWatcher({
   try {
     const resp = yield request.post(`/user`, userData);
     yield put(registerUserSuccess(resp.data.user));
+    yield put(pushNotificationToStack("User has been created"));
     history.push("/login");
   } catch (e) {
-    registerUserError();
-    console.error(e);
+    yield put(registerUserError());
+    yield put(
+      pushNotificationToStack(
+        "Sorry. Something went wrong. Unable to finish action"
+      )
+    );
   }
 }
 
@@ -80,11 +88,15 @@ function* updateUserWatcher({
 
   try {
     const resp = yield request.put(`/user/${userId}`, formData);
-
-    yield put(registerUserSuccess(resp.data.user));
+    yield put(updateUserSuccess(resp.data.user));
+    yield put(pushNotificationToStack("User has been created"));
   } catch (e) {
-    registerUserError();
-    console.error(e);
+    yield put(updateUserError());
+    yield put(
+      pushNotificationToStack(
+        "Sorry. Something went wrong. Unable to finish action"
+      )
+    );
   }
 }
 
@@ -117,9 +129,21 @@ function* passwordResetSagaWatcher({
     const { email } = payload;
     yield request.post(`/auth/password-reset`, { email });
     yield put(passwordResetSuccess());
+    yield put(
+      pushNotificationToStack(
+        `Email with instructions how to set new password has been send to email ${email}. You'll be redirected to login page in moment`
+      )
+    );
+    setTimeout(() => {
+      history.push("/login");
+    }, 4000);
   } catch (e) {
-    passwordResetError();
-    console.error(e);
+    yield put(passwordResetError());
+    yield put(
+      pushNotificationToStack(
+        "Sorry. Something went wrong. Unable to finish action"
+      )
+    );
   }
 }
 
@@ -132,9 +156,21 @@ function* setNewPasswordWatcher({ payload }: { type: string; payload: any }) {
     });
 
     yield put(passwordResetSuccess());
+    yield put(
+      pushNotificationToStack(
+        `Your new password is active. You'll be redirected to login page in moment`
+      )
+    );
+    setTimeout(() => {
+      history.push("/login");
+    }, 4000);
   } catch (e) {
     passwordResetError();
-    console.error(e);
+    yield put(
+      pushNotificationToStack(
+        "Sorry. Something went wrong. Unable to finish action"
+      )
+    );
   }
 }
 

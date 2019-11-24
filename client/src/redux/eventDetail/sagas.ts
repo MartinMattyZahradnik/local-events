@@ -3,6 +3,7 @@ import { takeLatest, put } from "redux-saga/effects";
 
 // Actions
 import { fetchEventDetailSuccess, fetchSimilarEventsSuccess } from "./actions";
+import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Constants
 import { actionTypes as eventsActionTypes } from "./constants";
@@ -20,7 +21,11 @@ function* fetchEventDetailWatcher({
 
     yield put(fetchEventDetailSuccess(resp.data.event));
   } catch (e) {
-    console.error(e);
+    yield put(
+      pushNotificationToStack(
+        "Sorry. Something went wrong. Unable to finish action"
+      )
+    );
   }
 }
 
@@ -37,7 +42,11 @@ function* fetchSimilarEventsWatcher({
 
     yield put(fetchSimilarEventsSuccess(eventId, resp.data.similarEvents));
   } catch (e) {
-    console.error(e);
+    yield put(
+      pushNotificationToStack(
+        "Sorry. Something went wrong. Unable to finish action"
+      )
+    );
   }
 }
 

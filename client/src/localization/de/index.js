@@ -27,6 +27,8 @@ export default {
   "General.delete": "Löschen",
   "General.confirm": "Bestätigen",
   "General.cancel": "Stornieren",
+  "General.permissionDenied":
+    "Sie haben keine Berechtigung, diese Aktion auszuführen",
 
   // Auth
   "Auth.passwordReset": "Passwort zurücksetzen",

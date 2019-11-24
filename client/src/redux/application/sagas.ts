@@ -3,6 +3,7 @@ import { takeLatest, put } from "redux-saga/effects";
 
 // Actions
 import { fetchCountyListSuccess, fetchCountyListError } from "./actions";
+import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Constants
 import { actionTypes as applicationActionTypes } from "./constants";
@@ -15,6 +16,11 @@ function* fetchCountryListWatcher() {
     if (error.response.status) {
       yield put(fetchCountyListError(error.response.status));
     }
+    yield put(
+      pushNotificationToStack(
+        "Sorry. Something went wrong. Unable to fetch list of countries"
+      )
+    );
   }
 }
 

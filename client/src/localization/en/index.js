@@ -27,6 +27,7 @@ export default {
   "General.delete": "Delete",
   "General.confirm": "Confirm",
   "General.cancel": "Cancel",
+  "General.permissionDenied": "You have no permissions to perform this action",
 
   // Auth
   "Auth.passwordReset": "password reset",

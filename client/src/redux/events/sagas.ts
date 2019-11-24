@@ -21,6 +21,7 @@ import {
   fetchEventsByUserIdSuccess,
   fetchEventsByUserIdError
 } from "./actions";
+import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Types
 import { FetchEventsPayload } from "./types";
@@ -78,9 +79,15 @@ function* createEventWatcher({ payload }: { type: string; payload: any }) {
     const resp = yield request.post("/events", eventData);
 
     yield put(createEventSuccess(resp.data));
+    yield put(pushNotificationToStack("Event has been created"));
   } catch (error) {
     if (error.response.status) {
       yield put(createEventError(error.response.status));
+      yield put(
+        pushNotificationToStack(
+          "Sorry. Something went wrong. Unable to finish action"
+        )
+      );
     }
   }
 }
@@ -100,9 +107,15 @@ function* updateEventWatcher({
         events: resp.data.events
       })
     );
+    yield put(pushNotificationToStack("Event has been updated"));
   } catch (error) {
     if (error.response.status) {
       yield put(updateEventError(error.response.status));
+      yield put(
+        pushNotificationToStack(
+          "Sorry. Something went wrong. Unable to finish action"
+        )
+      );
     }
   }
 }
@@ -116,10 +129,16 @@ function* deleteEventWatcher({
   try {
     yield request.delete(`/events/${id}`);
     yield put(deleteEventSuccess(id));
+    yield put(pushNotificationToStack("Event has been deleted"));
   } catch (error) {
     console.log(error);
     if (error && error.response && error.response.status) {
       yield put(deleteEventError(error.response.status));
+      yield put(
+        pushNotificationToStack(
+          "Sorry. Something went wrong. Unable to finish action"
+        )
+      );
     }
   }
 }
@@ -136,6 +155,11 @@ function* fetchEventsByIdWatcher({
   } catch (error) {
     if (error.response.status) {
       yield put(fetchEventsByUserIdError(error.response.status));
+      yield put(
+        pushNotificationToStack(
+          "Sorry. Something went wrong. Unable to finish action"
+        )
+      );
     }
   }
 }

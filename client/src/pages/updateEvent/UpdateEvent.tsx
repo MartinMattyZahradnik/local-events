@@ -13,6 +13,7 @@ import { EventForm } from "components";
 // Actions
 import { fetchEventDetail } from "redux/eventDetail/actions";
 import { updateEvent } from "redux/events/actions";
+import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Selectors
 import { selectHasAccessPermission } from "redux/events/selectors";
@@ -64,6 +65,14 @@ const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
   }
 
   if (!hasAccessPermission) {
+    dispatch(
+      pushNotificationToStack(
+        formatMessage({
+          id: "General.permissionDenied",
+          defaultMessage: "You have no permissions to perform this action"
+        })
+      )
+    );
     return <Redirect to={`/user/${userId}/events`} />;
   }
 
