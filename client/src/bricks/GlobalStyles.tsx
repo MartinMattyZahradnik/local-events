@@ -61,4 +61,15 @@ export default createGlobalStyle`
       font-weight: 800;
     }
   }
+
+  .MuiSnackbar-root {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+  
+  .MuiSnackbarContent-message {
+    font-size: 1.4rem;
+  }
 `;

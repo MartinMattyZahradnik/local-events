@@ -53,6 +53,8 @@ export default {
   "Event.category": "Kategorie",
   "Event.description": "Beschreibung",
   "Event.typeDescription": "Typbeschreibung",
+  "Event.create.loginRequired":
+    "Sie müssen angemeldet sein, um ein Ereignis zu erstellen",
 
   // Event categories
   "Event.category.music": "Musik",

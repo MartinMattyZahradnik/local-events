@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { useIntl } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 
 // Components
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import HeaderUser from "./HeaderUser";
 import LanguageSelector from "./LanguageSelector";
 import { Button } from "bricks";
+
+// Actions
+import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Selectors
 import { selectIsUserLoggedIn } from "redux/user/selectors";
@@ -69,6 +72,7 @@ const StyledCreateEventButton = styled(Button)`
 `;
 
 const Header = () => {
+  const dispatch = useDispatch();
   const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
   const { formatMessage } = useIntl();
 
@@ -77,6 +81,14 @@ const Header = () => {
       return history.push("/create-event");
     }
 
+    dispatch(
+      pushNotificationToStack(
+        formatMessage({
+          id: "Event.create.loginRequired",
+          defaultMessage: "You must be logged in to create an event"
+        })
+      )
+    );
     history.push("/login");
   };
 
@@ -91,10 +103,7 @@ const Header = () => {
         </Link>
 
         <StyledCreateEventButton onClick={handleCreateEventClick}>
-          {formatMessage({
-            id: "Event.create",
-            defaultMessage: "Create Event"
-          })}
+          <FormattedMessage id="Event.create" defaultMessage="Create Event" />
         </StyledCreateEventButton>
 
         <LanguageSelector />

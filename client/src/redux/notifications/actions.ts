@@ -1,9 +1,9 @@
+import uuid from "uuid/v4";
 import { actionTypes } from "./constants";
-import { INotification } from "./types";
 
-export const pushNotificationToStack = (notification: INotification) => ({
+export const pushNotificationToStack = (notification: string) => ({
   type: actionTypes.PUSH_NOTIFICATION_TO_STACK,
-  payload: { notification }
+  payload: { notification: { id: uuid(), text: notification } }
 });
 
 export const popNotificationFromStack = (id: string) => ({

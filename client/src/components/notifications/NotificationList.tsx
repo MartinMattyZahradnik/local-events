@@ -10,7 +10,7 @@ import { selectNotificationList } from "redux/notifications/selectors";
 
 const StyledNotificationList = styled.ul`
   position: fixed;
-  bottom: 0;
+  bottom: 2rem;
   right: 0;
   max-width: 25%;
 `;
