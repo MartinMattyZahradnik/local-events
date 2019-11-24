@@ -97,6 +97,7 @@ export default {
   "User.confirmPassword": "Password confirmation",
   "User.typeConfirmPassword": "Type password confirmation",
   "User.myEvents": "My Events",
+  "User.myEventsEmpty": "You have no events. Lets start with creating new one",
 
   // Form
   "Form.validations.invalidEmail": "Invalid email",

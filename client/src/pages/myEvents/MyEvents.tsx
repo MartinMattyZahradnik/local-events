@@ -12,7 +12,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  Grid
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -31,10 +32,18 @@ import {
 import { timestampToDate } from "utils/date";
 import { formatAddress } from "utils/general";
 
-const StyledMyEventsWrapper = styled.div`
-  padding-top: 5rem;
+const StyledMyEventsWrapper = styled(Paper)`
+  margin: 5rem auto 0 auto;
+  max-width: 90%;
+  overflow-x: auto;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    margin: 2.5rem auto 0 auto;
+  }
 `;
 
+const StyledTable = styled(Table)`
+  min-width: 95rem;
+`;
 const StyledEventLink = styled(Link)`
   color: ${({ theme }) => theme.color.primary};
   font-weight: 800;
@@ -47,6 +56,15 @@ const StyledIconLink = styled(Link)`
 const StyledDeleteIcon = styled(DeleteIcon)`
   color: ${({ theme }) => theme.color.primary};
   cursor: pointer;
+`;
+
+const StyledNoEventsWrapper = styled(Grid)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  max-width: 60%;
+  text-align: center;
 `;
 
 type MatchParams = {
@@ -82,61 +100,66 @@ const MyEvents = ({ match }: IMyEventsProps) => {
     return <Redirect to="/" />;
   }
 
+  if (events.length === 0) {
+    return (
+      <StyledNoEventsWrapper container alignItems="center" justify="center">
+        <FormattedMessage
+          id="User.myEventsEmpty"
+          defaultMessage="You have no events. Lets start with creating new one"
+        />
+      </StyledNoEventsWrapper>
+    );
+  }
+
   return (
     <StyledMyEventsWrapper>
-      <Paper>
-        <Table aria-label="My events table">
-          <TableHead>
-            <TableRow>
+      <StyledTable aria-label="My events table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <FormattedMessage id="Event.name" defaultMessage="Event name" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="Event.category" defaultMessage="Category" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="User.address" defaultMessage="Address" />
+            </TableCell>
+            <TableCell>
+              <FormattedMessage id="Event.date" defaultMessage="Date" />
+            </TableCell>
+            <TableCell align="center">
+              <FormattedMessage id="Event.update" defaultMessage="Update" />
+            </TableCell>
+            <TableCell align="center">
+              <FormattedMessage id="General.delete" defaultMessage="Delete" />
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {events.map(event => (
+            <TableRow key={event._id}>
               <TableCell>
-                <FormattedMessage id="Event.name" defaultMessage="Event name" />
+                <StyledEventLink to={`/event/${event._id}`}>
+                  {event.name}
+                </StyledEventLink>
               </TableCell>
-              <TableCell>
-                <FormattedMessage
-                  id="Event.category"
-                  defaultMessage="Category"
-                />
-              </TableCell>
-              <TableCell>
-                <FormattedMessage id="User.address" defaultMessage="Address" />
-              </TableCell>
-              <TableCell>
-                <FormattedMessage id="Event.date" defaultMessage="Date" />
+              <TableCell>{event.category}</TableCell>
+              <TableCell>{formatAddress(event.address)}</TableCell>
+              <TableCell>{timestampToDate(event.date)}</TableCell>
+              <TableCell align="center">
+                <StyledIconLink to={`/event/${event._id}/update`}>
+                  <EditIcon />
+                </StyledIconLink>
               </TableCell>
               <TableCell align="center">
-                <FormattedMessage id="Event.update" defaultMessage="Update" />
-              </TableCell>
-              <TableCell align="center">
-                <FormattedMessage id="General.delete" defaultMessage="Delete" />
+                <StyledDeleteIcon onClick={() => setActiveEventId(event._id)} />
               </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {events.map(event => (
-              <TableRow key={event._id}>
-                <TableCell>
-                  <StyledEventLink to={`/event/${event._id}`}>
-                    {event.name}
-                  </StyledEventLink>
-                </TableCell>
-                <TableCell>{event.category}</TableCell>
-                <TableCell>{formatAddress(event.address)}</TableCell>
-                <TableCell>{timestampToDate(event.date)}</TableCell>
-                <TableCell align="center">
-                  <StyledIconLink to={`/event/${event._id}/update`}>
-                    <EditIcon />
-                  </StyledIconLink>
-                </TableCell>
-                <TableCell align="center">
-                  <StyledDeleteIcon
-                    onClick={() => setActiveEventId(event._id)}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+          ))}
+        </TableBody>
+      </StyledTable>
+
       <Modal
         open={Boolean(activeEventId)}
         onClose={() => setActiveEventId(null)}

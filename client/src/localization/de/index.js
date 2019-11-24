@@ -100,6 +100,7 @@ export default {
   "User.confirmPassword": "Passwort bestätigen",
   "User.typeConfirmPassword": "Geben Sie Confirm password ein",
   "User.myEvents": "Meine Ereignisse",
+  "User.myEventsEmpty": "Sie haben keine Ereignisse. Beginnen wir mit der Erstellung eines neuen",
 
   // Form
   "Form.validations.invalidEmail": "Ungültige e-mail",
