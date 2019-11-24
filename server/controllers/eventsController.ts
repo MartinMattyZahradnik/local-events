@@ -56,7 +56,7 @@ export const updateEventController = async (
 ) => {
   const {
     body,
-    token: { _id },
+    token: { _id, userRole },
     params: { eventId }
   } = req;
 
@@ -65,7 +65,7 @@ export const updateEventController = async (
       .populate("owner")
       .exec();
 
-    if (_id !== event.owner._id.toString()) {
+    if (_id !== event.owner._id.toString() && userRole !== "admin") {
       return res
         .status(403)
         .send({ message: "You don't have access rights to update this event" });
