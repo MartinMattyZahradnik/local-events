@@ -20,10 +20,9 @@ import authRoutes from "./routes/auth";
 import applicationRoutes from "./routes/app";
 
 dotenv.config();
-
 const fileStorage = multer.diskStorage({
   destination: (req: Request, file, callback) => {
-    callback(null, "public/uploads");
+    callback(null, path.join(__dirname, "public/uploads"));
   },
   filename: (req: Request, file: Express.Multer.File, callback: any) => {
     callback(null, new Date().toISOString() + "-" + file.originalname);
