@@ -93,14 +93,13 @@ function* createEventWatcher({ payload }: { type: string; payload: any }) {
 }
 
 function* updateEventWatcher({
-  payload: { eventId, eventData }
+  payload: { eventId, formValues }
 }: {
   type: string;
   payload: any;
 }) {
   try {
-    const resp = yield request.put(`/events/${eventId}`, eventData);
-
+    const resp = yield request.put(`/events/${eventId}`, formValues);
     yield put(
       updateEventSuccess({
         totalItems: resp.data.totalItems,

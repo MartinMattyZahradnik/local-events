@@ -36,9 +36,9 @@ export const createEventError = (eventData: any) => ({
 });
 
 /*** ===  UPDATE EVENT  === ***/
-export const updateEvent = (eventId: string, eventData: any) => ({
+export const updateEvent = (eventId: string, formValues: any) => ({
   type: actionTypes.UPDATE_EVENT,
-  payload: { eventId, eventData }
+  payload: { eventId, formValues }
 });
 
 export const updateEventSuccess = (eventData: any) => ({

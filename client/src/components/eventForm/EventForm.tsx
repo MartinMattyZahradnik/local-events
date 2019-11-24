@@ -333,7 +333,7 @@ const EventForm = (
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               type="number"
-              name="price"
+              name="price.price"
               label={
                 <FormattedMessage id="General.price" defaultMessage="Pride" />
               }
