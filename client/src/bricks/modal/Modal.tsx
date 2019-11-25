@@ -61,13 +61,23 @@ const Modal = ({
   const el = document.createElement("div");
   useEffect(() => {
     const modalRoot = document.getElementById("modal-root");
+    document.addEventListener("keydown", handleKeyDown, true);
     if (modalRoot) {
       modalRoot.appendChild(el);
       return () => {
         modalRoot.removeChild(el);
+        document.removeEventListener("keyDown", handleKeyDown, true);
       };
     }
   });
+
+  const handleKeyDown = (e: any) => {
+    if (open && e.keyCode === 27) {
+      // ESC
+      console.log(e.keyCode);
+      handleCloseModal();
+    }
+  };
 
   const handleCloseModal = () => {
     onClose();
