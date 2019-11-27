@@ -99,7 +99,17 @@ export const updateUserController = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const {
+      params: { id },
+      token: { _id, userRole }
+    } = req;
+
+    if (_id !== id && userRole !== "admin") {
+      return res
+        .status(403)
+        .send({ message: "You don't have access to update this user profile" });
+    }
+
     const { password } = req.body;
     if (!id) {
       res.status(400).json({

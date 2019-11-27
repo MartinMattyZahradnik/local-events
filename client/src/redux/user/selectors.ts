@@ -49,3 +49,14 @@ export const selectUserId = createSelector(selectUser, user =>
 export const selectUserRole = createSelector(selectUser, user => {
   return user && user.userRole ? user.userRole : "visitor";
 });
+
+export const selectHasPermissionViewProfile = createSelector(
+  [
+    selectUserRole,
+    selectUserId,
+    (state: IState, profileId: string) => profileId
+  ],
+  (userRole, selectUserId, profileId) => {
+    return profileId === selectUserId || userRole === "admin";
+  }
+);

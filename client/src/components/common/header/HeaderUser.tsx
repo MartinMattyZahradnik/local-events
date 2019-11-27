@@ -96,6 +96,11 @@ const HeaderUser = () => {
         onClose={handleClose}
         anchorEl={anchorEl}
       >
+        <MenuItem onClick={handleClose}>
+          <StyledMenuLink to={`/user/${user._id}/update`}>
+            <FormattedMessage id="User.profile" defaultMessage="User profile" />
+          </StyledMenuLink>
+        </MenuItem>
         <MenuItem>
           <StyledMenuLink to={`/user/${user._id}/events`}>
             <FormattedMessage id="User.myEvents" defaultMessage="My Events" />

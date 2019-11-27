@@ -16,7 +16,7 @@ const router = express.Router();
 router.post("/", createUserController);
 router.get("/", getUsersController);
 router.get("/:id", getUserController);
-router.put("/:id", updateUserController);
+router.put("/:id", verifyToken, updateUserController);
 router.delete("/:id", deleteUserController);
 
 // /user/:id/events

@@ -74,7 +74,6 @@ const Modal = ({
   const handleKeyDown = (e: any) => {
     if (open && e.keyCode === 27) {
       // ESC
-      console.log(e.keyCode);
       handleCloseModal();
     }
   };

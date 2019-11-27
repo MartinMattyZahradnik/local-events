@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 // Components
 import { Grid } from "@material-ui/core";
@@ -10,10 +11,16 @@ import { UserForm } from "components";
 
 // Actions
 import { updateUser, fetchUser } from "redux/user/actions";
+import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Selectors
-import { selectUser } from "redux/user/selectors";
+import {
+  selectUser,
+  selectHasPermissionViewProfile
+} from "redux/user/selectors";
+
 // Types
+import { IState } from "redux/rootReducer";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -30,11 +37,15 @@ type MatchParams = {
 interface IUpdateUserProps extends RouteComponentProps<MatchParams> {}
 
 const UpdateUser: React.FC<IUpdateUserProps> = ({ match }) => {
+  const { formatMessage } = useIntl();
   const dispatch = useDispatch();
   const intl = useIntl();
-
   const userId = match.params.id;
   const user = useSelector(selectUser);
+  const hasViewPermission = useSelector((state: IState) =>
+    selectHasPermissionViewProfile(state, userId)
+  );
+
   useEffect(() => {
     dispatch(fetchUser(userId));
   }, [dispatch, userId]);
@@ -47,6 +58,18 @@ const UpdateUser: React.FC<IUpdateUserProps> = ({ match }) => {
     id: "General.update",
     defaultMessage: "Update"
   });
+
+  if (!hasViewPermission) {
+    dispatch(
+      pushNotificationToStack(
+        formatMessage({
+          id: "General.permissionDenied",
+          defaultMessage: "You have no permissions to perform this action"
+        })
+      )
+    );
+    return <Redirect to={`/user/${userId}/events`} />;
+  }
 
   return (
     <StyledFormWrapper container>
