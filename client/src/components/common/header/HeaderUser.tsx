@@ -28,7 +28,7 @@ const StyledLink = styled(Link)`
 const StyledUserAvatar = styled.div<any>`
   width: 4rem;
   height: 4rem;
-  background: ${({ image }) => `url(${image}) center`};
+  background: ${({ image }) => `url("${image}") center`};
   background-size: cover;
   border-radius: 50%;
   cursor: pointer;

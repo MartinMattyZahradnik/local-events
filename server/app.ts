@@ -22,7 +22,7 @@ import applicationRoutes from "./routes/app";
 dotenv.config();
 const fileStorage = multer.diskStorage({
   destination: (req: Request, file, callback) => {
-    callback(null, path.join(__dirname, "public/uploads"));
+    callback(null, "uploads/");
   },
   filename: (req: Request, file: Express.Multer.File, callback: any) => {
     callback(null, new Date().toISOString() + "-" + file.originalname);
@@ -49,7 +49,7 @@ app.use(morgan("combined", { stream: accessLogStream }));
 app.use(bodyParser.json());
 app.use(multer({ storage: fileStorage, fileFilter }).array("image", 10));
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/uploads"));
 
 app.use("/app", applicationRoutes);
 app.use("/auth", authRoutes);

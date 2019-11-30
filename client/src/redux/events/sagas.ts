@@ -123,7 +123,7 @@ function* updateEventWatcher({
         headers: { "Content-Type": "multipart/form-data" }
       });
 
-      formValues.imageUrl = `/uploads/${res.data.files[0].filename}`;
+      formValues.imageUrl = `/${res.data.files[0].filename}`;
     } catch (e) {
       yield put(
         pushNotificationToStack("Something went wrong. Unable to upload image")

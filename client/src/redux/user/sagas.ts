@@ -57,7 +57,8 @@ function* registerUserWatcher({
       const res = yield request.post(`/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" }
       });
-      userData.image = res.data.files[0].path;
+
+      userData.image = `/${res.data.files[0].filename}`;
     } catch (e) {
       console.log(e);
     }
@@ -85,9 +86,25 @@ function* updateUserWatcher({
   payload: { userId: string; formData: IRegisterUserActionPayload };
 }) {
   const { userId, formData } = payload;
+  const userData = { ...formData };
+
+  if (formData.image) {
+    try {
+      const data = new FormData();
+      data.append("image", formData.image);
+
+      const res = yield request.post(`/upload`, data, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+
+      userData.image = `/${res.data.files[0].filename}`;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   try {
-    const resp = yield request.put(`/user/${userId}`, formData);
+    const resp = yield request.put(`/user/${userId}`, userData);
     yield put(updateUserSuccess(resp.data.user));
     yield put(pushNotificationToStack("User has been updated"));
   } catch (e) {
