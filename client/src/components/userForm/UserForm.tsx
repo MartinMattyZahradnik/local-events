@@ -28,7 +28,7 @@ import { fetchCountryList } from "redux/application/actions";
 import { selectCountryList } from "redux/application/selectors";
 
 // Others
-import validationSchema from "./UserFormValidationSchema";
+import createValidationSchema from "./UserFormValidationSchema";
 
 const StyledUserFormWrapper = styled(Card)`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
@@ -97,10 +97,18 @@ interface IRegisterUserProps extends IUserFormValues {
   onSubmit: (formValues: IRegisterUserActionPayload) => any;
   submitButtonLabel: string;
   formHeading: string;
+  isUpdate?: boolean;
 }
 
 const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
-  const { isSubmitting, setFieldValue, formHeading, touched, errors } = props;
+  const {
+    isSubmitting,
+    setFieldValue,
+    formHeading,
+    touched,
+    errors,
+    isUpdate
+  } = props;
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
   const countries = useSelector(selectCountryList);
@@ -273,55 +281,59 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             </StyledFormErrorWrapper>
           </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={12} sm={6}>
-            <Field
-              name="password"
-              type="password"
-              label={
-                <FormattedMessage
-                  id="User.password"
-                  defaultMessage="Password"
+          {!isUpdate && (
+            <>
+              <StyledFieldWrapper item xs={12} sm={6}>
+                <Field
+                  name="password"
+                  type="password"
+                  label={
+                    <FormattedMessage
+                      id="User.password"
+                      defaultMessage="Password"
+                    />
+                  }
+                  placeholder={formatMessage({
+                    id: "User.typePassword",
+                    defaultMessage: "Type password"
+                  })}
+                  component={FormField}
                 />
-              }
-              placeholder={formatMessage({
-                id: "User.typePassword",
-                defaultMessage: "Type password"
-              })}
-              component={FormField}
-            />
 
-            <StyledFormErrorWrapper>
-              <FormError
-                touched={touched.password}
-                errorMsgId={errors.password}
-              />
-            </StyledFormErrorWrapper>
-          </StyledFieldWrapper>
+                <StyledFormErrorWrapper>
+                  <FormError
+                    touched={touched.password}
+                    errorMsgId={errors.password}
+                  />
+                </StyledFormErrorWrapper>
+              </StyledFieldWrapper>
 
-          <StyledFieldWrapper item xs={12} sm={6}>
-            <Field
-              name="passwordConfirm"
-              type="password"
-              label={
-                <FormattedMessage
-                  id="User.confirmPassword"
-                  defaultMessage="Confirm password"
+              <StyledFieldWrapper item xs={12} sm={6}>
+                <Field
+                  name="passwordConfirm"
+                  type="password"
+                  label={
+                    <FormattedMessage
+                      id="User.confirmPassword"
+                      defaultMessage="Confirm password"
+                    />
+                  }
+                  placeholder={formatMessage({
+                    id: "User.typeConfirmPassword",
+                    defaultMessage: "Type password confirm"
+                  })}
+                  component={FormField}
                 />
-              }
-              placeholder={formatMessage({
-                id: "User.typeConfirmPassword",
-                defaultMessage: "Type password confirm"
-              })}
-              component={FormField}
-            />
 
-            <StyledFormErrorWrapper>
-              <FormError
-                touched={touched.passwordConfirm}
-                errorMsgId={errors.passwordConfirm}
-              />
-            </StyledFormErrorWrapper>
-          </StyledFieldWrapper>
+                <StyledFormErrorWrapper>
+                  <FormError
+                    touched={touched.passwordConfirm}
+                    errorMsgId={errors.passwordConfirm}
+                  />
+                </StyledFormErrorWrapper>
+              </StyledFieldWrapper>
+            </>
+          )}
 
           <StyledFieldWrapper>
             <input
@@ -476,7 +488,8 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
 
 export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
   displayName: "User form",
-  validationSchema,
+  validationSchema: (props: IRegisterUserProps) =>
+    createValidationSchema(props.isUpdate),
   handleSubmit(values, { props, setSubmitting }) {
     props.onSubmit(values);
   },

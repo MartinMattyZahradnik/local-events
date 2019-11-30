@@ -75,6 +75,7 @@ const UpdateUser: React.FC<IUpdateUserProps> = ({ match }) => {
     <StyledFormWrapper container>
       <UserForm
         {...user}
+        isUpdate
         onSubmit={handleSubmit}
         submitButtonLabel={submitButtonLabel}
         formHeading={intl.formatMessage({

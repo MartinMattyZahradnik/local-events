@@ -101,7 +101,8 @@ export const updateUserController = async (
   try {
     const {
       params: { id },
-      token: { _id, userRole }
+      token: { _id, userRole },
+      body
     } = req;
 
     if (_id !== id && userRole !== "admin") {
@@ -110,20 +111,15 @@ export const updateUserController = async (
         .send({ message: "You don't have access to update this user profile" });
     }
 
-    const { password } = req.body;
     if (!id) {
       res.status(400).json({
         message: "Missing user Id."
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    const user = await User.findByIdAndUpdate(
-      id,
-      { ...req.body, password: hashedPassword },
-      { new: true }
-    );
+    const user = await User.findByIdAndUpdate(id, body, {
+      new: true
+    });
 
     if (!user) {
       res.status(404).json({
