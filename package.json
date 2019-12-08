@@ -7,7 +7,7 @@
     "start": "node server/dist/app.js",
     "start-server-dev": "npm run dev --prefix server",
     "start-client-dev": "npm run start --prefix client",
-    "start-dev": "concurrently \"npm run start-server-dev\" \"npm run start-client-dev\"",
+    "start-dev": "NODE_ENV=development concurrently \"npm run start-server-dev\" \"npm run start-client-dev\"",
     "build-client": "npm install --prefix client && npm run build --prefix client",
     "create-public-folder": "cd server && mkdir -p uploads",
     "build-server": "npm install --prefix server && npm run build --prefix server",

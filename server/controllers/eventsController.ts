@@ -164,7 +164,7 @@ export const getSimilarEventsController = async (
 
     return res
       .status(200)
-      .json({ similarEvents, message: "Fetch similar events successfull" });
+      .json({ similarEvents, message: "Fetch similar events successful" });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
