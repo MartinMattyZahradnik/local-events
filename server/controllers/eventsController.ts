@@ -93,18 +93,16 @@ export const getEventDetailController = async (
   const { eventId } = req.params;
   try {
     const event = await Event.findById(eventId).populate("owner");
-
     if (!event) {
-      const error: ErrorWithStatusCode = new Error("Could not find Event.");
-      error.statusCode = 404;
-      throw error;
+      return res.status(404).send({ message: "Unable to find event" });
     }
 
     return res.status(200).json({ event, message: "Fetch event successful" });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
+    if (err.kind && err.kind === "ObjectId") {
+      return res.status(404).send({ message: "Unable to find event" });
     }
+
     next(err);
   }
 };

@@ -11,8 +11,8 @@
     "dev": "NODE_ENV=development nodemon app.ts",
     "start": "NODE_ENV=production node ./dist/app.js",
     "prod": "npm run build && npm run start",
-    "test-dev": "NODE_ENV=testing nodemon --watch . --ext ts --exec \"mocha --file ./test/before.test.ts --file ./test/after.test.ts -r ts-node/register test/**/*.test.ts\"",
-    "test": "NODE_ENV=testing mocha --exit --file ./test/before.test.ts --file ./test/after.test.ts -r ts-node/register test/**/*.test.ts"
+    "test-dev": "NODE_ENV=testing nodemon --watch . --ext ts --exec \"mocha -t 100000 --file ./test/before.ts -r ts-node/register test/**/*.test.ts\"",
+    "test": "NODE_ENV=testing mocha --exit -t 100000 --file ./test/before.ts  -r ts-node/register test/**/*.test.ts"
   },
   "engines": {
     "node": "11.14.0"

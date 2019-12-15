@@ -6,6 +6,7 @@ type Gender = "male" | "female" | "other";
 export interface IUserModel extends mongoose.Document {
   name: string;
   firstName: string;
+  lastName: string;
   userName: string;
   email: string;
   phone?: string;
