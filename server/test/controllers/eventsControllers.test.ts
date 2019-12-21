@@ -138,6 +138,61 @@ describe("Create Events", () => {
   });
 });
 
+describe("Update Events", () => {
+  it("UPDATE /events/:id -> should return 403 if has no rights to update event", async () => {
+    const id = eventsMock[0]._id.toString(); // Event created by admin
+    const res = await chai
+      .request(app)
+      .put(`/events/${id}`)
+      .set("authorization", getToken("user"));
+    expect(res.status).to.equal(403);
+    expect(res.body).to.eql({
+      message: "You don't have access rights to update this event"
+    });
+  });
+
+  it("UPDATE /events/:id -> admin should be able to update any event", async () => {
+    const id = "5defe6519ea3d18c03f5df57";
+    const res = await chai
+      .request(app)
+      .put(`/events/${id}`)
+      .set("authorization", getToken("admin"))
+      .send({ name: "Updated event name" });
+
+    expect(res.status).to.equal(200);
+
+    const event = await Event.findById(id);
+
+    expect(event.name).to.equals("Updated event name");
+  });
+
+  it("UPDATE /events/:id -> user should be able to update own event event", async () => {
+    const id = "5defe6519ea3d18c03f5df57";
+    const res = await chai
+      .request(app)
+      .put(`/events/${id}`)
+      .set("authorization", getToken("user"))
+      .send({ name: "User updated his own event" });
+
+    expect(res.status).to.equal(200);
+
+    const event = await Event.findById(id);
+    expect(event.name).to.equals("User updated his own event");
+  });
+
+  it("UPDATE /events/:id -> should return 404 if event doesn't exist", async () => {
+    const id = mongoose.Types.ObjectId();
+    const res = await chai
+      .request(app)
+      .put(`/events/${id}`)
+      .set("authorization", getToken("user"))
+      .send({ name: "Event doesn't exist" });
+
+    expect(res.status).to.equal(404);
+    expect(res.body.message).to.equal(`Unable to find event with id: ${id}`);
+  });
+});
+
 describe("Delete Events", () => {
   it("DELETE /events -> delete event existing event", async () => {
     const id = eventsMock[eventsMock.length - 1]._id.toString();

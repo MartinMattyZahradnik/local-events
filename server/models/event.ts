@@ -1,5 +1,33 @@
 import mongoose, { Schema } from "mongoose";
 
+export interface IAddress {
+  street: string;
+  postalCode: string;
+  city: string;
+  countryCode?: string;
+  country: string;
+}
+
+export interface IPrice {
+  price: number;
+  currency: string;
+  locale: string;
+}
+
+export interface IEventModel extends mongoose.Document {
+  name: string;
+  description: string;
+  date: Date;
+  imageUrl?: string;
+  category: string[];
+  coordinates?: [number, number];
+  similarEvents?: mongoose.Types.ObjectId[];
+  tags?: string[];
+  price: IPrice;
+  address: IAddress;
+  owner: mongoose.Types.ObjectId;
+}
+
 const eventsCategory = [
   "other",
   "music",
@@ -83,4 +111,4 @@ const eventSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Event", eventSchema);
+export default mongoose.model<IEventModel>("Event", eventSchema);

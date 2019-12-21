@@ -61,6 +61,12 @@ export const updateEventController = async (
       .populate("owner")
       .exec();
 
+    if (!event) {
+      return res
+        .status(404)
+        .send({ message: `Unable to find event with id: ${eventId}` });
+    }
+
     if (_id !== event.owner._id.toString() && userRole !== "admin") {
       return res
         .status(403)
@@ -116,12 +122,14 @@ export const deleteEventController = async (
   try {
     const event: any = await Event.findById(eventId).populate("owner");
     if (!event) {
-      return res.send(404).json({ message: `Could not find Event ${eventId}` });
+      return res
+        .status(404)
+        .json({ message: `Could not find Event ${eventId}` });
     }
 
     const user = await User.findOne({ email });
     if (!user || !user._id.equals(event.owner._id)) {
-      return res.send(403).send("Forbidden");
+      return res.status(403).send("Forbidden");
     }
 
     await Event.findByIdAndRemove(eventId);
