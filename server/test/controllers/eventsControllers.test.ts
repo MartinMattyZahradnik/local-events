@@ -5,6 +5,7 @@ import app from "../../app";
 import eventsMock from "../eventsMock";
 import Event from "../../models/event";
 import { getToken } from "../testUtils";
+import usersMock from "../usersMock";
 
 describe("Event detail", () => {
   it("GET /:eventId -> should return event detail", async () => {
@@ -134,5 +135,73 @@ describe("Create Events", () => {
 
     expect(res.status).to.equal(403);
     expect(res.text).to.equal("Missing Authorization header");
+  });
+});
+
+describe("Delete Events", () => {
+  it("DELETE /events -> delete event existing event", async () => {
+    const id = eventsMock[eventsMock.length - 1]._id.toString();
+    const res = await chai
+      .request(app)
+      .delete(`/events/${id}`)
+      .set("authorization", getToken("user"));
+    expect(res.status).to.equal(200);
+  });
+
+  it("DELETE /events -> admin should be able to delete any event", async () => {
+    // 5defea09ed3c7c4be1de88bb - owner is user
+    const res = await chai
+      .request(app)
+      .delete(`/events/5defea09ed3c7c4be1de88bb`)
+      .set("authorization", getToken("admin"));
+    expect(res.status).to.equal(200);
+  });
+
+  it("DELETE /events -> should return 404 for non existing event", async () => {
+    const id = mongoose.Types.ObjectId().toString();
+    const res = await chai
+      .request(app)
+      .delete(`/events/${id}`)
+      .set("authorization", getToken("user"));
+    expect(res.status).to.equal(404);
+  });
+
+  it("DELETE /events -> should return 403 if has no rights to delete event", async () => {
+    const _id = mongoose.Types.ObjectId().toString();
+
+    await chai
+      .request(app)
+      .post("/events")
+      .set("authorization", getToken("admin"))
+      .send({
+        price: { price: 123, currency: "EUR", locale: "en" },
+        address: {
+          street: "Example street",
+          postalCode: "81107",
+          city: "Bratislava",
+          countryCode: "AM",
+          country: "Slovakia"
+        },
+        category: ["sport", "food"],
+        coordinates: [48.1526288, 17.1159969, 17],
+        similarEvents: [],
+        tags: ["21321", "122"],
+        _id,
+        name: "Testing Event",
+        description: "This event exist only in testing DB",
+        date: 1575482732012,
+        imageUrl: "",
+        owner: usersMock[0]._id,
+        createdAt: "2019-12-04T18:05:51.523Z",
+        updatedAt: "2019-12-04T18:05:51.523Z",
+        __v: 0
+      });
+
+    const res = await chai
+      .request(app)
+      .delete(`/events/${_id}`)
+      .set("authorization", getToken("user"));
+
+    expect(res.status).to.equal(403);
   });
 });

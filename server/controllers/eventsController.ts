@@ -116,7 +116,7 @@ export const deleteEventController = async (
   try {
     const event: any = await Event.findById(eventId).populate("owner");
     if (!event) {
-      return res.send(404).send(`Could not find Event ${eventId}`);
+      return res.send(404).json({ message: `Could not find Event ${eventId}` });
     }
 
     const user = await User.findOne({ email });
