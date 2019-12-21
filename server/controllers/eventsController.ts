@@ -36,16 +36,12 @@ export const createEventController = async (
   next: NextFunction
 ) => {
   const { body } = req;
-  const newEvent = new Event(body);
 
   try {
-    await newEvent.save();
+    await Event.create(body);
     return res.status(200).json(body);
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    return res.status(500).send({ message: "Unable to create an event" });
   }
 };
 

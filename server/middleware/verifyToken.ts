@@ -7,9 +7,6 @@ declare module "express" {
   }
 }
 
-// Format Token
-// Authorization: Bearer <access_token>
-
 export const verifyToken = async (
   req: Request,
   res: Response,

@@ -1,8 +1,10 @@
 import chai, { expect } from "chai";
-import app from "../../app";
 import mongoose from "mongoose";
 
+import app from "../../app";
 import eventsMock from "../eventsMock";
+import Event from "../../models/event";
+import { getToken } from "../testUtils";
 
 describe("Event detail", () => {
   it("GET /:eventId -> should return event detail", async () => {
@@ -38,6 +40,11 @@ describe("Get Events", () => {
     expect(events.length).to.equal(eventsMock.length);
   });
 
+  it("GET /events -> should return totalItems property", async () => {
+    const req = await chai.request(app).get(`/events`);
+    expect(req.body.totalItems).to.equal(eventsMock.length);
+  });
+
   it("GET /events -> should populate owner correctly", async () => {
     const req = await chai.request(app).get(`/events?offset=0&limit=10`);
     const { events } = req.body;
@@ -55,5 +62,77 @@ describe("Get Events", () => {
     const { events } = req.body;
     expect(events.length).to.equal(limit);
     expect(events[0]._id).to.equal(eventsMock[offset]._id.toHexString());
+  });
+});
+
+describe("Create Events", () => {
+  const _id = mongoose.Types.ObjectId();
+  after(async () => {
+    await Event.deleteOne({ _id });
+  });
+
+  it("POST /events -> create Event properly", async () => {
+    await chai
+      .request(app)
+      .post("/events")
+      .set("authorization", getToken("user"))
+      .send({
+        price: { price: 123, currency: "EUR", locale: "en" },
+        address: {
+          street: "Example street",
+          postalCode: "81107",
+          city: "Bratislava",
+          countryCode: "AM",
+          country: "Slovakia"
+        },
+        category: ["sport", "food"],
+        coordinates: [48.1526288, 17.1159969, 17],
+        similarEvents: [],
+        tags: ["21321", "122"],
+        _id,
+        name: "Testing Event",
+        description: "This event exist only in testing DB",
+        date: 1575482732012,
+        imageUrl: "",
+        owner: mongoose.Types.ObjectId("5defe80a4eb7888d723270e2"),
+        createdAt: "2019-12-04T18:05:51.523Z",
+        updatedAt: "2019-12-04T18:05:51.523Z",
+        __v: 0
+      });
+
+    const event = await Event.findById(_id.toString());
+    expect(event._id.toString()).to.equal(_id.toString());
+  });
+
+  it("POST /events -> should handle missing access_token properly", async () => {
+    const res = await chai
+      .request(app)
+      .post("/events")
+      .send({
+        price: { price: 123, currency: "EUR", locale: "en" },
+        address: {
+          street: "Example street",
+          postalCode: "81107",
+          city: "Bratislava",
+          countryCode: "AM",
+          country: "Slovakia"
+        },
+        category: ["sport", "food"],
+        coordinates: [48.1526288, 17.1159969, 17],
+        similarEvents: [],
+        tags: ["21321", "122"],
+        _id: mongoose.Types.ObjectId(),
+        name: 12, // ERROR - NAME SHOULD BE A STRING!
+        description: "This event exist only in testing DB",
+        date: 1575482732012,
+        imageUrl: "",
+        owner: mongoose.Types.ObjectId("5defe80a4eb7888d723270e2"),
+        createdAt: "2019-12-04T18:05:51.523Z",
+        updatedAt: "2019-12-04T18:05:51.523Z",
+        __v: 0
+      });
+
+    expect(res.status).to.equal(403);
+    expect(res.text).to.equal("Missing Authorization header");
   });
 });

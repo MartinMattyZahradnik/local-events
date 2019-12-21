@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-type AvailableUserRoles = "admin" | "visitor" | "user";
+export type AvailableUserRoles = "admin" | "visitor" | "user";
 type Gender = "male" | "female" | "other";
 
 export interface IUserModel extends mongoose.Document {

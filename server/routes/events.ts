@@ -14,7 +14,7 @@ const router = express.Router();
 
 // GET /events
 router.get("/", getEventsController);
-router.post("/", createEventController);
+router.post("/", verifyToken, createEventController);
 router.get("/:eventId", getEventDetailController);
 router.put("/:eventId", verifyToken, updateEventController);
 router.delete("/:eventId", verifyToken, deleteEventController);
