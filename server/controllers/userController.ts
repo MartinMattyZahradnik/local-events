@@ -14,7 +14,7 @@ export const createUserController = async (
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      res.status(400).send({
+      return res.status(400).send({
         message: `Users with email: ${email} already exist. please use another email`
       });
     }
@@ -27,69 +27,51 @@ export const createUserController = async (
 
     const user = await User.create(userData);
 
-    res.status(201).json({
+    return res.status(201).send({
       message: "User has been created successfully.",
       userId: user._id
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    return res.status(500).send();
   }
 };
-// ///////////////////////////////////
-export const getUsersController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const getUsersController = async (req: Request, res: Response) => {
   try {
-    const limit = req.body.limit || 20;
+    const limit = req.query.limit ? parseInt(req.query.limit) : 20;
     const users = await User.find().limit(limit);
 
-    res.status(200).json({
+    return res.status(200).send({
       message: "Users has fetched successfully.",
       users
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    return res.status(500).send();
   }
 };
 
-export const getUserController = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-) => {
+export const getUserController = async (req: any, res: Response) => {
   try {
     const { id } = req.params;
-    if (!id) {
-      res.status(400).json({
-        message: "Missing user Id."
-      });
-    }
-
     const user = await User.findById(id);
-
     if (!user) {
-      res.status(404).json({
+      return res.status(404).send({
         message: `Unable to find user with id ${id}`
       });
     }
 
-    res.status(201).json({
+    return res.status(200).send({
       message: "User has been fetched successfully.",
       user
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
+    if (err.name === "CastError" || err.kind === "ObjectId") {
+      return res.status(400).send({
+        message: `There is a problem with request. Probably it's not possible to cast object id ${err.value}`
+      });
     }
-    next(err);
+
+    return res.status(500).send();
   }
 };
 
