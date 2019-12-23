@@ -40,7 +40,7 @@ describe("GET User", () => {
     expect(res.status).to.equal(404);
   });
 
-  it("GET /user/:id -> should return 400 if :id is invalit ObjectId", async () => {
+  it("GET /user/:id -> should return 400 if :id is invalid ObjectId", async () => {
     const id = "invalidObjectId";
     const res = await chai.request(app).get(`/user/${id}`);
     expect(res.status).to.equal(400);
@@ -96,6 +96,79 @@ describe("Create User", () => {
         ...usersMock[0]
       });
 
+    expect(res.status).to.equal(400);
+  });
+});
+
+describe("Update User", () => {
+  it("PUT /user/:id -> it should update user", async () => {
+    const id = usersMock[1]._id.toString();
+    const updatedFirstName = "Updated User name";
+    const res = await chai
+      .request(app)
+      .put(`/user/${id}`)
+      .set("authorization", getToken("user"))
+      .send({
+        firstName: updatedFirstName
+      });
+
+    const user = await User.findOne({ _id: id });
+
+    expect(res.status).to.equal(200);
+    expect(user.firstName).to.equal(updatedFirstName);
+  });
+
+  it("PUT /user/:id -> it should return 403 for missing credentials", async () => {
+    const id = usersMock[0]._id.toString();
+    const updatedFirstName = "Updated User name";
+    const res = await chai
+      .request(app)
+      .put(`/user/${id}`)
+      .set("authorization", getToken("user")) // set user's 3 token
+      .send({
+        firstName: updatedFirstName
+      });
+
+    expect(res.status).to.equal(403);
+  });
+
+  it("PUT /user/:id -> it should return 404 if user not exist", async () => {
+    const id = mongoose.Types.ObjectId();
+    const updatedFirstName = "Updated User name";
+    const res = await chai
+      .request(app)
+      .put(`/user/${id}`)
+      .set("authorization", getToken("user")) // set user's 3 token
+      .send({
+        firstName: updatedFirstName
+      });
+
+    expect(res.status).to.equal(404);
+  });
+
+  it("PUT /user/:id -> admin should have permission to update any user", async () => {
+    const id = usersMock[1]._id.toString();
+    const updatedLastName = "Updated User name";
+    const res = await chai
+      .request(app)
+      .put(`/user/${id}`)
+      .set("authorization", getToken("admin"))
+      .send({
+        lastName: updatedLastName
+      });
+
+    const user = await User.findOne({ _id: id });
+
+    expect(res.status).to.equal(200);
+    expect(user.lastName).to.equal(updatedLastName);
+  });
+
+  it("PUT /user/:id -> should return 400 if :id is invalid ObjectId", async () => {
+    const id = "invalidObjectId";
+    const res = await chai
+      .request(app)
+      .put(`/user/${id}`)
+      .set("authorization", getToken("admin"));
     expect(res.status).to.equal(400);
   });
 });

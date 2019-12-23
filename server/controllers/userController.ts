@@ -5,11 +5,7 @@ import bcrypt from "bcrypt";
 import User from "../models/user";
 import Event from "../models/event";
 
-export const createUserController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const createUserController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
@@ -75,11 +71,7 @@ export const getUserController = async (req: any, res: Response) => {
   }
 };
 
-export const updateUserController = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-) => {
+export const updateUserController = async (req: any, res: Response) => {
   try {
     const {
       params: { id },
@@ -87,37 +79,34 @@ export const updateUserController = async (
       body
     } = req;
 
+    const user = await User.findByIdAndUpdate(id, body, {
+      new: true
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        message: `Unable to find user with id ${id}`
+      });
+    }
+
     if (_id !== id && userRole !== "admin") {
       return res
         .status(403)
         .send({ message: "You don't have access to update this user profile" });
     }
 
-    if (!id) {
-      res.status(400).json({
-        message: "Missing user Id."
-      });
-    }
-
-    const user = await User.findByIdAndUpdate(id, body, {
-      new: true
-    });
-
-    if (!user) {
-      res.status(404).json({
-        message: `Unable to find user with id ${id}`
-      });
-    }
-
-    res.status(201).json({
+    return res.status(200).send({
       message: "User has been updated successfully.",
       user
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
+    if (err.name === "CastError" || err.kind === "ObjectId") {
+      return res.status(400).send({
+        message: `There is a problem with request. Probably it's not possible to cast object id ${err.value}`
+      });
     }
-    next(err);
+
+    return res.status(500).send();
   }
 };
 
