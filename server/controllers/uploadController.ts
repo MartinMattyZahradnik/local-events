@@ -5,6 +5,8 @@ export const uploadFileController = async (req: Request, res: Response) => {
     return res.status(400).send({ message: "files array is required! " });
   }
 
+  console.log(req.files, "????");
+
   if (Array.isArray(req.files)) {
     const normalizedResponse = req.files.map((file: any) => ({
       ...file,
@@ -13,5 +15,7 @@ export const uploadFileController = async (req: Request, res: Response) => {
     return res.status(201).send({ files: normalizedResponse });
   }
 
-  return res.status(500).send();
+  console.log(Array.isArray(req.files), "???");
+
+  return res.status(401).send();
 };

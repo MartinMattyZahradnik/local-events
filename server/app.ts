@@ -4,7 +4,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import { Request, Response, NextFunction } from "express";
+import { Request } from "express";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import compression from "compression";
@@ -22,9 +22,7 @@ import applicationRoutes from "./routes/app";
 
 dotenv.config();
 const fileStorage = multer.diskStorage({
-  destination: (req: Request, file, callback) => {
-    callback(null, `${__dirname}/uploads/`);
-  },
+  destination: "./uploads/",
   filename: (req: Request, file: Express.Multer.File, callback: any) => {
     callback(null, new Date().toISOString() + "-" + file.originalname);
   }
