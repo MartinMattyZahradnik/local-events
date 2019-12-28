@@ -23,7 +23,7 @@ import applicationRoutes from "./routes/app";
 dotenv.config();
 const fileStorage = multer.diskStorage({
   destination: (req: Request, file, callback) => {
-    callback(null, "uploads/");
+    callback(null, `${__dirname}/uploads/`);
   },
   filename: (req: Request, file: Express.Multer.File, callback: any) => {
     callback(null, new Date().toISOString() + "-" + file.originalname);
@@ -56,11 +56,6 @@ app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
 app.use("/user", userRoutes);
 app.use("/upload", uploadRoutes);
-
-interface IErrorHandlerType extends Error {
-  statusCode?: number;
-  data: any;
-}
 
 if (process.env.NODE_ENV === "production") {
   // All remaining requests return the React app, so it can handle routing.
