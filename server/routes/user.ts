@@ -17,7 +17,7 @@ router.post("/", createUserController);
 router.get("/", getUsersController);
 router.get("/:id", getUserController);
 router.put("/:id", verifyToken, updateUserController);
-router.delete("/:id", deleteUserController);
+router.delete("/:id", verifyToken, deleteUserController);
 
 // /user/:id/events
 router.get("/:id/events", verifyToken, getUserEventsController);

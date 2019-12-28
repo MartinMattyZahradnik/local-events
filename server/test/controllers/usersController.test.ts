@@ -7,6 +7,7 @@ import Event from "../../models/event";
 import { getToken } from "../testUtils";
 import usersMock from "../usersMock";
 import User from "../../models/user";
+import user from "../../models/user";
 
 describe("GET Users", () => {
   it("GET /user -> should return array of users", async () => {
@@ -169,6 +170,59 @@ describe("Update User", () => {
       .request(app)
       .put(`/user/${id}`)
       .set("authorization", getToken("admin"));
+    expect(res.status).to.equal(400);
+  });
+});
+
+describe("Delete User", () => {
+  const _id = mongoose.Types.ObjectId();
+  before(async () => {
+    await User.create({
+      ...usersMock[0],
+      _id,
+      email: "testuser@localevents.com"
+    });
+  });
+
+  after(async () => {
+    await User.findByIdAndDelete(_id);
+  });
+
+  it("DELETE /user/:id -> it should return 403 for missing credentials", async () => {
+    const res = await chai
+      .request(app)
+      .delete(`/user/${_id.toString()}`)
+      .set("authorization", getToken("user"));
+
+    expect(res.status).to.equal(403);
+  });
+
+  it("DELETE /user/:id -> it should return 404 if user not exist", async () => {
+    const id = mongoose.Types.ObjectId();
+    const res = await chai
+      .request(app)
+      .put(`/user/${id}`)
+      .set("authorization", getToken("user")); // set user's 3 token
+
+    expect(res.status).to.equal(404);
+  });
+
+  it("DELETE /user/:id -> admin should have permission to delete any user", async () => {
+    await chai
+      .request(app)
+      .delete(`/user/${_id}`)
+      .set("authorization", getToken("admin"));
+
+    const user = await User.findOne({ _id });
+    expect(user).to.equal(null);
+  });
+
+  it("DELETE /user/:id -> should return 400 if :id is invalid ObjectId", async () => {
+    const id = "invalidObjectId";
+    const res = await chai
+      .request(app)
+      .delete(`/user/${id}`)
+      .set("authorization", getToken("user"));
     expect(res.status).to.equal(400);
   });
 });

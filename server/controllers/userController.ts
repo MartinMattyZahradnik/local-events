@@ -79,9 +79,7 @@ export const updateUserController = async (req: any, res: Response) => {
       body
     } = req;
 
-    const user = await User.findByIdAndUpdate(id, body, {
-      new: true
-    });
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({
@@ -95,9 +93,13 @@ export const updateUserController = async (req: any, res: Response) => {
         .send({ message: "You don't have access to update this user profile" });
     }
 
+    const updatedUser = await User.findByIdAndUpdate(id, body, {
+      new: true
+    });
+
     return res.status(200).send({
       message: "User has been updated successfully.",
-      user
+      user: updatedUser
     });
   } catch (err) {
     if (err.name === "CastError" || err.kind === "ObjectId") {
@@ -110,29 +112,40 @@ export const updateUserController = async (req: any, res: Response) => {
   }
 };
 
-export const deleteUserController = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-) => {
+export const deleteUserController = async (req: any, res: Response) => {
+  const {
+    params: { id },
+    token: { _id, userRole }
+  } = req;
+
   try {
-    const { id } = req.params;
-    const user = await User.findByIdAndRemove(id);
+    const user = await User.findById(id);
     if (!user) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Unable to find user with id ${id}`
       });
     }
 
-    res.status(201).json({
+    if (_id !== id && userRole !== "admin") {
+      return res
+        .status(403)
+        .send({ message: "You don't have access to update this user profile" });
+    }
+
+    await User.findByIdAndDelete(id);
+
+    return res.status(200).json({
       message: "User has been deleted successfully.",
       user
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
+    if (err.name === "CastError" || err.kind === "ObjectId") {
+      return res.status(400).send({
+        message: `There is a problem with request. Probably it's not possible to cast object id ${err.value}`
+      });
     }
-    next(err);
+
+    return res.status(500).send();
   }
 };
 
