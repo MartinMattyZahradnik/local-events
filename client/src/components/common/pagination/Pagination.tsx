@@ -47,6 +47,8 @@ const StyledBeforeIcon = styled(NavigateBefore)`
 
 const StyledForm = styled.form`
   margin-right: 3rem;
+  display: flex;
+  align-items: center;
 `;
 
 const StyledPerPage = styled.span`
@@ -65,6 +67,12 @@ const StyledBoldText = styled.span`
 
 const StyledOfText = styled.span`
   margin: 0 0.5rem;
+`;
+
+const StyledSelect = styled(Select)`
+  .MuiSelect-root {
+    font-size: 1.4rem;
+  }
 `;
 
 interface IPaginationProps {
@@ -110,7 +118,7 @@ const Pagination = ({
             :
           </StyledPerPage>
           <StyledFormControl>
-            <Select
+            <StyledSelect
               value={perPage}
               onChange={handleChangePerPage}
               input={<Input name="age" id="age-helper" />}
@@ -120,7 +128,7 @@ const Pagination = ({
                   {value}
                 </MenuItem>
               ))}
-            </Select>
+            </StyledSelect>
           </StyledFormControl>
 
           <StyledBoldText>
