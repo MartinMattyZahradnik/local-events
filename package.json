@@ -9,8 +9,9 @@
     "start-client-dev": "npm run start --prefix client",
     "start-dev": "NODE_ENV=development concurrently \"npm run start-server-dev\" \"npm run start-client-dev\"",
     "build-client": "npm install --prefix client && npm run build --prefix client",
+    "create-public-folder": "cd server && mkdir -p uploads",
     "build-server": "npm install --prefix server && npm run build --prefix server",
-    "heroku-postbuild": "npm run build-client && npm run build-server"
+    "heroku-postbuild": "npm run build-client && npm run build-server && npm run create-public-folder"
   },
   "repository": {
     "type": "git",

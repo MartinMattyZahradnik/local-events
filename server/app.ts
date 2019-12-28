@@ -30,10 +30,19 @@ const fileStorage = multer.diskStorage({
 
 const fileFilter = (req: Request, file: Express.Multer.File, callback: any) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return callback(new Error("Only image files are allowed!"), false);
+    return callback(
+      new Error("Only .jpg, .jpeg, .png, .gif files are allowed"),
+      false
+    );
   }
   callback(null, true);
 };
+
+// Init upload
+export const fileUpload = multer({ storage: fileStorage, fileFilter }).array(
+  "image",
+  10
+);
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "access.log"),
@@ -45,7 +54,6 @@ app.use(helmet());
 app.use(compression());
 app.use(morgan("combined", { stream: accessLogStream }));
 app.use(bodyParser.json());
-app.use(multer({ storage: fileStorage, fileFilter }).array("image", 10));
 app.use(cors());
 app.use(express.static(__dirname + "/uploads"));
 

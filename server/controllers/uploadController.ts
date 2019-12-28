@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
+import { fileUpload } from "../app";
 
 export const uploadFileController = async (req: Request, res: Response) => {
-  if (!req.files || req.files.length < 1) {
-    return res.status(400).send({ message: "files array is required! " });
-  }
+  fileUpload(req, res, err => {
+    if (err) {
+      console.log(err, "????");
+      return res.send(400);
+    }
 
-  console.log(req.files, "????");
+    if (Array.isArray(req.files)) {
+      const normalizedResponse = req.files.map((file: any) => ({
+        ...file,
+        path: file.path.substring(7) // remove "public/" from path
+      }));
+      return res.status(201).send({ files: normalizedResponse });
+    }
 
-  if (Array.isArray(req.files)) {
-    const normalizedResponse = req.files.map((file: any) => ({
-      ...file,
-      path: file.path.substring(7) // remove "public/" from path
-    }));
-    return res.status(201).send({ files: normalizedResponse });
-  }
-
-  console.log(Array.isArray(req.files), "???");
-
-  return res.status(401).send();
+    return res.status(300).send({ nototo: req.files });
+  });
 };
