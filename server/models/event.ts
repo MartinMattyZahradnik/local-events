@@ -1,4 +1,5 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
+import { IUserModel } from "./user";
 
 export interface IAddress {
   street: string;
@@ -14,7 +15,7 @@ export interface IPrice {
   locale: string;
 }
 
-export interface IEventModel extends mongoose.Document {
+export interface IEventModel extends Document {
   name: string;
   description: string;
   date: Date;
@@ -25,7 +26,9 @@ export interface IEventModel extends mongoose.Document {
   tags?: string[];
   price: IPrice;
   address: IAddress;
-  owner: mongoose.Types.ObjectId;
+  owner: Schema.Types.ObjectId | IUserModel;
+  createdAt: number;
+  deletedAt: number | null;
 }
 
 const eventsCategory = [

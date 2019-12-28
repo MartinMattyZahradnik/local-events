@@ -1,9 +1,9 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 export type AvailableUserRoles = "admin" | "visitor" | "user";
 type Gender = "male" | "female" | "other";
 
-export interface IUserModel extends mongoose.Document {
+export interface IUserModel extends Document {
   name: string;
   firstName: string;
   lastName: string;
@@ -13,16 +13,18 @@ export interface IUserModel extends mongoose.Document {
   birthDate: Date;
   userRole: AvailableUserRoles;
   gender: Gender;
-  password: String;
-  image?: String;
+  password: string;
+  image?: string;
   address: {
     street: string;
     postalCode: string;
     city: string;
     country: string;
   };
-  resetToken: String | null;
+  resetToken: string | null;
   resetTokenExpiration: number | null;
+  createdAt: number;
+  deletedAt: number | null;
 }
 
 const availableUserRoles = ["admin", "visitor", "user"];

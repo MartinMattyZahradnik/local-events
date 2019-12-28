@@ -1,30 +1,31 @@
 import User from "../models/user";
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import sgMail from "@sendgrid/mail";
 import { getAppBaseUrl } from "../utils/utils";
+import { IUserModel } from "../models/user";
 
 export const loginController = async (
-  req: any,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "email and password are required params for auth"
       });
     }
 
-    const user: any = await User.findOne({
+    const user: IUserModel = await User.findOne({
       email
     });
 
     if (!user) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Unable to find user with email ${email}`
       });
     }
@@ -32,7 +33,7 @@ export const loginController = async (
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      res.status(403).json({
+      return res.status(403).json({
         message: `Invalid combination of username and password`
       });
     }
@@ -86,11 +87,7 @@ export const loginController = async (
   }
 };
 
-export const passwordResetController = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-) => {
+export const passwordResetController = async (req: Request, res: Response) => {
   const { email } = req.body;
   try {
     const buffer = await crypto.randomBytes(32);
@@ -100,7 +97,7 @@ export const passwordResetController = async (
     });
 
     if (!user) {
-      res
+      return res
         .status(404)
         .send({ message: `Unable to find user with email ${email}` });
     }
@@ -115,20 +112,20 @@ export const passwordResetController = async (
       subject: "Local Events - password reset",
       html: `<p>Please use this link to reset the password. </p><a href="${link}">${link}</a>`
     });
-    res.status(200).send({ message: "Password has been reset successfully" });
+    return res
+      .status(200)
+      .send({ message: "Password has been reset successfully" });
   } catch (err) {
     console.error(JSON.stringify(err, null, 2));
   }
 };
 
-export const setNewPasswordController = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-) => {
+export const setNewPasswordController = async (req: Request, res: Response) => {
   const { token, password } = req.body;
   if (!token || !password) {
-    res.status(400).send({ message: "Password and token are required params" });
+    return res
+      .status(400)
+      .send({ message: "Password and token are required params" });
   }
 
   try {
@@ -137,11 +134,13 @@ export const setNewPasswordController = async (
     });
 
     if (!user) {
-      res.status(404).send({ message: "Unable to find user with given token" });
+      return res
+        .status(404)
+        .send({ message: "Unable to find user with given token" });
     }
 
     if (user.resetTokenExpiration < Date.now()) {
-      res.status(403).send({ message: "Token expired" });
+      return res.status(403).send({ message: "Token expired" });
     }
 
     const hashedPw = await bcrypt.hash(password, 12);
@@ -151,7 +150,7 @@ export const setNewPasswordController = async (
       resetTokenExpiration: null
     });
 
-    res.status(200).send({ message: "User password has been reset" });
+    return res.status(200).send({ message: "User password has been reset" });
   } catch (err) {
     console.error(err);
   }

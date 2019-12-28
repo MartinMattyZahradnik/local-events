@@ -1,10 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
-export const uploadFileController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const uploadFileController = async (req: Request, res: Response) => {
   if (!req.files || req.files.length < 1) {
     return res.status(400).send({ message: "files array is required! " });
   }

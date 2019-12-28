@@ -1,6 +1,7 @@
 import Event from "../models/event";
 import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
+import { IEventModel } from "../models/event";
 
 export const getEventsController = async (
   req: Request,
@@ -23,18 +24,11 @@ export const getEventsController = async (
       totalItems: totalItems
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    return res.status(500).send({});
   }
 };
 
-export const createEventController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const createEventController = async (req: Request, res: Response) => {
   const { body } = req;
 
   try {
@@ -88,7 +82,7 @@ interface ErrorWithStatusCode extends Error {
 }
 
 export const getEventDetailController = async (
-  req: any,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -110,7 +104,7 @@ export const getEventDetailController = async (
 };
 
 export const deleteEventController = async (
-  req: any,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -143,7 +137,7 @@ export const deleteEventController = async (
 };
 
 export const getSimilarEventsController = async (
-  req: any,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {

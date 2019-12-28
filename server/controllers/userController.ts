@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 
 // Models
@@ -46,7 +46,7 @@ export const getUsersController = async (req: Request, res: Response) => {
   }
 };
 
-export const getUserController = async (req: any, res: Response) => {
+export const getUserController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -71,7 +71,7 @@ export const getUserController = async (req: any, res: Response) => {
   }
 };
 
-export const updateUserController = async (req: any, res: Response) => {
+export const updateUserController = async (req: Request, res: Response) => {
   try {
     const {
       params: { id },
@@ -112,7 +112,7 @@ export const updateUserController = async (req: any, res: Response) => {
   }
 };
 
-export const deleteUserController = async (req: any, res: Response) => {
+export const deleteUserController = async (req: Request, res: Response) => {
   const {
     params: { id },
     token: { _id, userRole }
@@ -149,7 +149,7 @@ export const deleteUserController = async (req: any, res: Response) => {
   }
 };
 
-export const getUserEventsController = async (req: any, res: Response) => {
+export const getUserEventsController = async (req: Request, res: Response) => {
   const {
     params: { id },
     token: { _id, userRole }
