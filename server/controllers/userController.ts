@@ -149,41 +149,41 @@ export const deleteUserController = async (req: any, res: Response) => {
   }
 };
 
-export const getUserEventsController = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-) => {
+export const getUserEventsController = async (req: any, res: Response) => {
   const {
     params: { id },
     token: { _id, userRole }
   } = req;
 
-  if (id !== _id && userRole !== "admin") {
-    res.status(403).json({
-      message: `Don't have access to user events`
-    });
-  }
-
   try {
-    const events = await Event.find({
-      owner: id
-    });
-
-    if (!events) {
-      res.status(404).json({
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).send({
         message: `Unable to events for user`
       });
     }
 
-    res.status(201).json({
+    if (id !== _id && userRole !== "admin") {
+      return res.status(403).json({
+        message: `Don't have access to user events`
+      });
+    }
+
+    const events = await Event.find({
+      owner: id
+    });
+
+    return res.status(200).json({
       message: "",
       events
     });
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
+    if (err.name === "CastError" || err.kind === "ObjectId") {
+      return res.status(400).send({
+        message: `There is a problem with request. Probably it's not possible to cast object id ${err.value}`
+      });
     }
-    next(err);
+
+    return res.status(500).send();
   }
 };

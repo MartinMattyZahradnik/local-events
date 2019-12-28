@@ -26,6 +26,44 @@ describe("GET Users", () => {
   });
 });
 
+describe("GET User's Events", () => {
+  const id = usersMock[1]._id;
+
+  it("GET /user/:id/events -> should return array of user's events", async () => {
+    const res = await chai
+      .request(app)
+      .get(`/user/${id}/events`)
+      .set("authorization", getToken("user"));
+
+    expect(res.status).to.equal(200);
+    expect(res.body.events).to.be.an("array");
+  });
+
+  it("GET /user/:id/events -> should return 403 for missing credentials", async () => {
+    const res = await chai.request(app).get(`/user/${id}/events`);
+    expect(res.status).to.equal(403);
+  });
+
+  it("GET /user/:id/events -> should return 404 if user doesn't exist", async () => {
+    const id = mongoose.Types.ObjectId();
+    const res = await chai
+      .request(app)
+      .get(`/user/${id}/events`)
+      .set("authorization", getToken("user"));
+
+    expect(res.status).to.equal(404);
+  });
+
+  it("GET /user/:id/events -> should return 400 if :id is invalid ObjectId", async () => {
+    const id = "invalidObjectId";
+    const res = await chai
+      .request(app)
+      .get(`/user/${id}/events`)
+      .set("authorization", getToken("user"));
+    expect(res.status).to.equal(400);
+  });
+});
+
 describe("GET User", () => {
   it("GET /user/:id -> should return user detail", async () => {
     const id = usersMock[0]._id.toString();
