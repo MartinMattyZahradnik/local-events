@@ -55,7 +55,7 @@ app.use(compression());
 app.use(morgan("combined", { stream: accessLogStream }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static(__dirname + "/uploads"));
+app.use(express.static("./uploads/"));
 
 app.use("/app", applicationRoutes);
 app.use("/auth", authRoutes);

@@ -122,7 +122,11 @@ export const deleteEventController = async (
     }
 
     const user = await User.findOne({ email });
-    if (!user || !user._id.equals(event.owner._id)) {
+
+    if (
+      !user ||
+      (!user._id.equals(event.owner._id) && user.userRole !== "admin")
+    ) {
       return res.status(403).send("Forbidden");
     }
 

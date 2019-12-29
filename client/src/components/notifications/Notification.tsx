@@ -22,6 +22,12 @@ const StyledNotification = styled.li`
   z-index: 99999;
 `;
 
+const StyledSnackBar = styled(Snackbar)`
+  .MuiSnackbarContent-message {
+    line-height: 2.2rem;
+  }
+`;
+
 const StyledCloseBtn = styled(IconButton)`
   color: white;
 `;
@@ -45,7 +51,7 @@ const Notification = ({ id, text }: INotificationProps) => {
 
   return (
     <StyledNotification>
-      <Snackbar
+      <StyledSnackBar
         open={true}
         anchorOrigin={{
           vertical: "bottom",

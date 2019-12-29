@@ -28,15 +28,13 @@ export const MapComponent = ({
   google,
   width = "100%",
   height = "100%"
-}: IMapProps) => {
-  return (
-    <StyledMapWrapper width={width} height={height}>
-      <Map google={google} initialCenter={initialCenter} zoom={zoom}>
-        <Marker />
-      </Map>
-    </StyledMapWrapper>
-  );
-};
+}: IMapProps) => (
+  <StyledMapWrapper width={width} height={height}>
+    <Map google={google} initialCenter={initialCenter} zoom={zoom}>
+      <Marker />
+    </Map>
+  </StyledMapWrapper>
+);
 
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_GOOGLE_MAPS_API || ""

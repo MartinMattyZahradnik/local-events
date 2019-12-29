@@ -29,6 +29,7 @@ import { selectCountryList } from "redux/application/selectors";
 
 // Others
 import validationSchema from "./EventFormValidationSchema";
+import { history } from "App";
 
 const StyledEventFormWrapper = styled(Card)`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
@@ -83,6 +84,20 @@ const StyledDescriptionWrapper = styled(Grid)`
   margin-bottom: 2rem;
   padding: 1.2rem 2rem 0 2rem;
   position: relative;
+`;
+
+const StyledFormFooter = styled(Grid)`
+  padding: 0 2rem;
+`;
+
+const StyledLink = styled.span`
+  display: inline-block;
+  color: #8c7b6b;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  font-weight: bolder;
+  cursor: pointer;
+  margin-top: auto;
 `;
 
 interface IEventFormValues extends ICreateEventActionPayload {}
@@ -392,11 +407,18 @@ const EventForm = (
           </StyledFieldWrapper>
         </Grid>
 
-        <Grid container>
+        <StyledFormFooter container>
+          <StyledLink onClick={history.goBack}>
+            {" "}
+            {formatMessage({
+              id: "General.back",
+              defaultMessage: "Back"
+            })}
+          </StyledLink>
           <StyledButton type="submit" disabled={isSubmitting}>
             {actionButtonLabel}
           </StyledButton>
-        </Grid>
+        </StyledFormFooter>
       </StyledForm>
     </StyledEventFormWrapper>
   );

@@ -12,7 +12,7 @@ const StyledNotificationList = styled.ul`
   position: fixed;
   bottom: 2rem;
   right: 0;
-  max-width: 25%;
+  max-width: 50rem;
 `;
 
 const NotificationList = () => {

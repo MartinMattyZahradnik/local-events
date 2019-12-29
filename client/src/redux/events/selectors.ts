@@ -29,6 +29,11 @@ export const makeSelectHasRightToEditEvent = (ownerId: string) =>
     return userRole === "admin" || userId === ownerId;
   });
 
+export const makeSelectHasRightToDeleteEvent = (ownerId: string) =>
+  createSelector(selectUserId, selectUserRole, (userId, userRole) => {
+    return userRole === "admin" || userId === ownerId;
+  });
+
 export const selectHasAccessPermission = createSelector(
   [selectUserId, selectUserRole, selectEventDetail],
   (userId, userRole, event) => {

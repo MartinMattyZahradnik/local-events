@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps, Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { FormattedMessage } from "react-intl";
-import { useSelector } from "react-redux";
 
 // Components
 import {
@@ -67,6 +66,10 @@ const StyledNoEventsWrapper = styled(Grid)`
   text-align: center;
 `;
 
+const StyledAddressCell = styled(TableCell)`
+  max-width: 22rem;
+`;
+
 type MatchParams = {
   id: string;
 };
@@ -122,9 +125,9 @@ const MyEvents = ({ match }: IMyEventsProps) => {
             <TableCell>
               <FormattedMessage id="Event.category" defaultMessage="Category" />
             </TableCell>
-            <TableCell>
+            <StyledAddressCell>
               <FormattedMessage id="User.address" defaultMessage="Address" />
-            </TableCell>
+            </StyledAddressCell>
             <TableCell>
               <FormattedMessage id="Event.date" defaultMessage="Date" />
             </TableCell>
