@@ -58,7 +58,7 @@ function* registerUserWatcher({
         headers: { "Content-Type": "multipart/form-data" }
       });
 
-      userData.image = `/${res.data.files[0].filename}`;
+      userData.image = res.data.files[0].path;
     } catch (e) {
       console.log(e);
     }
@@ -97,7 +97,7 @@ function* updateUserWatcher({
         headers: { "Content-Type": "multipart/form-data" }
       });
 
-      userData.image = `/${res.data.files[0].filename}`;
+      userData.image = res.data.files[0].path;
     } catch (e) {
       console.log(e);
     }

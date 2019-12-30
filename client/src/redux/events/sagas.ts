@@ -70,7 +70,8 @@ function* createEventWatcher({ payload }: { type: string; payload: any }) {
         const res = yield request.post(`/upload`, data, {
           headers: { "Content-Type": "multipart/form-data" }
         });
-        payload.eventData.imageUrl = `${res.data.files[0].path}`;
+
+        payload.eventData.imageUrl = res.data.files[0].path;
       } catch (e) {
         yield put(
           pushNotificationToStack(
@@ -123,7 +124,7 @@ function* updateEventWatcher({
         headers: { "Content-Type": "multipart/form-data" }
       });
 
-      formValues.imageUrl = `/${res.data.files[0].filename}`;
+      formValues.imageUrl = res.data.files[0].path;
     } catch (e) {
       yield put(
         pushNotificationToStack("Something went wrong. Unable to upload image")

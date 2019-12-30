@@ -1,4 +1,3 @@
-// test deploy
 import express from "express";
 import fs from "fs";
 import path from "path";
@@ -11,6 +10,8 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import multer from "multer";
+import multerS3 from "multer-s3";
+import aws from "aws-sdk";
 import sgMail from "@sendgrid/mail";
 import { makeDBConnectionString } from "./utils/utils";
 
@@ -22,11 +23,10 @@ import authRoutes from "./routes/auth";
 import applicationRoutes from "./routes/app";
 
 dotenv.config();
-const fileStorage = multer.diskStorage({
-  destination: "./uploads/",
-  filename: (req: Request, file: Express.Multer.File, callback: any) => {
-    callback(null, new Date().toISOString() + "-" + file.originalname);
-  }
+
+const s3 = new aws.S3({
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
 });
 
 const fileFilter = (req: Request, file: Express.Multer.File, callback: any) => {
@@ -40,10 +40,20 @@ const fileFilter = (req: Request, file: Express.Multer.File, callback: any) => {
 };
 
 // Init upload
-export const fileUpload = multer({ storage: fileStorage, fileFilter }).array(
-  "image",
-  10
-);
+export const fileUpload = multer({
+  storage: multerS3({
+    s3,
+    bucket: "local-events-react",
+    metadata: function(req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function(req, file, cb) {
+      cb(null, new Date().toISOString() + "-" + file.originalname);
+    },
+    acl: "public-read"
+  }),
+  fileFilter
+});
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, "access.log"),
