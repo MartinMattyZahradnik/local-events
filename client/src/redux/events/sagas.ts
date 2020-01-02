@@ -116,6 +116,9 @@ function* updateEventWatcher({
   type: string;
   payload: any;
 }) {
+  const values = {
+    ...formValues
+  };
   if (formValues.image) {
     try {
       const data = new FormData();
@@ -124,7 +127,7 @@ function* updateEventWatcher({
         headers: { "Content-Type": "multipart/form-data" }
       });
 
-      formValues.imageUrl = res.data.files[0].path;
+      values.imageUrl = res.data.files[0].path;
     } catch (e) {
       yield put(
         pushNotificationToStack("Something went wrong. Unable to upload image")
@@ -132,8 +135,14 @@ function* updateEventWatcher({
     }
   }
 
+  if (!formValues.coordinates) {
+    values.coordinates = [];
+  } else if (typeof formValues.coordinates === "string") {
+    values.coordinates = formValues.coordinates.split(",");
+  }
+
   try {
-    const resp = yield request.put(`/events/${eventId}`, formValues);
+    const resp = yield request.put(`/events/${eventId}`, values);
     yield put(
       updateEventSuccess({
         totalItems: resp.data.totalItems,

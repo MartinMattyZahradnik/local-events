@@ -11,7 +11,8 @@ import {
   FormSelect,
   FormDatePiker,
   FormHeader,
-  FormError
+  FormError,
+  UploadFilePreview
 } from "components/common";
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
@@ -118,7 +119,8 @@ const EventForm = (
     formHeading,
     touched,
     errors,
-    address
+    address,
+    imageUrl
   } = props;
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
@@ -202,16 +204,6 @@ const EventForm = (
           </StyledFieldWrapper>
 
           <StyledFieldWrapper item xs={12} sm={6}>
-            <input
-              id="eventImage"
-              onChange={(event: any) => {
-                setFieldValue("image", event.currentTarget.files[0]);
-              }}
-              type="file"
-              name="image"
-              accept="image/png, image/jpeg"
-              hidden
-            />
             <StyledUploadBtn>
               <label htmlFor="eventImage">
                 {formatMessage({
@@ -221,6 +213,12 @@ const EventForm = (
               </label>
             </StyledUploadBtn>
           </StyledFieldWrapper>
+
+          <UploadFilePreview
+            onChange={setFieldValue}
+            imageUrl={imageUrl}
+            inputId="eventImage"
+          />
 
           <StyledDescriptionWrapper item xs={12}>
             <Field
@@ -402,7 +400,6 @@ const EventForm = (
                 defaultMessage: "Type coordinates"
               })}
               component={FormField}
-              multiline
             />
           </StyledFieldWrapper>
         </Grid>

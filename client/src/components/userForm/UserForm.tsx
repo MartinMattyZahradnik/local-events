@@ -12,7 +12,8 @@ import {
   FormSelect,
   FormDatePiker,
   FormHeader,
-  FormError
+  FormError,
+  UploadFilePreview
 } from "components/common";
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
@@ -107,7 +108,8 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
     formHeading,
     touched,
     errors,
-    isUpdate
+    isUpdate,
+    image
   } = props;
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
@@ -336,17 +338,6 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           )}
 
           <StyledFieldWrapper>
-            <input
-              id="userImage"
-              onChange={(event: any) => {
-                setFieldValue("image", event.currentTarget.files[0]);
-              }}
-              type="file"
-              name="image"
-              accept="image/png, image/jpeg"
-              multiple
-              hidden
-            />
             <StyledUploadBtn>
               <label htmlFor="userImage">
                 {formatMessage({
@@ -356,6 +347,12 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               </label>
             </StyledUploadBtn>
           </StyledFieldWrapper>
+
+          <UploadFilePreview
+            onChange={setFieldValue}
+            imageUrl={image}
+            inputId="userImage"
+          />
 
           <StyledHeading>
             {formatMessage({

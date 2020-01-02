@@ -7,6 +7,7 @@ export const uploadFileController = async (req: Request, res: Response) => {
       if (err.statusCode === 403) {
         return res.status(403).send(err.message);
       }
+      console.log(err, "error log");
       return res.send(400);
     }
 
