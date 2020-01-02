@@ -36,6 +36,11 @@ export const MapComponent = ({
   </StyledMapWrapper>
 );
 
+console.log(
+  process.env.REACT_APP_GOOGLE_MAPS_API,
+  "process.env.REACT_APP_GOOGLE_MAPS_API"
+);
+
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_GOOGLE_MAPS_API || ""
 })(MapComponent);
