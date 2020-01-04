@@ -82,3 +82,13 @@ export const deleteEventError = (id: string) => ({
   type: actionTypes.DELETE_EVENT_ERROR,
   payload: { id }
 });
+
+export const setSearchTerm = (searchTerm: string) => ({
+  type: actionTypes.SET_SEARCH_TERM,
+  payload: { searchTerm }
+});
+
+export const setSearchCity = (searchCity: string) => ({
+  type: actionTypes.SET_SEARCH_CITY,
+  payload: { searchCity }
+});

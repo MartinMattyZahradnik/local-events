@@ -51,13 +51,16 @@ const StyledHeading = styled.h3`
   font-weight: 700;
   font-size: ${({ theme }) => theme.text.fontSize.normal};
   text-align: left;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 `;
 
 const StyledSubheading = styled.h4`
   color: ${({ theme }) => theme.color.subHeading};
   font-size: ${({ theme }) => theme.text.fontSize.small};
-  margin-bottom: 1.7rem;
+  margin-bottom: 1.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const StyledDate = styled(Grid)``;
@@ -79,6 +82,9 @@ const StyledCardContent = styled(CardContent)`
   display: flex;
   flex-direction: column;
   color: ${({ theme }) => theme.color.text};
+  &.MuiCardContent-root:last-child {
+    padding-bottom: 1.6rem;
+  }
 `;
 
 const StyledPriceWrapper = styled(Grid)`

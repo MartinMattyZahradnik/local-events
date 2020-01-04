@@ -53,11 +53,13 @@ const eventSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      index: true
     },
     description: {
       type: String,
-      required: true
+      required: true,
+      index: true
     },
     date: { type: Number, default: Date.now, required: true },
     imageUrl: {
@@ -112,6 +114,19 @@ const eventSchema = new Schema(
     }
   },
   { timestamps: true }
+);
+
+eventSchema.index(
+  {
+    name: "text",
+    description: "text"
+  },
+  {
+    weights: {
+      name: 5,
+      description: 1
+    }
+  }
 );
 
 export default mongoose.model<IEventModel>("Event", eventSchema);

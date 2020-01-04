@@ -6,9 +6,11 @@ import { useIntl, FormattedMessage } from "react-intl";
 
 // Components
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { Button } from "bricks";
 import HeaderUser from "./HeaderUser";
 import LanguageSelector from "./LanguageSelector";
-import { Button } from "bricks";
+import Search from "./Search";
+import CitySelector from "./CitySelector";
 
 // Actions
 import { pushNotificationToStack } from "redux/notifications/actions";
@@ -66,9 +68,24 @@ const StyledToolBar = styled(Toolbar)`
 `;
 
 const StyledCreateEventButton = styled(Button)`
-  &${Button} {
-    margin: 0 2.5rem 0 auto;
+  margin-right: 1.5rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    display: none;
   }
+`;
+
+const StyledLanguageSelectorWrapper = styled.div`
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    margin-left: auto;
+  }
+`;
+
+const StyledSearchWrapper = styled.div`
+  margin: 0 2.5rem 0 auto;
+`;
+
+const StyledCitySelectorWrapper = styled.div`
+  margin-left: 2rem;
 `;
 
 const Header = () => {
@@ -102,11 +119,21 @@ const Header = () => {
           </Logo>
         </Link>
 
+        <StyledCitySelectorWrapper>
+          <CitySelector />
+        </StyledCitySelectorWrapper>
+
+        <StyledSearchWrapper>
+          <Search />
+        </StyledSearchWrapper>
+
         <StyledCreateEventButton onClick={handleCreateEventClick}>
           <FormattedMessage id="Event.create" defaultMessage="Create Event" />
         </StyledCreateEventButton>
 
-        <LanguageSelector />
+        <StyledLanguageSelectorWrapper>
+          <LanguageSelector />
+        </StyledLanguageSelectorWrapper>
 
         <HeaderUser />
       </StyledToolBar>

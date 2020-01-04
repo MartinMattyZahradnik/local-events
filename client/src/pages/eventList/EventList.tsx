@@ -8,6 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { EventCard } from "components";
 import { Pagination } from "components/common";
 import { Grid } from "@material-ui/core";
+
 // Actions
 import { fetchEvents } from "redux/events/actions";
 
@@ -16,7 +17,9 @@ import {
   selectEvents,
   selectEventsTotal,
   selectEventsIsLoading,
-  selectEventsError
+  selectEventsError,
+  selectSearchTerm,
+  selectSearchCity
 } from "redux/events/selectors";
 
 // Types
@@ -53,10 +56,12 @@ const StyledPaginationWrapper = styled.div`
 `;
 
 const EventList: React.FC = () => {
+  const searchTerm = useSelector(selectSearchTerm);
+  const searchCity = useSelector(selectSearchCity);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchEvents(1, 10));
-  }, [dispatch]);
+  }, [dispatch, searchTerm, searchCity]);
 
   const events = useSelector(selectEvents, shallowEqual);
   const total = useSelector(selectEventsTotal, shallowEqual);

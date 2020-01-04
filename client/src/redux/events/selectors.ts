@@ -65,6 +65,21 @@ export const selectMyEventsIsLoading = createSelector(
   myEvents => myEvents.isLoading
 );
 
+export const selectSearch = createSelector(
+  [getEvents],
+  events => events.search
+);
+
+export const selectSearchTerm = createSelector(
+  [selectSearch],
+  search => search.term || ""
+);
+
+export const selectSearchCity = createSelector(
+  [selectSearch],
+  search => search.city || "all"
+);
+
 export const selectEventCategories = createSelector(getEvents, () => {
   // Todo - move this to separate DB table
   // and load categories as API call

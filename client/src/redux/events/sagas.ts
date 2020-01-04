@@ -32,6 +32,7 @@ import { actionTypes as eventsActionTypes } from "./constants";
 // Selectors
 import { selectUserId } from "redux/user/selectors";
 import { makeSelectCountryNameByCode } from "redux/application/selectors";
+import { selectSearchCity, selectSearchTerm } from "./selectors";
 
 function* fetchEventsWatcher({
   payload
@@ -43,7 +44,12 @@ function* fetchEventsWatcher({
   const offset = (pageNumber - 1) * perPage;
 
   try {
-    const resp = yield request.get(`/events?offset=${offset}&limit=${perPage}`);
+    const city = yield select(selectSearchCity);
+    const searchTerm = yield select(selectSearchTerm);
+
+    const resp = yield request.get(
+      `/events?offset=${offset}&limit=${perPage}&city=${city}&searchTerm=${searchTerm}`
+    );
 
     yield put(
       fetchEventsSuccess({

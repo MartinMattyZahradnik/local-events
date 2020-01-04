@@ -1,19 +1,23 @@
 import Event from "../models/event";
 import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
-import { IEventModel } from "../models/event";
 
-export const getEventsController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { offset, limit } = req.query;
+export const getEventsController = async (req: Request, res: Response) => {
+  const { offset, limit, city, searchTerm } = req.query;
+
+  const searchConditions: { "address.city"?: string; $text?: any } = {};
+  if (city !== "all") {
+    searchConditions["address.city"] = city;
+  }
+
+  if (searchTerm) {
+    searchConditions.$text = { $search: searchTerm };
+  }
 
   try {
-    const totalItems = await Event.find().countDocuments();
-    const events = await Event.find()
-      .sort({ createdAt: -1 })
+    const totalItems = await Event.find(searchConditions).countDocuments();
+    const events = await Event.find(searchConditions)
+      .sort({ date: -1 })
       .skip(parseInt(offset))
       .limit(parseInt(limit))
       .populate("owner");

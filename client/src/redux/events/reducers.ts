@@ -20,7 +20,10 @@ function error(state = false, { type, payload }: IAction<IErrorPayload>) {
   }
 }
 
-type IResultState = { events: IEvent[]; totalItems: number };
+type IResultState = {
+  events: IEvent[];
+  totalItems: number;
+};
 
 const ResultDefaultState = {
   events: [],
@@ -74,6 +77,7 @@ export interface IEventsReducerState {
     error: boolean;
     result: IEvent[];
   };
+  search: ISearchEventsReducerState;
 }
 
 export interface IMyEventsReducerState {
@@ -127,4 +131,36 @@ function myEvents(
   }
 }
 
-export default combineReducers({ error, result, isLoading, myEvents });
+export interface ISearchEventsReducerState {
+  city: string;
+  term: string;
+}
+
+const searchRerucerDefaultState = {
+  city: "all",
+  term: ""
+};
+
+function search(
+  state: ISearchEventsReducerState = searchRerucerDefaultState,
+  { type, payload }: { type: string; payload: any }
+) {
+  switch (type) {
+    case eventsActions.SET_SEARCH_TERM:
+      return {
+        ...state,
+        term: payload.searchTerm
+      };
+
+    case eventsActions.SET_SEARCH_CITY:
+      return {
+        ...state,
+        city: payload.searchCity
+      };
+
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ error, result, isLoading, myEvents, search });
