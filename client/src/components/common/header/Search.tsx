@@ -12,7 +12,6 @@ const StyledSearch = styled(TextField)`
   position: relative;
   border-radius: 0.5rem;
   background-color: rgba(255, 255, 255, 0.15);
-  width: 17rem;
   padding: 0.5rem 1rem;
   &:hover {
     background-color: rgba(255, 255, 255, 0.25);

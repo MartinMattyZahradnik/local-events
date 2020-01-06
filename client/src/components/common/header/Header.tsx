@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 
 // Components
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Grid, Collapse } from "@material-ui/core";
 import { Button } from "bricks";
 import HeaderUser from "./HeaderUser";
 import LanguageSelector from "./LanguageSelector";
@@ -20,6 +20,7 @@ import { selectIsUserLoggedIn } from "redux/user/selectors";
 
 // Other
 import { history } from "App";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const StyledAppBar = styled(AppBar)`
   position: fixed;
@@ -72,6 +73,9 @@ const StyledCreateEventButton = styled(Button)`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
     display: none;
   }
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-left: auto;
+  }
 `;
 
 const StyledLanguageSelectorWrapper = styled.div`
@@ -82,13 +86,80 @@ const StyledLanguageSelectorWrapper = styled.div`
 
 const StyledSearchWrapper = styled.div`
   margin: 0 2.5rem 0 auto;
+  width: 17rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
 const StyledCitySelectorWrapper = styled.div`
   margin-left: 2rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
+`;
+
+const StyledMobileCitySelectorWrapper = styled.div`
+  .MuiInputBase-root {
+    width: 100%;
+  }
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 30%;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    width: 100%;
+  }
+`;
+
+const StyledMobileSubmenu = styled(Grid)`
+  display: none;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: flex;
+    padding: 0 3.5rem;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    flex-direction: column;
+    padding: 0 2rem;
+    align-items: normal;
+  }
+`;
+
+const StyledMobileCreateEventButton = styled(StyledCreateEventButton)`
+  display: none;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    display: block;
+    margin: 0 0 1.5rem 0;
+  }
+`;
+
+const MobileSearchWrapper = styled.div`
+  margin: 1.5rem 0;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 65%;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    width: 100%;
+  }
+`;
+
+const StyledMenuIcon = styled(MenuIcon)`
+  width: 2.5rem;
+  height: 2.5rem;
+  padding-bottom: 0.2rem;
+  margin-right: 0.5rem;
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
   const { formatMessage } = useIntl();
@@ -112,6 +183,7 @@ const Header = () => {
   return (
     <StyledAppBar>
       <StyledToolBar>
+        <StyledMenuIcon onClick={() => setIsMenuOpen(!isMenuOpen)} />
         <Link to="/">
           <Logo variant="h1">
             <StyledLogoLocal>Local</StyledLogoLocal>
@@ -137,6 +209,25 @@ const Header = () => {
 
         <HeaderUser />
       </StyledToolBar>
+
+      <Collapse in={isMenuOpen}>
+        <StyledMobileSubmenu
+          container
+          direction="column"
+          justify="space-between"
+        >
+          <StyledMobileCitySelectorWrapper>
+            <CitySelector />
+          </StyledMobileCitySelectorWrapper>
+
+          <MobileSearchWrapper>
+            <Search />
+          </MobileSearchWrapper>
+          <StyledMobileCreateEventButton onClick={handleCreateEventClick}>
+            <FormattedMessage id="Event.create" defaultMessage="Create Event" />
+          </StyledMobileCreateEventButton>
+        </StyledMobileSubmenu>
+      </Collapse>
     </StyledAppBar>
   );
 };
