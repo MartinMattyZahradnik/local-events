@@ -82,7 +82,7 @@ const MyEvents = ({ match }: IMyEventsProps) => {
   const { id } = match.params;
   useEffect(() => {
     dispatch(fetchEventsByUserId(id));
-  }, [id]);
+  }, [id, dispatch]);
 
   const events = useSelector(selectMyEventsResult);
   const isLoading = useSelector(selectMyEventsIsLoading);

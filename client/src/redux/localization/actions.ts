@@ -2,10 +2,13 @@ import { createSelector } from "reselect";
 import { AvailableLocales } from "redux/localization/types";
 
 import { IState } from "redux/rootReducer";
-import { actionTypes } from "redux/localization/constants";
+import { CHANGE_LOCALE } from "redux/localization/constants";
+import { ChangeLocaleAction } from "./types";
 
-export const changeLocale = (newLocale: AvailableLocales) => ({
-  type: actionTypes.CHANGE_LOCALE,
+export const changeLocale = (
+  newLocale: AvailableLocales
+): ChangeLocaleAction => ({
+  type: CHANGE_LOCALE,
   payload: newLocale
 });
 

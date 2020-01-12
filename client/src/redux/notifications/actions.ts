@@ -1,12 +1,23 @@
 import uuid from "uuid/v4";
-import { actionTypes } from "./constants";
+import {
+  PUSH_NOTIFICATION_TO_STACK,
+  POP_NOTIFICATION_FROM_STACK
+} from "./constants";
+import {
+  PushNotificationToStackAction,
+  PopNotificationFromStackAction
+} from "./types";
 
-export const pushNotificationToStack = (notification: string) => ({
-  type: actionTypes.PUSH_NOTIFICATION_TO_STACK,
+export const pushNotificationToStack = (
+  notification: string
+): PushNotificationToStackAction => ({
+  type: PUSH_NOTIFICATION_TO_STACK,
   payload: { notification: { id: uuid(), text: notification } }
 });
 
-export const popNotificationFromStack = (id: string) => ({
-  type: actionTypes.POP_NOTIFICATION_FROM_STACK,
+export const popNotificationFromStack = (
+  id: string
+): PopNotificationFromStackAction => ({
+  type: POP_NOTIFICATION_FROM_STACK,
   payload: { id }
 });

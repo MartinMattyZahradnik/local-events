@@ -27,7 +27,13 @@ import { pushNotificationToStack } from "redux/notifications/actions";
 import { FetchEventsPayload } from "./types";
 
 // Constants
-import { actionTypes as eventsActionTypes } from "./constants";
+import {
+  FETCH_EVENTS,
+  CREATE_EVENT,
+  UPDATE_EVENT,
+  DELETE_EVENT,
+  FETCH_EVENTS_BY_USER_ID
+} from "./constants";
 
 // Selectors
 import { selectUserId } from "redux/user/selectors";
@@ -213,12 +219,9 @@ function* fetchEventsByIdWatcher({
 }
 
 export default function* userSaga() {
-  yield takeLatest(eventsActionTypes.FETCH_EVENTS, fetchEventsWatcher);
-  yield takeLatest(eventsActionTypes.CREATE_EVENT, createEventWatcher);
-  yield takeLatest(eventsActionTypes.UPDATE_EVENT, updateEventWatcher);
-  yield takeLatest(eventsActionTypes.DELETE_EVENT, deleteEventWatcher);
-  yield takeLatest(
-    eventsActionTypes.FETCH_EVENTS_BY_USER_ID,
-    fetchEventsByIdWatcher
-  );
+  yield takeLatest(FETCH_EVENTS, fetchEventsWatcher);
+  yield takeLatest(CREATE_EVENT, createEventWatcher);
+  yield takeLatest(UPDATE_EVENT, updateEventWatcher);
+  yield takeLatest(DELETE_EVENT, deleteEventWatcher);
+  yield takeLatest(FETCH_EVENTS_BY_USER_ID, fetchEventsByIdWatcher);
 }

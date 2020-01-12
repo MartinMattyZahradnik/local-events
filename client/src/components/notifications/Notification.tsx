@@ -47,7 +47,7 @@ const Notification = ({ id, text }: INotificationProps) => {
     }, NOTIFICATION_DURATION);
 
     return () => clearTimeout(timer);
-  }, [id]);
+  }, [id, dispatch]);
 
   return (
     <StyledNotification>

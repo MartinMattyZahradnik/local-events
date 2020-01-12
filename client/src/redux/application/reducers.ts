@@ -1,31 +1,37 @@
 import { combineReducers } from "redux";
 
-import { IAction } from "redux/action";
-import { actionTypes as applicationActionTypes } from "./constants";
-import { ICountryList } from "./types";
+import {
+  FETCH_COUNTRY_LIST,
+  FETCH_COUNTRY_LIST_SUCCESS,
+  FETCH_COUNTRY_LIST_ERROR
+} from "./constants";
+import {
+  ICountryList,
+  CountryListResultTypes,
+  CountryListLoadingTypes,
+  CountryListErrorTypes
+} from "./types";
 
-type IErrorPayload = true | false;
+function error(state: number | null = null, action: CountryListErrorTypes) {
+  switch (action.type) {
+    case FETCH_COUNTRY_LIST_ERROR:
+      return action.payload.statusCode;
 
-function error(state = false, { type, payload }: IAction<IErrorPayload>) {
-  switch (type) {
-    case applicationActionTypes.FETCH_COUNTRY_LIST_ERROR:
-      return payload;
-
-    case applicationActionTypes.FETCH_COUNTRY_LIST:
-    case applicationActionTypes.FETCH_COUNTRY_LIST_SUCCESS:
-      return false;
+    case FETCH_COUNTRY_LIST:
+    case FETCH_COUNTRY_LIST_SUCCESS:
+      return null;
 
     default:
       return state;
   }
 }
 
-function result(state: ICountryList = [], { type, payload }: any) {
-  switch (type) {
-    case applicationActionTypes.FETCH_COUNTRY_LIST_SUCCESS:
-      return payload.countries;
+function result(state: ICountryList = [], action: CountryListResultTypes) {
+  switch (action.type) {
+    case FETCH_COUNTRY_LIST_SUCCESS:
+      return action.payload.countries;
 
-    case applicationActionTypes.FETCH_COUNTRY_LIST_ERROR:
+    case FETCH_COUNTRY_LIST_ERROR:
       return [];
 
     default:
@@ -33,15 +39,13 @@ function result(state: ICountryList = [], { type, payload }: any) {
   }
 }
 
-type IsLoadingPayload = true | false;
-
-function isLoading(state = false, { type }: IAction<IsLoadingPayload>) {
-  switch (type) {
-    case applicationActionTypes.FETCH_COUNTRY_LIST:
+function isLoading(state = false, action: CountryListLoadingTypes) {
+  switch (action.type) {
+    case FETCH_COUNTRY_LIST:
       return true;
 
-    case applicationActionTypes.FETCH_COUNTRY_LIST_SUCCESS:
-    case applicationActionTypes.FETCH_COUNTRY_LIST_ERROR:
+    case FETCH_COUNTRY_LIST_SUCCESS:
+    case FETCH_COUNTRY_LIST_ERROR:
       return false;
 
     default:

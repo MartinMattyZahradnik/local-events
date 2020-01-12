@@ -1,19 +1,22 @@
 import { combineReducers } from "redux";
 
-import { IAction } from "redux/action";
-import { actionTypes as eventsActions } from "./constants";
+import {
+  FETCH_EVENT_DETAIL,
+  FETCH_EVENT_DETAIL_SUCCESS,
+  FETCH_EVENT_DETAIL_ERROR,
+  RESET_EVENT_DETAIL,
+  FETCH_SIMILAR_EVENTS_SUCCESS
+} from "./constants";
 import { IResultState } from "./types";
 
-type IErrorPayload = true | false;
-
-function error(state = false, { type, payload }: IAction<IErrorPayload>) {
+function error(state = false, { type, payload }: any) {
   switch (type) {
-    case eventsActions.FETCH_EVENT_DETAIL_ERROR:
+    case FETCH_EVENT_DETAIL_ERROR:
       return payload;
 
-    case eventsActions.FETCH_EVENT_DETAIL:
-    case eventsActions.FETCH_EVENT_DETAIL_SUCCESS:
-    case eventsActions.RESET_EVENT_DETAIL:
+    case FETCH_EVENT_DETAIL:
+    case FETCH_EVENT_DETAIL_SUCCESS:
+    case RESET_EVENT_DETAIL:
       return false;
 
     default:
@@ -21,22 +24,18 @@ function error(state = false, { type, payload }: IAction<IErrorPayload>) {
   }
 }
 
-function result(
-  state: IResultState = null,
-  // { type, payload }: IAction<IResultState>
-  { type, payload }: any
-) {
+function result(state: IResultState = null, { type, payload }: any) {
   switch (type) {
-    case eventsActions.FETCH_EVENT_DETAIL_SUCCESS:
+    case FETCH_EVENT_DETAIL_SUCCESS:
       return payload;
 
-    case eventsActions.FETCH_SIMILAR_EVENTS_SUCCESS:
+    case FETCH_SIMILAR_EVENTS_SUCCESS:
       return {
         ...state,
         similarEvents: payload.events
       };
 
-    case eventsActions.RESET_EVENT_DETAIL:
+    case RESET_EVENT_DETAIL:
       return null;
 
     default:
@@ -44,14 +43,12 @@ function result(
   }
 }
 
-type IsLoadingPayload = true | false;
-
-function isLoading(state = false, { type }: IAction<IsLoadingPayload>) {
+function isLoading(state = false, { type }: any) {
   switch (type) {
-    case eventsActions.FETCH_EVENT_DETAIL:
+    case FETCH_EVENT_DETAIL:
       return true;
 
-    case eventsActions.RESET_EVENT_DETAIL:
+    case RESET_EVENT_DETAIL:
       return false;
 
     default:

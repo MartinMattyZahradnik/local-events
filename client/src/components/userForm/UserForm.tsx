@@ -116,7 +116,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
   const countries = useSelector(selectCountryList);
   useEffect(() => {
     dispatch(fetchCountryList());
-  }, []);
+  }, [dispatch]);
 
   return (
     <StyledUserFormWrapper>

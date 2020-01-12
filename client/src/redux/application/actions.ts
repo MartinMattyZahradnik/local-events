@@ -1,17 +1,30 @@
-import { actionTypes } from "./constants";
-import { ICountryList } from "./types";
+import {
+  FETCH_COUNTRY_LIST,
+  FETCH_COUNTRY_LIST_SUCCESS,
+  FETCH_COUNTRY_LIST_ERROR
+} from "./constants";
+import {
+  ICountryList,
+  FetchCountyListAction,
+  FetchCountyListSuccessAction,
+  FetchCountyListErrorAction
+} from "./types";
 
 /*** ===  FETCH COUNTRY LIST  === ***/
-export const fetchCountryList = () => ({
-  type: actionTypes.FETCH_COUNTRY_LIST
+export const fetchCountryList = (): FetchCountyListAction => ({
+  type: FETCH_COUNTRY_LIST
 });
 
-export const fetchCountyListSuccess = (countries: ICountryList) => ({
-  type: actionTypes.FETCH_COUNTRY_LIST_SUCCESS,
+export const fetchCountyListSuccess = (
+  countries: ICountryList
+): FetchCountyListSuccessAction => ({
+  type: FETCH_COUNTRY_LIST_SUCCESS,
   payload: { countries }
 });
 
-export const fetchCountyListError = (statusCode: number) => ({
-  type: actionTypes.FETCH_COUNTRY_LIST_ERROR,
+export const fetchCountyListError = (
+  statusCode: number
+): FetchCountyListErrorAction => ({
+  type: FETCH_COUNTRY_LIST_ERROR,
   payload: { statusCode }
 });

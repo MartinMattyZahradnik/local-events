@@ -1,6 +1,13 @@
 import { request } from "utils/request";
 import { takeLatest, put } from "redux-saga/effects";
-import { actionTypes as userActionTypes } from "redux/user/constants";
+import {
+  FETCH_USER,
+  REGISTER_USER,
+  UPDATE_USER,
+  LOGIN,
+  PASSWORD_RESET,
+  SET_NEW_PASSWORD
+} from "redux/user/constants";
 import { history } from "App";
 
 // Actions
@@ -192,10 +199,10 @@ function* setNewPasswordWatcher({ payload }: { type: string; payload: any }) {
 }
 
 export default function* userSaga() {
-  yield takeLatest(userActionTypes.FETCH_USER, fetchUserSagaWatcher);
-  yield takeLatest(userActionTypes.REGISTER_USER, registerUserWatcher);
-  yield takeLatest(userActionTypes.UPDATE_USER, updateUserWatcher);
-  yield takeLatest(userActionTypes.LOGIN, loginSagaWatcher);
-  yield takeLatest(userActionTypes.PASSWORD_RESET, passwordResetSagaWatcher);
-  yield takeLatest(userActionTypes.SET_NEW_PASSWORD, setNewPasswordWatcher);
+  yield takeLatest(FETCH_USER, fetchUserSagaWatcher);
+  yield takeLatest(REGISTER_USER, registerUserWatcher);
+  yield takeLatest(UPDATE_USER, updateUserWatcher);
+  yield takeLatest(LOGIN, loginSagaWatcher);
+  yield takeLatest(PASSWORD_RESET, passwordResetSagaWatcher);
+  yield takeLatest(SET_NEW_PASSWORD, setNewPasswordWatcher);
 }

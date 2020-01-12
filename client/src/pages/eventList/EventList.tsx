@@ -55,7 +55,7 @@ const StyledPaginationWrapper = styled.div`
   }
 `;
 
-const EventList: React.FC = () => {
+const EventList = (): JSX.Element | null => {
   const searchTerm = useSelector(selectSearchTerm);
   const searchCity = useSelector(selectSearchCity);
   const dispatch = useDispatch();
@@ -83,7 +83,7 @@ const EventList: React.FC = () => {
 
   return (
     <StyledEventList>
-      {/* @TODO preset unknow visitor with data from https://ipinfo.io - setup search */}
+      {/* @TODO preset unknown visitor with data from https://ipinfo.io - setup search */}
       <StyledHeading>
         <FormattedMessage
           id="EventList.heading"

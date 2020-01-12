@@ -1,3 +1,1 @@
-export const actionTypes = {
-  CHANGE_LOCALE: "localization/CHANGE_LOCALE"
-};
+export const CHANGE_LOCALE = "localization/CHANGE_LOCALE";

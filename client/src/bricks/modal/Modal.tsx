@@ -42,7 +42,7 @@ const StyledContentWrapper = styled(Paper)`
 interface IModalProps {
   children?: React.ReactNode;
   open: boolean;
-  onClose: () => any;
+  onClose: () => void;
   onConfirm: () => any;
   title?: string;
   confirmLabel?: React.ReactNode;
@@ -69,16 +69,16 @@ const Modal = ({
         document.removeEventListener("keyDown", handleKeyDown, true);
       };
     }
-  });
+  }, [el]);
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: any): void => {
     if (open && e.keyCode === 27) {
       // ESC
       handleCloseModal();
     }
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (): void => {
     onClose();
   };
 

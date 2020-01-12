@@ -126,7 +126,7 @@ const EventForm = (
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCountryList());
-  }, []);
+  }, [dispatch]);
 
   const categories = useSelector(selectEventCategories);
   const countries = useSelector(selectCountryList);

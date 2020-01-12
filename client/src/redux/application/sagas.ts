@@ -6,7 +6,7 @@ import { fetchCountyListSuccess, fetchCountyListError } from "./actions";
 import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Constants
-import { actionTypes as applicationActionTypes } from "./constants";
+import { FETCH_COUNTRY_LIST } from "./constants";
 
 function* fetchCountryListWatcher() {
   try {
@@ -25,8 +25,5 @@ function* fetchCountryListWatcher() {
 }
 
 export default function* userSaga() {
-  yield takeLatest(
-    applicationActionTypes.FETCH_COUNTRY_LIST,
-    fetchCountryListWatcher
-  );
+  yield takeLatest(FETCH_COUNTRY_LIST, fetchCountryListWatcher);
 }

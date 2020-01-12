@@ -1,31 +1,45 @@
 import { combineReducers } from "redux";
+import {
+  IUser,
+  UserErrorReducerTypes,
+  UserResultReducerTypes,
+  UserIsLoadingReducerTypes
+} from "./types";
 
-import { actionTypes as userActionsTypes } from "redux/user/constants";
+import {
+  FETCH_USER,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_ERROR,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGOUT
+} from "redux/user/constants";
 
-function error(state = false, { type, payload }: any) {
-  switch (type) {
-    case userActionsTypes.FETCH_USER:
-    case userActionsTypes.FETCH_USER_SUCCESS:
-    case userActionsTypes.LOGIN_SUCCESS:
-    case userActionsTypes.LOGOUT:
-      return false;
+function error(state: null | number = null, action: UserErrorReducerTypes) {
+  switch (action.type) {
+    case FETCH_USER:
+    case FETCH_USER_SUCCESS:
+    case LOGIN_SUCCESS:
+    case LOGOUT:
+      return null;
 
-    case userActionsTypes.LOGIN_ERROR:
-    case userActionsTypes.FETCH_USER_ERROR:
-      return payload.statusCode;
+    case LOGIN_ERROR:
+    case FETCH_USER_ERROR:
+      return action.payload.statusCode;
 
     default:
       return state;
   }
 }
 
-function result(state = null, { type, payload }: any) {
-  switch (type) {
-    case userActionsTypes.FETCH_USER_SUCCESS:
-    case userActionsTypes.LOGIN_SUCCESS:
-      return payload.user;
+function result(state: null | IUser = null, action: UserResultReducerTypes) {
+  switch (action.type) {
+    case FETCH_USER_SUCCESS:
+    case LOGIN_SUCCESS:
+      return action.payload.user;
 
-    case userActionsTypes.LOGOUT:
+    case LOGOUT:
       return null;
 
     default:
@@ -33,16 +47,16 @@ function result(state = null, { type, payload }: any) {
   }
 }
 
-function isLoading(state = {}, { type }: any) {
-  switch (type) {
-    case userActionsTypes.FETCH_USER:
-    case userActionsTypes.LOGIN:
+function isLoading(state: boolean = false, action: UserIsLoadingReducerTypes) {
+  switch (action.type) {
+    case FETCH_USER:
+    case LOGIN:
       return true;
 
-    case userActionsTypes.LOGIN_SUCCESS:
-    case userActionsTypes.FETCH_USER_ERROR:
-    case userActionsTypes.LOGIN_ERROR:
-    case userActionsTypes.LOGOUT:
+    case LOGIN_SUCCESS:
+    case FETCH_USER_ERROR:
+    case LOGIN_ERROR:
+    case LOGOUT:
       return false;
 
     default:

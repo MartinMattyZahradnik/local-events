@@ -34,8 +34,10 @@ const UploadFilePreview = ({
   const [image, setImage] = useState<null | string>(imageUrl);
 
   const handleInputChange = (event: any) => {
-    setImage(URL.createObjectURL(event.target.files[0]));
-    onChange("image", event.currentTarget.files[0]);
+    const target = event.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+    setImage(URL.createObjectURL(file));
+    onChange("image", file);
   };
 
   const handleClearImage = () => {
@@ -56,7 +58,7 @@ const UploadFilePreview = ({
 
       {image && (
         <>
-          <img style={{ width: "100%" }} src={image} />
+          <img style={{ width: "100%" }} src={image} alt="" />
           <StyledClearIcon onClick={handleClearImage} />
         </>
       )}

@@ -1,19 +1,34 @@
 import { combineReducers } from "redux";
 
-import { IAction } from "redux/action";
-import { IEvent } from "./types";
-import { actionTypes as eventsActions } from "./constants";
+import {
+  IEvent,
+  EventsResultReducerTypes,
+  EventLoadingLoadingTypes,
+  EventErrorReducerTypes,
+  EventsSearchReducerTypes,
+  MyEventsReducerTypes
+} from "./types";
+import {
+  FETCH_EVENTS_ERROR,
+  FETCH_EVENTS,
+  FETCH_EVENTS_SUCCESS,
+  CREATE_EVENT_SUCCESS,
+  DELETE_EVENT_SUCCESS,
+  FETCH_EVENTS_BY_USER_ID,
+  FETCH_EVENTS_BY_USER_ID_SUCCESS,
+  FETCH_EVENTS_BY_USER_ID_ERROR,
+  SET_SEARCH_TERM,
+  SET_SEARCH_CITY
+} from "./constants";
 
-type IErrorPayload = true | false;
+function error(state: null | number = null, action: EventErrorReducerTypes) {
+  switch (action.type) {
+    case FETCH_EVENTS_ERROR:
+      return action.payload.statusCode;
 
-function error(state = false, { type, payload }: IAction<IErrorPayload>) {
-  switch (type) {
-    case eventsActions.FETCH_EVENTS_ERROR:
-      return payload;
-
-    case eventsActions.FETCH_EVENTS:
-    case eventsActions.FETCH_EVENTS_SUCCESS:
-      return false;
+    case FETCH_EVENTS:
+    case FETCH_EVENTS_SUCCESS:
+      return null;
 
     default:
       return state;
@@ -32,22 +47,22 @@ const ResultDefaultState = {
 
 function result(
   state: IResultState = ResultDefaultState,
-  { type, payload }: { type: string; payload: any } | IAction<IResultState>
+  action: EventsResultReducerTypes
 ) {
-  switch (type) {
-    case eventsActions.FETCH_EVENTS_SUCCESS:
-      return payload;
+  switch (action.type) {
+    case FETCH_EVENTS_SUCCESS:
+      return action.payload;
 
-    case eventsActions.CREATE_EVENT_SUCCESS:
+    case CREATE_EVENT_SUCCESS:
       return {
-        events: [payload.eventData, ...state.events],
+        events: [action.payload.eventData, ...state.events],
         totalItems: state.totalItems + 1
       };
 
-    case eventsActions.DELETE_EVENT_SUCCESS:
+    case DELETE_EVENT_SUCCESS:
       return {
         ...state,
-        events: state.events.filter(event => event._id !== payload.id),
+        events: state.events.filter(event => event._id !== action.payload.id),
         totalItems: state.totalItems - 1
       };
 
@@ -56,11 +71,9 @@ function result(
   }
 }
 
-type IsLoadingPayload = true | false;
-
-function isLoading(state = false, { type }: IAction<IsLoadingPayload>) {
-  switch (type) {
-    case eventsActions.FETCH_EVENTS:
+function isLoading(state = false, action: EventLoadingLoadingTypes) {
+  switch (action.type) {
+    case FETCH_EVENTS:
       return true;
 
     default:
@@ -94,31 +107,33 @@ const MyEventsDefaultState = {
 
 function myEvents(
   state: IMyEventsReducerState = MyEventsDefaultState,
-  { type, payload }: { type: string; payload: any } | IAction<IEvent[]>
+  action: MyEventsReducerTypes
 ) {
-  switch (type) {
-    case eventsActions.DELETE_EVENT_SUCCESS:
+  switch (action.type) {
+    case DELETE_EVENT_SUCCESS:
       return {
         ...state,
-        result: state.result.filter(userEvent => userEvent._id !== payload.id)
+        result: state.result.filter(
+          userEvent => userEvent._id !== action.payload.id
+        )
       };
 
-    case eventsActions.FETCH_EVENTS_BY_USER_ID:
+    case FETCH_EVENTS_BY_USER_ID:
       return {
         ...state,
         isLoading: true,
         error: false
       };
 
-    case eventsActions.FETCH_EVENTS_BY_USER_ID_SUCCESS:
+    case FETCH_EVENTS_BY_USER_ID_SUCCESS:
       return {
         ...state,
-        result: payload.events,
+        result: action.payload.events,
         isLoading: false,
         error: false
       };
 
-    case eventsActions.FETCH_EVENTS_BY_USER_ID_ERROR:
+    case FETCH_EVENTS_BY_USER_ID_ERROR:
       return {
         ...state,
         result: [],
@@ -136,26 +151,26 @@ export interface ISearchEventsReducerState {
   term: string;
 }
 
-const searchRerucerDefaultState = {
+const searchReducerDefaultState = {
   city: "all",
   term: ""
 };
 
 function search(
-  state: ISearchEventsReducerState = searchRerucerDefaultState,
-  { type, payload }: { type: string; payload: any }
+  state: ISearchEventsReducerState = searchReducerDefaultState,
+  action: EventsSearchReducerTypes
 ) {
-  switch (type) {
-    case eventsActions.SET_SEARCH_TERM:
+  switch (action.type) {
+    case SET_SEARCH_TERM:
       return {
         ...state,
-        term: payload.searchTerm
+        term: action.payload.searchTerm
       };
 
-    case eventsActions.SET_SEARCH_CITY:
+    case SET_SEARCH_CITY:
       return {
         ...state,
-        city: payload.searchCity
+        city: action.payload.searchCity
       };
 
     default:

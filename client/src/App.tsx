@@ -28,10 +28,6 @@ history.listen(location => ReactGA.pageview(location.pathname));
 
 const App: React.FC = () => {
   useEffect(() => {
-    console.log(
-      "process.env.REACT_APP_GA_TRACKING_ID",
-      process.env.REACT_APP_GA_TRACKING_ID
-    );
     if (process.env.REACT_APP_GA_TRACKING_ID) {
       ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     }

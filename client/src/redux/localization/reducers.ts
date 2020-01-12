@@ -1,6 +1,5 @@
-import { IAction } from "redux/action";
-import { actionTypes as localizationActionsTypes } from "redux/localization/constants";
-import { ILocalizationReducerState, AvailableLocales } from "./types";
+import { CHANGE_LOCALE } from "redux/localization/constants";
+import { ILocalizationReducerState, LocalizationReducerTypes } from "./types";
 
 const defaultState: ILocalizationReducerState = {
   locale: "en"
@@ -8,13 +7,13 @@ const defaultState: ILocalizationReducerState = {
 
 function localizationReducer(
   state: ILocalizationReducerState = defaultState,
-  { type, payload }: IAction<AvailableLocales>
+  action: LocalizationReducerTypes
 ) {
-  switch (type) {
-    case localizationActionsTypes.CHANGE_LOCALE:
+  switch (action.type) {
+    case CHANGE_LOCALE:
       return {
         ...state,
-        locale: payload
+        locale: action.payload
       };
 
     default:

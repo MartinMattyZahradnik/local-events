@@ -83,7 +83,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 mongoose
-  .connect(makeDBConnectionString())
+  .connect(makeDBConnectionString(), { useNewUrlParser: true })
   .then(result => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     if (process.env.NODE_ENV !== "testing") {

@@ -6,7 +6,7 @@ import { fetchEventDetailSuccess, fetchSimilarEventsSuccess } from "./actions";
 import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Constants
-import { actionTypes as eventsActionTypes } from "./constants";
+import { FETCH_EVENT_DETAIL, FETCH_SIMILAR_EVENTS } from "./constants";
 
 function* fetchEventDetailWatcher({
   payload
@@ -51,13 +51,7 @@ function* fetchSimilarEventsWatcher({
 }
 
 export default function* userSaga() {
-  yield takeLatest(
-    eventsActionTypes.FETCH_EVENT_DETAIL,
-    fetchEventDetailWatcher
-  );
+  yield takeLatest(FETCH_EVENT_DETAIL, fetchEventDetailWatcher);
 
-  yield takeLatest(
-    eventsActionTypes.FETCH_SIMILAR_EVENTS,
-    fetchSimilarEventsWatcher
-  );
+  yield takeLatest(FETCH_SIMILAR_EVENTS, fetchSimilarEventsWatcher);
 }
