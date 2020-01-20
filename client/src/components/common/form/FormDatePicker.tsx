@@ -7,9 +7,9 @@ import styled from "styled-components";
 // Components
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  MaterialUiPickersDate
+  KeyboardDatePicker
 } from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
 const StyledMuiPickersUtilsProvider = styled(MuiPickersUtilsProvider)``;
 
