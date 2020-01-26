@@ -34,7 +34,7 @@ interface IProps extends FieldProps {
   label: string;
   defaultDate?: number;
   defaultFormat?: string;
-  onChange: (field: string, value: any) => {};
+  onChange: (field: string, value: number) => {};
 }
 
 const Field: React.FC<IProps> = ({

@@ -52,6 +52,5 @@ function* fetchSimilarEventsWatcher({
 
 export default function* userSaga() {
   yield takeLatest(FETCH_EVENT_DETAIL, fetchEventDetailWatcher);
-
   yield takeLatest(FETCH_SIMILAR_EVENTS, fetchSimilarEventsWatcher);
 }

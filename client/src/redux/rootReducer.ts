@@ -9,15 +9,16 @@ import applicationReducer from "redux/application/reducers";
 import notificationsReducer from "redux/notifications/reducer";
 
 // Reducers Types
-import { IEventsReducerState } from "redux/events/reducers";
+import { IEventsReducerState } from "redux/events/types";
 import { IEventDetailReducerState } from "redux/eventDetail/types";
 import { ILocalizationReducerState } from "redux/localization/types";
 import { IApplicationReducerState } from "redux/application/types";
 import { INotificationReducerState } from "redux/notifications/types";
+import { IUserReducerState } from "redux/user/types";
 
 export interface IState {
   localization: ILocalizationReducerState;
-  user: any;
+  user: IUserReducerState;
   events: IEventsReducerState;
   eventDetail: IEventDetailReducerState;
   application: IApplicationReducerState;

@@ -17,8 +17,11 @@ import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Selectors
 import { selectHasAccessPermission } from "redux/events/selectors";
-import { selectEventDetail } from "redux/eventDetail/selectors";
+import { selectEventForUpdateForm } from "redux/eventDetail/selectors";
 import { selectUserId } from "redux/user/selectors";
+
+// Types
+import { IEventFormValues } from "redux/events/types";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -48,7 +51,7 @@ const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
   const { formatMessage } = useIntl();
   const { id } = match.params;
   const dispatch = useDispatch();
-  const event = useSelector(selectEventDetail);
+  const event = useSelector(selectEventForUpdateForm);
   const userId = useSelector(selectUserId);
   const hasAccessPermission = useSelector(selectHasAccessPermission);
 
@@ -56,7 +59,7 @@ const UpdateEventPage: React.FC<IUpdateEventPageProps> = ({ match }) => {
     dispatch(fetchEventDetail(id));
   }, [dispatch, id]);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: IEventFormValues) => {
     dispatch(updateEvent(id, values));
   };
 

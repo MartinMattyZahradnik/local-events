@@ -17,7 +17,8 @@ import {
   UpdateUserAction,
   UpdateUserSuccessAction,
   UpdateUserErrorAction,
-  SetNewPasswordAction
+  SetNewPasswordAction,
+  IUserFormValues
 } from "./types";
 
 // Constants
@@ -93,12 +94,16 @@ export const passwordResetError = (): PasswordResetErrorAction => ({
 });
 
 /*** ===  REGISTER USER  === ***/
-export const registerUser = (formData: any): RegisterUserAction => ({
+export const registerUser = (
+  formData: IUserFormValues
+): RegisterUserAction => ({
   type: REGISTER_USER,
   payload: { formData }
 });
 
-export const registerUserSuccess = (user: any): RegisterUserSuccessAction => ({
+export const registerUserSuccess = (
+  user: IUser
+): RegisterUserSuccessAction => ({
   type: REGISTER_USER_SUCCESS,
   payload: { user }
 });
@@ -110,13 +115,13 @@ export const registerUserError = (): RegisterUserErrorAction => ({
 /*** ===  UPDATE USER  === ***/
 export const updateUser = (
   userId: string,
-  formData: any
+  formData: IUserFormValues
 ): UpdateUserAction => ({
   type: UPDATE_USER,
   payload: { userId, formData }
 });
 
-export const updateUserSuccess = (user: any): UpdateUserSuccessAction => ({
+export const updateUserSuccess = (user: IUser): UpdateUserSuccessAction => ({
   type: UPDATE_USER_SUCCESS,
   payload: { user }
 });

@@ -22,7 +22,7 @@ import { fetchCountryList } from "redux/application/actions";
 import { ICountry } from "redux/application/types";
 
 // Types
-import { ICreateEventActionPayload } from "redux/events/types";
+import { IEventFormValues } from "redux/events/types";
 
 // Selectors
 import { selectEventCategories } from "redux/events/selectors";
@@ -101,10 +101,8 @@ const StyledLink = styled.span`
   margin-top: auto;
 `;
 
-interface IEventFormValues extends ICreateEventActionPayload {}
-
 interface ICreateEventProps extends IEventFormValues {
-  onSubmit: (formValues: ICreateEventActionPayload) => any;
+  onSubmit: (formValues: IEventFormValues) => void;
   actionButtonLabel: string;
   formHeading: string;
 }
@@ -356,7 +354,7 @@ const EventForm = (
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               type="number"
-              name="price.price"
+              name="price"
               label={
                 <FormattedMessage id="General.price" defaultMessage="Pride" />
               }
@@ -421,7 +419,7 @@ const EventForm = (
   );
 };
 
-export default withFormik<ICreateEventProps, ICreateEventActionPayload>({
+export default withFormik<ICreateEventProps, IEventFormValues>({
   displayName: "Event form",
   validationSchema,
   handleSubmit(values, { props, setSubmitting }) {
@@ -433,7 +431,6 @@ export default withFormik<ICreateEventProps, ICreateEventActionPayload>({
     description,
     date,
     imageUrl,
-    images,
     category,
     address,
     price,
@@ -445,7 +442,6 @@ export default withFormik<ICreateEventProps, ICreateEventActionPayload>({
       description,
       date,
       imageUrl,
-      images,
       category,
       address,
       price,

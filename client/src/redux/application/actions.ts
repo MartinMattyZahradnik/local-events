@@ -4,7 +4,7 @@ import {
   FETCH_COUNTRY_LIST_ERROR
 } from "./constants";
 import {
-  ICountryList,
+  ICountry,
   FetchCountyListAction,
   FetchCountyListSuccessAction,
   FetchCountyListErrorAction
@@ -16,7 +16,7 @@ export const fetchCountryList = (): FetchCountyListAction => ({
 });
 
 export const fetchCountyListSuccess = (
-  countries: ICountryList
+  countries: ICountry[]
 ): FetchCountyListSuccessAction => ({
   type: FETCH_COUNTRY_LIST_SUCCESS,
   payload: { countries }

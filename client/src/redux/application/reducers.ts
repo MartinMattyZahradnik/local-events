@@ -6,7 +6,7 @@ import {
   FETCH_COUNTRY_LIST_ERROR
 } from "./constants";
 import {
-  ICountryList,
+  ICountry,
   CountryListResultTypes,
   CountryListLoadingTypes,
   CountryListErrorTypes
@@ -26,7 +26,7 @@ function error(state: number | null = null, action: CountryListErrorTypes) {
   }
 }
 
-function result(state: ICountryList = [], action: CountryListResultTypes) {
+function result(state: ICountry[] = [], action: CountryListResultTypes) {
   switch (action.type) {
     case FETCH_COUNTRY_LIST_SUCCESS:
       return action.payload.countries;
@@ -56,7 +56,7 @@ function isLoading(state = false, action: CountryListLoadingTypes) {
 export interface ICountryListReducerState {
   isLoading: boolean;
   error: boolean;
-  result: ICountryList;
+  result: ICountry[];
 }
 
 export const countryListReducer = combineReducers({ error, result, isLoading });

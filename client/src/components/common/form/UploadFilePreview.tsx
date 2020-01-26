@@ -22,27 +22,27 @@ const StyledClearIcon = styled(ClearIcon)`
 
 interface IUploadFilePreviewProps {
   inputId: string;
-  imageUrl: string | null;
+  imageUrl: string;
   onChange: Function;
 }
 
 const UploadFilePreview = ({
   inputId,
-  imageUrl = null,
+  imageUrl = "",
   onChange
 }: IUploadFilePreviewProps) => {
-  const [image, setImage] = useState<null | string>(imageUrl);
+  const [image, setImage] = useState<string>(imageUrl);
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
     setImage(URL.createObjectURL(file));
-    onChange("image", file);
+    onChange("imageUrl", file);
   };
 
   const handleClearImage = () => {
-    setImage(null);
-    onChange("image", null);
+    setImage("");
+    onChange("image", "");
   };
 
   return (
@@ -51,7 +51,7 @@ const UploadFilePreview = ({
         id={inputId}
         onChange={handleInputChange}
         type="file"
-        name="image"
+        name="imageUrl"
         accept="image/png, image/jpeg"
         hidden
       />

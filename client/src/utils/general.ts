@@ -1,9 +1,11 @@
 export const formatAddress = ({
   street,
   postalCode,
-  city,
-  countryCode,
-  country
-}: any) => {
+  city
+}: {
+  street: string;
+  postalCode?: string;
+  city: string;
+}): string => {
   return `${street} ${postalCode} ${city}`;
 };

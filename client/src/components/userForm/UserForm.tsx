@@ -19,7 +19,7 @@ import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
 
 // Types
-import { IRegisterUserActionPayload } from "redux/user/types";
+import { IUserFormValues } from "redux/user/types";
 import { ICountry } from "redux/application/types";
 
 // Actions
@@ -92,10 +92,8 @@ const StyledFormErrorWrapper = styled.div`
   right: 2rem;
 `;
 
-interface IUserFormValues extends IRegisterUserActionPayload {}
-
 interface IRegisterUserProps extends IUserFormValues {
-  onSubmit: (formValues: IRegisterUserActionPayload) => any;
+  onSubmit: (formValues: IUserFormValues) => void;
   submitButtonLabel: string;
   formHeading: string;
   isUpdate?: boolean;
@@ -483,7 +481,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
   );
 };
 
-export default withFormik<IRegisterUserProps, IRegisterUserActionPayload>({
+export default withFormik<IRegisterUserProps, IUserFormValues>({
   displayName: "User form",
   validationSchema: (props: IRegisterUserProps) =>
     createValidationSchema(props.isUpdate),

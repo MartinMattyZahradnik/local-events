@@ -71,7 +71,10 @@ export const updateEventController = async (
         .send({ message: "You don't have access rights to update this event" });
     }
 
-    await Event.findByIdAndUpdate(eventId, body);
+    await Event.findByIdAndUpdate(eventId, {
+      ...body,
+      price: { ...event.price, price: body.price }
+    });
     return res.status(200).json(body);
   } catch (err) {
     if (!err.statusCode) {

@@ -29,20 +29,19 @@ import { pushNotificationToStack } from "redux/notifications/actions";
 import {
   ILoginActionPayload,
   IPasswordResetActionPayload,
-  IRegisterUserActionPayload
+  IUserFormValues
 } from "./types";
 
 function* fetchUserSagaWatcher({
   payload
 }: {
   type: string;
-  payload: { userId?: string };
+  payload: { userId: string };
 }) {
   try {
     const userId = payload.userId;
     const resp = yield request.get(`/user/${userId}`);
-
-    yield put(fetchUserSuccess(resp.data));
+    yield put(fetchUserSuccess(resp.data.user));
   } catch (error) {
     fetchUserError(error.response.status);
   }
@@ -52,7 +51,7 @@ function* registerUserWatcher({
   payload
 }: {
   type: string;
-  payload: { formData: IRegisterUserActionPayload };
+  payload: { formData: IUserFormValues };
 }) {
   const { formData } = payload;
   const userData = { ...formData };
@@ -90,7 +89,7 @@ function* updateUserWatcher({
   payload
 }: {
   type: string;
-  payload: { userId: string; formData: IRegisterUserActionPayload };
+  payload: { userId: string; formData: IUserFormValues };
 }) {
   const { userId, formData } = payload;
   const userData = { ...formData };
@@ -171,7 +170,12 @@ function* passwordResetSagaWatcher({
   }
 }
 
-function* setNewPasswordWatcher({ payload }: { type: string; payload: any }) {
+function* setNewPasswordWatcher({
+  payload
+}: {
+  type: string;
+  payload: { password: string; token: string };
+}) {
   try {
     const { password, token } = payload;
     yield request.post(`/auth/set-new-password`, {

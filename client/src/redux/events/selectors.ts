@@ -3,40 +3,41 @@ import { createSelector } from "reselect";
 import { IState } from "redux/rootReducer";
 import { selectUserRole, selectUserId } from "redux/user/selectors";
 import { selectEventDetail } from "redux/eventDetail/selectors";
+import { IEvent } from "redux/events/types";
 
 const getEvents = (state: IState) => state.events;
 
-export const selectEventsTotal = (state: IState) =>
+export const selectEventsTotal = (state: IState): number =>
   state.events.result.totalItems;
 
 export const selectEvents = createSelector(
   getEvents,
-  eventsState => eventsState.result.events
+  (eventsState): IEvent[] => eventsState.result.events
 );
 
 export const selectEventsError = createSelector(
   getEvents,
-  eventsState => eventsState.error
+  (eventsState): null | number => eventsState.error
 );
 
 export const selectEventsIsLoading = createSelector(
   getEvents,
-  eventsState => eventsState.isLoading
+  (eventsState): boolean => eventsState.isLoading
 );
 
 export const makeSelectHasRightToEditEvent = (ownerId: string) =>
-  createSelector(selectUserId, selectUserRole, (userId, userRole) => {
+  createSelector(selectUserId, selectUserRole, (userId, userRole): boolean => {
     return userRole === "admin" || userId === ownerId;
   });
 
 export const makeSelectHasRightToDeleteEvent = (ownerId: string) =>
-  createSelector(selectUserId, selectUserRole, (userId, userRole) => {
+  createSelector(selectUserId, selectUserRole, (userId, userRole): boolean => {
     return userRole === "admin" || userId === ownerId;
   });
 
 export const selectHasAccessPermission = createSelector(
   [selectUserId, selectUserRole, selectEventDetail],
-  (userId, userRole, event) => {
+  (userId, userRole, event): boolean => {
     if (!event) {
       return false;
     }
@@ -52,17 +53,17 @@ export const selectMyEvents = createSelector(
 
 export const selectMyEventsResult = createSelector(
   [selectMyEvents],
-  myEvents => myEvents.result
+  (myEvents): IEvent[] => myEvents.result
 );
 
 export const selectMyEventsError = createSelector(
   [selectMyEvents],
-  myEvents => myEvents.error
+  (myEvents): null | number => myEvents.error
 );
 
 export const selectMyEventsIsLoading = createSelector(
   [selectMyEvents],
-  myEvents => myEvents.isLoading
+  (myEvents): boolean => myEvents.isLoading
 );
 
 export const selectSearch = createSelector(
@@ -72,12 +73,12 @@ export const selectSearch = createSelector(
 
 export const selectSearchTerm = createSelector(
   [selectSearch],
-  search => search.term || ""
+  (search): string => search.term || ""
 );
 
 export const selectSearchCity = createSelector(
   [selectSearch],
-  search => search.city || "all"
+  (search): string => search.city || "all"
 );
 
 export const selectEventCategories = createSelector(getEvents, () => {

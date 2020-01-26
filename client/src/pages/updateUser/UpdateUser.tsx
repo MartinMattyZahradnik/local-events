@@ -21,6 +21,7 @@ import {
 
 // Types
 import { IState } from "redux/rootReducer";
+import { IUserFormValues } from "redux/user/types";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -50,7 +51,7 @@ const UpdateUser: React.FC<IUpdateUserProps> = ({ match }) => {
     dispatch(fetchUser(userId));
   }, [dispatch, userId]);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: IUserFormValues) => {
     dispatch(updateUser(userId, values));
   };
 
@@ -58,6 +59,10 @@ const UpdateUser: React.FC<IUpdateUserProps> = ({ match }) => {
     id: "General.update",
     defaultMessage: "Update"
   });
+
+  if (!user) {
+    return <div>Loading</div>;
+  }
 
   if (!hasViewPermission) {
     dispatch(

@@ -21,23 +21,28 @@ import {
 export type AvailableUserRoles = "admin" | "user" | "visitor";
 type Gender = "male" | "female" | "other";
 
-export interface IUser {
-  _id: string;
-  name: string;
+export interface IUserFormValues {
   firstName: string;
+  lastName: string;
   userName: string;
   email: string;
-  phone?: string;
   birthDate: Date;
-  userRole: AvailableUserRoles;
-  gender?: Gender;
-  image?: string;
+  password: string;
+  passwordConfirm: string;
+  image: string;
+  phone?: string;
+  gender: string;
   address: {
     street: string;
-    postalCode: string;
+    postalCode?: string;
     city: string;
     country: string;
   };
+}
+
+export interface IUser extends IUserFormValues {
+  _id: string;
+  userRole: AvailableUserRoles;
 }
 
 export interface ILoginActionPayload {
@@ -47,25 +52,6 @@ export interface ILoginActionPayload {
 
 export interface IPasswordResetActionPayload {
   email: string;
-}
-
-export interface IRegisterUserActionPayload {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  phone?: string;
-  birthDate: Date;
-  password: string;
-  passwordConfirm: string;
-  gender?: Gender;
-  image?: any;
-  address: {
-    street: string;
-    postalCode: string;
-    city: string;
-    country: string;
-  };
 }
 
 export interface FetchUserAction {
@@ -117,12 +103,12 @@ export interface PasswordResetErrorAction {
 
 export interface RegisterUserAction {
   type: typeof REGISTER_USER;
-  payload: { formData: any };
+  payload: { formData: IUserFormValues };
 }
 
 export interface RegisterUserSuccessAction {
   type: typeof REGISTER_USER_SUCCESS;
-  payload: { user: any };
+  payload: { user: IUser };
 }
 
 export interface RegisterUserErrorAction {
@@ -131,12 +117,12 @@ export interface RegisterUserErrorAction {
 
 export interface UpdateUserAction {
   type: typeof UPDATE_USER;
-  payload: { userId: string; formData: any };
+  payload: { userId: string; formData: IUserFormValues };
 }
 
 export interface UpdateUserSuccessAction {
   type: typeof UPDATE_USER_SUCCESS;
-  payload: { user: any };
+  payload: { user: IUserFormValues };
 }
 
 export interface UpdateUserErrorAction {
@@ -168,3 +154,9 @@ export type UserIsLoadingReducerTypes =
   | LoginSuccessAction
   | LoginErrorAction
   | LogoutAction;
+
+export interface IUserReducerState {
+  error: null | number;
+  result: IUser | null;
+  isLoading: boolean;
+}

@@ -45,7 +45,8 @@ import {
   FetchEventsByUserIdErrorAction,
   // others
   SetSearchTermAction,
-  SetSearchCityAction
+  SetSearchCityAction,
+  IEventFormValues
 } from "./types";
 
 /*** ===  FETCH EVENTS  === ***/
@@ -73,7 +74,9 @@ export const fetchEventsError = (
 });
 
 /*** ===  CREATE EVENT  === ***/
-export const createEvent = (eventData: any): CreateEventAction => ({
+export const createEvent = (
+  eventData: IEventFormValues
+): CreateEventAction => ({
   type: CREATE_EVENT,
   payload: { eventData }
 });
@@ -95,17 +98,18 @@ export const createEventError = (
 /*** ===  UPDATE EVENT  === ***/
 export const updateEvent = (
   eventId: string,
-  formValues: any
+  formValues: IEventFormValues
 ): UpdateEventAction => ({
   type: UPDATE_EVENT,
   payload: { eventId, formValues }
 });
 
 export const updateEventSuccess = (
-  eventData: any
+  id: string,
+  eventData: IEvent
 ): UpdateEventSuccessAction => ({
   type: UPDATE_EVENT_SUCCESS,
-  payload: { eventData }
+  payload: { id, eventData }
 });
 
 export const updateEventError = (

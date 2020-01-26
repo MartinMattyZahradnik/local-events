@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { IResultState, ISearchEventsReducerState } from "./types";
 
 import {
   IEvent,
@@ -34,11 +35,6 @@ function error(state: null | number = null, action: EventErrorReducerTypes) {
       return state;
   }
 }
-
-type IResultState = {
-  events: IEvent[];
-  totalItems: number;
-};
 
 const ResultDefaultState = {
   events: [],
@@ -76,21 +72,13 @@ function isLoading(state = false, action: EventLoadingLoadingTypes) {
     case FETCH_EVENTS:
       return true;
 
-    default:
+    case FETCH_EVENTS_SUCCESS:
+    case FETCH_EVENTS_ERROR:
       return false;
-  }
-}
 
-export interface IEventsReducerState {
-  isLoading: boolean;
-  error: boolean;
-  result: IResultState;
-  myEvents: {
-    isLoading: boolean;
-    error: boolean;
-    result: IEvent[];
-  };
-  search: ISearchEventsReducerState;
+    default:
+      return state;
+  }
 }
 
 export interface IMyEventsReducerState {
@@ -144,11 +132,6 @@ function myEvents(
     default:
       return state;
   }
-}
-
-export interface ISearchEventsReducerState {
-  city: string;
-  term: string;
 }
 
 const searchReducerDefaultState = {

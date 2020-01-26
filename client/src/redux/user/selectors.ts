@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import { IState } from "redux/rootReducer";
+import { AvailableUserRoles } from "./types";
 
 const getUserData = (state: IState) => state.user;
 
@@ -10,15 +11,15 @@ export const selectUser = createSelector(
 
 export const selectUserIsLoading = createSelector(
   getUserData,
-  userData => userData.isLoading
+  (userData): boolean => userData.isLoading
 );
 
 export const selectUserError = createSelector(
   getUserData,
-  userData => userData.error
+  (userData): number | null => userData.error
 );
 
-export const selectUserImage = createSelector(selectUser, user => {
+export const selectUserImage = createSelector(selectUser, (user): string => {
   if (!user) {
     return "/defaultUserAvatarOther.png";
   }
@@ -38,17 +39,20 @@ export const selectUserImage = createSelector(selectUser, user => {
   return user.image;
 });
 
-export const selectIsUserLoggedIn = createSelector(selectUser, user =>
-  Boolean(user)
+export const selectIsUserLoggedIn = createSelector(
+  selectUser,
+  (user): boolean => Boolean(user)
 );
 
-export const selectUserId = createSelector(selectUser, user =>
+export const selectUserId = createSelector(selectUser, (user): string | null =>
   user ? user._id : null
 );
 
-export const selectUserRole = createSelector(selectUser, user => {
-  return user && user.userRole ? user.userRole : "visitor";
-});
+export const selectUserRole = createSelector(
+  selectUser,
+  (user): AvailableUserRoles =>
+    user && user.userRole ? user.userRole : "visitor"
+);
 
 export const selectHasPermissionViewProfile = createSelector(
   [
@@ -56,7 +60,7 @@ export const selectHasPermissionViewProfile = createSelector(
     selectUserId,
     (state: IState, profileId: string) => profileId
   ],
-  (userRole, selectUserId, profileId) => {
+  (userRole, selectUserId, profileId): boolean => {
     return profileId === selectUserId || userRole === "admin";
   }
 );

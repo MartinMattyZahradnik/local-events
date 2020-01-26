@@ -13,7 +13,7 @@ import { fetchSimilarEvents } from "redux/eventDetail/actions";
 import { selectSimilarEvents } from "redux/eventDetail/selectors";
 
 // Types
-import { IEvent } from "redux/eventDetail/types";
+import { IEvent } from "redux/events/types";
 
 interface ISimilarEventsProps {
   eventId: string;

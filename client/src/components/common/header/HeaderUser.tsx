@@ -25,7 +25,10 @@ const StyledLink = styled(Link)`
   text-transform: uppercase;
 `;
 
-const StyledUserAvatar = styled.div<any>`
+const StyledUserAvatar = styled.div<{
+  image: string;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+}>`
   width: 4rem;
   height: 4rem;
   background: ${({ image }) => `url("${image}") center`};
@@ -47,13 +50,15 @@ const HeaderUser = () => {
   const userImage = useSelector(selectUserImage);
   const { formatMessage } = useIntl();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  console.log(user, "user");
 
   const handleLogout = () => {
     handleClose();

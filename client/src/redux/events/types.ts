@@ -19,31 +19,49 @@ import {
   SET_SEARCH_CITY
 } from "./constants";
 
-export interface IEvent {
-  _id: string;
+export interface IEventFormValues {
   name: string;
   description: string;
   date: number;
   imageUrl: string;
-  images?: string[];
-  category: [string];
-  attendants?: string[];
-  similarEvents?: IEvent[];
   address: {
     street: string;
-    postalCode: string;
+    postalCode?: string;
     city: string;
     countryCode: string;
     country: string;
   };
+  category: string[];
+  price: number;
+  coordinates?: string;
+  tags: string;
+}
+
+export interface IEvent {
+  name: string;
+  description: string;
+  date: number;
+  imageUrl: string;
+  address: {
+    street: string;
+    postalCode?: string;
+    city: string;
+    countryCode: string;
+    country: string;
+  };
+  category: string[];
+  coordinates?: [number, number];
+  tags: string[];
+  _id: string;
+  images?: string[];
+  attendants?: string[];
+  similarEvents?: IEvent[];
   owner: IUser;
   price: {
     price: number;
     currency: string;
     locale: string;
   };
-  tags: string[];
-  coordinates?: [number, number];
   socialLinks?: {
     facebook?: string;
     twitter?: string;
@@ -52,34 +70,6 @@ export interface IEvent {
 }
 
 export type FetchEventsPayload = { pageNumber: number; perPage: number };
-
-export interface ICreateEventActionPayload {
-  name: string;
-  description: string;
-  date: number;
-  imageUrl: string;
-  images?: string[];
-  category: string[];
-  address: {
-    street: string;
-    postalCode: string;
-    city: string;
-    countryCode: string;
-    country?: string;
-  };
-  price: {
-    price: number;
-    currency: string;
-    locale: string;
-  };
-  tags: string[];
-  coordinates?: [number, number];
-  socialLinks?: {
-    facebook?: string;
-    twitter?: string;
-    pinterest?: string;
-  };
-}
 
 export interface FetchEventsAction {
   type: typeof FETCH_EVENTS;
@@ -101,7 +91,7 @@ export interface FetchEventsErrorAction {
 
 export interface CreateEventAction {
   type: typeof CREATE_EVENT;
-  payload: { eventData: any };
+  payload: { eventData: IEventFormValues };
 }
 
 export interface CreateEventSuccessAction {
@@ -116,12 +106,12 @@ export interface CreateEventErrorAction {
 
 export interface UpdateEventAction {
   type: typeof UPDATE_EVENT;
-  payload: { eventId: string; formValues: any };
+  payload: { eventId: string; formValues: IEventFormValues };
 }
 
 export interface UpdateEventSuccessAction {
   type: typeof UPDATE_EVENT_SUCCESS;
-  payload: { eventData: IEvent };
+  payload: { id: string; eventData: IEvent };
 }
 
 export interface UpdateEventErrorAction {
@@ -176,7 +166,10 @@ export type EventsResultReducerTypes =
   | UpdateEventSuccessAction
   | DeleteEventSuccessAction;
 
-export type EventLoadingLoadingTypes = FetchEventsAction;
+export type EventLoadingLoadingTypes =
+  | FetchEventsAction
+  | FetchEventsSuccessAction
+  | FetchEventsErrorAction;
 
 export type EventErrorReducerTypes =
   | FetchEventsErrorAction
@@ -192,3 +185,25 @@ export type MyEventsReducerTypes =
 export type EventsSearchReducerTypes =
   | SetSearchTermAction
   | SetSearchCityAction;
+
+export interface ISearchEventsReducerState {
+  city: string;
+  term: string;
+}
+
+export interface IResultState {
+  events: IEvent[];
+  totalItems: number;
+}
+
+export interface IEventsReducerState {
+  isLoading: boolean;
+  error: null | number;
+  result: IResultState;
+  myEvents: {
+    isLoading: boolean;
+    error: null | number;
+    result: IEvent[];
+  };
+  search: ISearchEventsReducerState;
+}

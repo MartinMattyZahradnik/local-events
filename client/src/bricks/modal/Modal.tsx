@@ -43,7 +43,7 @@ interface IModalProps {
   children?: React.ReactNode;
   open: boolean;
   onClose: () => void;
-  onConfirm: () => any;
+  onConfirm: (event: React.MouseEvent) => void;
   title?: string;
   confirmLabel?: React.ReactNode;
   cancelLabel?: React.ReactNode;

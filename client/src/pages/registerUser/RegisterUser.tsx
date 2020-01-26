@@ -11,6 +11,7 @@ import { UserForm } from "components";
 import { registerUser } from "redux/user/actions";
 
 // Types
+import { IUserFormValues } from "redux/user/types";
 
 const StyledFormWrapper = styled(Grid)`
   width: 80rem;
@@ -39,6 +40,7 @@ const emptyUser = {
   password: "",
   passwordConfirm: "",
   image: "",
+  gender: "male",
   address: {
     street: "",
     postalCode: "",
@@ -51,7 +53,7 @@ const RegisterUser: React.FC = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: IUserFormValues) => {
     dispatch(registerUser(values));
   };
 

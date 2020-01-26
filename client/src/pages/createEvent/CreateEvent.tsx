@@ -12,6 +12,7 @@ import { EventForm } from "components";
 import { createEvent } from "redux/events/actions";
 
 // Types
+import { IEventFormValues } from "redux/events/types";
 
 const StyledFormWrapper = styled(Grid)`
   margin: auto;
@@ -37,12 +38,8 @@ const emptyEvent = {
   imageUrl: "",
   date: Date.now(),
   category: [],
-  price: {
-    price: 0,
-    currency: "EUR",
-    locale: "en"
-  },
-  tags: [],
+  price: 0,
+  tags: "",
   address: {
     street: "",
     postalCode: "",
@@ -56,7 +53,7 @@ const CreateEvent: React.FC = () => {
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: IEventFormValues) => {
     dispatch(createEvent(values));
   };
 

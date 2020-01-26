@@ -96,11 +96,13 @@ const Pagination = ({
     setCurrentPageNumber(pageNumber);
   };
 
-  const handleChangePerPage = (e: React.ChangeEvent<any>) => {
-    const newPerPage = e.target.value;
-    setCurrentPageNumber(1);
-    onChange(currentPageNumber, newPerPage);
-    setPerPage(newPerPage);
+  const handleChangePerPage = (e: React.SyntheticEvent<EventTarget>) => {
+    const newPerPage = parseInt((e.target as HTMLInputElement).value);
+    if (typeof newPerPage === "number") {
+      setCurrentPageNumber(1);
+      onChange(currentPageNumber, newPerPage);
+      setPerPage(newPerPage);
+    }
   };
 
   const hasNextPage = paginationItems.length - currentPageNumber > 0;
@@ -109,7 +111,7 @@ const Pagination = ({
   return (
     <>
       <StyledPagination>
-        <StyledForm onSubmit={(e: any) => e.prevent.default()}>
+        <StyledForm onSubmit={(e: React.FormEvent) => e.preventDefault()}>
           <StyledPerPage>
             {intl.formatMessage({
               id: "General.rowsPerPage",

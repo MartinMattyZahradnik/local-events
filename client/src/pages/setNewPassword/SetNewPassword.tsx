@@ -80,7 +80,7 @@ type RouteParams = {
 interface ILoginFormProps
   extends RouteComponentProps<RouteParams>,
     ILoginFormValues {
-  setNewPassword: (password: string, token: string) => any;
+  setNewPassword: (password: string, token: string) => void;
 }
 
 const SetNewPasswordPage = (

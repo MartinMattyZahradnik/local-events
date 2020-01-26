@@ -1,43 +1,12 @@
-import { IUser } from "redux/user/types";
+import { IEvent } from "redux/events/types";
 import {
   FETCH_EVENT_DETAIL,
   FETCH_EVENT_DETAIL_SUCCESS,
   FETCH_SIMILAR_EVENTS_SUCCESS,
   RESET_EVENT_DETAIL,
-  FETCH_SIMILAR_EVENTS
+  FETCH_SIMILAR_EVENTS,
+  FETCH_EVENT_DETAIL_ERROR
 } from "./constants";
-
-export interface IEvent {
-  _id: string;
-  name: string;
-  description: string;
-  date: number;
-  imageUrl: string;
-  images?: string[];
-  category: [string];
-  attendants?: string[];
-  similarEvents?: IEvent[];
-  address: {
-    street: string;
-    postalCode: string;
-    city: string;
-    countryCode: string;
-    country: string;
-  };
-  owner: IUser;
-  price: {
-    price: number;
-    currency: string;
-    locale: string;
-  };
-  tags: string[];
-  coordinates: [number, number];
-  socialLinks?: {
-    facebook?: string;
-    twitter?: string;
-    pinterest?: string;
-  };
-}
 
 export type IResultState = IEvent | null;
 
@@ -57,6 +26,11 @@ export interface FetchEventDetailSuccessAction {
   payload: IEvent;
 }
 
+export interface FetchEventDetailErrorAction {
+  type: typeof FETCH_EVENT_DETAIL_ERROR;
+  payload: { statusCode: number };
+}
+
 export interface ResetEventDetailAction {
   type: typeof RESET_EVENT_DETAIL;
 }
@@ -70,3 +44,19 @@ export interface FetchSimilarEventsSuccessAction {
   type: typeof FETCH_SIMILAR_EVENTS_SUCCESS;
   payload: { eventId: string; events: IEvent[] };
 }
+
+export type EventDetailErrorReducerTypes =
+  | FetchEventDetailSuccessAction
+  | FetchSimilarEventsSuccessAction
+  | ResetEventDetailAction
+  | FetchEventDetailAction
+  | FetchEventDetailErrorAction;
+
+export type EventDetailLoadingReducerTypes =
+  | FetchEventDetailAction
+  | ResetEventDetailAction;
+
+export type EventDetailResultReducerTypes =
+  | FetchEventDetailSuccessAction
+  | FetchSimilarEventsSuccessAction
+  | ResetEventDetailAction;

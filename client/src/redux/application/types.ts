@@ -10,14 +10,12 @@ export interface IState {
 }
 
 export interface ICountry extends IState {
-  states: null | IState[];
+  states?: IState[];
 }
-
-export type ICountryList = ICountry[];
 
 export type IApplicationReducerState = {
   countryList: {
-    result: ICountryList;
+    result: ICountry[];
     isLoading: boolean;
     error: boolean;
   };
@@ -29,7 +27,7 @@ export interface FetchCountyListAction {
 
 export interface FetchCountyListSuccessAction {
   type: typeof FETCH_COUNTRY_LIST_SUCCESS;
-  payload: { countries: ICountryList };
+  payload: { countries: ICountry[] };
 }
 
 export interface FetchCountyListErrorAction {

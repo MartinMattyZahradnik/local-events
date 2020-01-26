@@ -9,10 +9,16 @@ import {
 } from "./constants";
 import { IResultState } from "./types";
 
-function error(state = false, { type, payload }: any) {
-  switch (type) {
+import {
+  EventDetailErrorReducerTypes,
+  EventDetailLoadingReducerTypes,
+  EventDetailResultReducerTypes
+} from "./types";
+
+function error(state = false, action: EventDetailErrorReducerTypes) {
+  switch (action.type) {
     case FETCH_EVENT_DETAIL_ERROR:
-      return payload;
+      return action.payload;
 
     case FETCH_EVENT_DETAIL:
     case FETCH_EVENT_DETAIL_SUCCESS:
@@ -24,15 +30,18 @@ function error(state = false, { type, payload }: any) {
   }
 }
 
-function result(state: IResultState = null, { type, payload }: any) {
-  switch (type) {
+function result(
+  state: IResultState = null,
+  action: EventDetailResultReducerTypes
+) {
+  switch (action.type) {
     case FETCH_EVENT_DETAIL_SUCCESS:
-      return payload;
+      return action.payload;
 
     case FETCH_SIMILAR_EVENTS_SUCCESS:
       return {
         ...state,
-        similarEvents: payload.events
+        similarEvents: action.payload.events
       };
 
     case RESET_EVENT_DETAIL:
@@ -43,8 +52,8 @@ function result(state: IResultState = null, { type, payload }: any) {
   }
 }
 
-function isLoading(state = false, { type }: any) {
-  switch (type) {
+function isLoading(state = false, action: EventDetailLoadingReducerTypes) {
+  switch (action.type) {
     case FETCH_EVENT_DETAIL:
       return true;
 

@@ -24,7 +24,7 @@ import {
 import { pushNotificationToStack } from "redux/notifications/actions";
 
 // Types
-import { FetchEventsPayload } from "./types";
+import { FetchEventsPayload, IEventFormValues } from "./types";
 
 // Constants
 import {
@@ -68,17 +68,22 @@ function* fetchEventsWatcher({
   }
 }
 
-function* createEventWatcher({ payload }: { type: string; payload: any }) {
+function* createEventWatcher({
+  payload
+}: {
+  type: string;
+  payload: { eventData: IEventFormValues };
+}) {
   try {
     const owner = yield select(selectUserId);
     const country = yield select(
       makeSelectCountryNameByCode(payload.eventData.address.countryCode)
     );
 
-    if (payload.eventData.image) {
+    if (payload.eventData.imageUrl) {
       try {
         const data = new FormData();
-        data.append("image", payload.eventData.image);
+        data.append("image", payload.eventData.imageUrl);
         const res = yield request.post(`/upload`, data, {
           headers: { "Content-Type": "multipart/form-data" }
         });
@@ -101,7 +106,9 @@ function* createEventWatcher({ payload }: { type: string; payload: any }) {
         country
       },
       ...(payload.eventData.coordinates && {
-        coordinates: payload.eventData.coordinates.split(",")
+        coordinates: payload.eventData.coordinates
+          .split(",")
+          .map(value => parseFloat(value))
       }),
       ...(payload.eventData.tags && { tags: payload.eventData.tags.split(",") })
     };
@@ -126,15 +133,16 @@ function* updateEventWatcher({
   payload: { eventId, formValues }
 }: {
   type: string;
-  payload: any;
+  payload: { eventId: string; formValues: IEventFormValues };
 }) {
   const values = {
-    ...formValues
+    ...formValues,
+    coordinates: Array()
   };
-  if (formValues.image) {
+  if (formValues.imageUrl) {
     try {
       const data = new FormData();
-      data.append("image", formValues.image);
+      data.append("image", formValues.imageUrl);
       const res = yield request.post(`/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" }
       });
@@ -147,20 +155,20 @@ function* updateEventWatcher({
     }
   }
 
-  if (!formValues.coordinates) {
-    values.coordinates = [];
-  } else if (typeof formValues.coordinates === "string") {
-    values.coordinates = formValues.coordinates.split(",");
+  if (formValues.coordinates) {
+    formValues.coordinates.split(",").forEach((value: string) => {
+      const coordinate = parseFloat(value);
+      if (typeof coordinate === "number") {
+        values.coordinates.push(coordinate);
+      } else {
+        values.coordinates.push(0);
+      }
+    });
   }
 
   try {
     const resp = yield request.put(`/events/${eventId}`, values);
-    yield put(
-      updateEventSuccess({
-        totalItems: resp.data.totalItems,
-        events: resp.data.events
-      })
-    );
+    yield put(updateEventSuccess(eventId, resp.data));
     yield put(pushNotificationToStack("Event has been updated"));
   } catch (error) {
     if (error.response.status) {
@@ -185,7 +193,6 @@ function* deleteEventWatcher({
     yield put(deleteEventSuccess(id));
     yield put(pushNotificationToStack("Event has been deleted"));
   } catch (error) {
-    console.log(error);
     if (error && error.response && error.response.status) {
       yield put(deleteEventError(error.response.status));
       yield put(
@@ -201,7 +208,7 @@ function* fetchEventsByIdWatcher({
   payload: { userId }
 }: {
   type: string;
-  payload: any;
+  payload: { userId: string };
 }) {
   try {
     const resp = yield request.get(`/user/${userId}/events`);

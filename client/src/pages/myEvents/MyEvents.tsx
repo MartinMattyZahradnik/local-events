@@ -70,6 +70,10 @@ const StyledAddressCell = styled(TableCell)`
   max-width: 22rem;
 `;
 
+const StyledCategory = styled.span`
+  padding: 0 0.3rem;
+`;
+
 type MatchParams = {
   id: string;
 };
@@ -147,7 +151,11 @@ const MyEvents = ({ match }: IMyEventsProps) => {
                   {event.name}
                 </StyledEventLink>
               </TableCell>
-              <TableCell>{event.category}</TableCell>
+              <TableCell>
+                {event.category.map(category => (
+                  <StyledCategory>{category}</StyledCategory>
+                ))}
+              </TableCell>
               <TableCell>{formatAddress(event.address)}</TableCell>
               <TableCell>{timestampToDate(event.date)}</TableCell>
               <TableCell align="center">

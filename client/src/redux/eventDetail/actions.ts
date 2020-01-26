@@ -1,18 +1,20 @@
 import {
   FETCH_EVENT_DETAIL,
   FETCH_EVENT_DETAIL_SUCCESS,
+  FETCH_EVENT_DETAIL_ERROR,
   RESET_EVENT_DETAIL,
   FETCH_SIMILAR_EVENTS,
   FETCH_SIMILAR_EVENTS_SUCCESS
 } from "./constants";
 import {
-  IEvent,
   FetchEventDetailAction,
   FetchEventDetailSuccessAction,
+  FetchEventDetailErrorAction,
   ResetEventDetailAction,
   FetchSimilarEventsAction,
   FetchSimilarEventsSuccessAction
 } from "./types";
+import { IEvent } from "redux/events/types";
 
 /*** ===  FETCH EVENT DETAIL  === ***/
 export const fetchEventDetail = (eventId: string): FetchEventDetailAction => ({
@@ -25,6 +27,13 @@ export const fetchEventDetailSuccess = (
 ): FetchEventDetailSuccessAction => ({
   type: FETCH_EVENT_DETAIL_SUCCESS,
   payload
+});
+
+export const fetchEventDetailError = (
+  statusCode: number
+): FetchEventDetailErrorAction => ({
+  type: FETCH_EVENT_DETAIL_ERROR,
+  payload: { statusCode }
 });
 
 /*** ===  RESET EVENT DETAIL  === ***/
