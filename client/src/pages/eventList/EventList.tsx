@@ -55,6 +55,16 @@ const StyledPaginationWrapper = styled.div`
   }
 `;
 
+const StyledNoEvents = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 13rem); /*  header + padding */
+  font-size: 2rem;
+  font-weight: bolder;
+  letter-spacing: 0.2rem;
+`;
+
 const EventList = (): JSX.Element | null => {
   const searchTerm = useSelector(selectSearchTerm);
   const searchCity = useSelector(selectSearchCity);
@@ -74,7 +84,11 @@ const EventList = (): JSX.Element | null => {
   }
 
   if (!isLoading && events.length === 0) {
-    return <div>Currently there are no events</div>;
+    return (
+      <StyledNoEvents>
+        Sorry, there are no events match your search criteria
+      </StyledNoEvents>
+    );
   }
 
   const handlePaginationChange = (pageNumber: number, perPage: number) => {
