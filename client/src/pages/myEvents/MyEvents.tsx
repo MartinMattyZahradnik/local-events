@@ -153,7 +153,7 @@ const MyEvents = ({ match }: IMyEventsProps) => {
               </TableCell>
               <TableCell>
                 {event.category.map(category => (
-                  <StyledCategory>{category}</StyledCategory>
+                  <StyledCategory key={category}>{category}</StyledCategory>
                 ))}
               </TableCell>
               <TableCell>{formatAddress(event.address)}</TableCell>

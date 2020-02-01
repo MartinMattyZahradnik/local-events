@@ -56,10 +56,10 @@ function* registerUserWatcher({
   const { formData } = payload;
   const userData = { ...formData };
 
-  if (formData.image) {
+  if (formData.userImageFile) {
     try {
       const data = new FormData();
-      data.append("image", formData.image);
+      data.append("image", formData.userImageFile);
       const res = yield request.post(`/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" }
       });
@@ -94,10 +94,10 @@ function* updateUserWatcher({
   const { userId, formData } = payload;
   const userData = { ...formData };
 
-  if (formData.image) {
+  if (formData.userImageFile) {
     try {
       const data = new FormData();
-      data.append("image", formData.image);
+      data.append("image", formData.userImageFile);
 
       const res = yield request.post(`/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" }

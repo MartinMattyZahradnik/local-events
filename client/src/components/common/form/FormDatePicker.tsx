@@ -32,7 +32,7 @@ const StyledKeyboardDatePicker = styled(KeyboardDatePicker)`
 
 interface IProps extends FieldProps {
   label: string;
-  defaultDate?: number;
+  initialDate?: number;
   defaultFormat?: string;
   onChange: (field: string, value: number) => {};
 }
@@ -41,16 +41,16 @@ const Field: React.FC<IProps> = ({
   field: { name, value },
   form,
   defaultFormat = "MM/dd/yyyy",
-  defaultDate = Date.now(),
+  initialDate = Date.now(),
   onChange,
   ...other
 }) => {
   useEffect(() => {
-    onChange(name, defaultDate);
-  }, []);
+    onChange(name, initialDate);
+  }, [initialDate, name, onChange]);
   const handleDateChange = (date: MaterialUiPickersDate) => {
     if (date) {
-      onChange(name, getTime(new Date(date)));
+      onChange(name, getTime(date));
     }
   };
 

@@ -58,8 +58,6 @@ const HeaderUser = () => {
     setAnchorEl(null);
   };
 
-  console.log(user, "user");
-
   const handleLogout = () => {
     handleClose();
     dispatch(logout());
@@ -101,21 +99,22 @@ const HeaderUser = () => {
         onClose={handleClose}
         anchorEl={anchorEl}
       >
-        <MenuItem onClick={handleClose}>
-          <StyledMenuLink to={`/user/${user._id}/update`}>
+        <StyledMenuLink to={`/user/${user._id}/update`}>
+          <MenuItem onClick={handleClose}>
             <FormattedMessage id="User.profile" defaultMessage="User profile" />
-          </StyledMenuLink>
-        </MenuItem>
-        <MenuItem>
-          <StyledMenuLink to={`/user/${user._id}/events`}>
+          </MenuItem>
+        </StyledMenuLink>
+
+        <StyledMenuLink to={`/user/${user._id}/events`}>
+          <MenuItem onClick={handleClose}>
             <FormattedMessage id="User.myEvents" defaultMessage="My Events" />
-          </StyledMenuLink>
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          <StyledLogoutLink>
+          </MenuItem>
+        </StyledMenuLink>
+        <StyledLogoutLink>
+          <MenuItem onClick={handleLogout}>
             <FormattedMessage id="General.logout" defaultMessage="Logout" />
-          </StyledLogoutLink>
-        </MenuItem>
+          </MenuItem>
+        </StyledLogoutLink>
       </Menu>
     </>
   );

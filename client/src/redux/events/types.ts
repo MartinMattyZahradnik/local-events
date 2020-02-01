@@ -24,6 +24,7 @@ export interface IEventFormValues {
   description: string;
   date: number;
   imageUrl: string;
+  eventImageFile?: File;
   address: {
     street: string;
     postalCode?: string;

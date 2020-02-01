@@ -80,6 +80,9 @@ const StyledUploadBtn = styled(Button)`
   margin-top: 0.8rem;
   font-size: 1.4rem;
   width: 20rem;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.xs}) {
+    margin: auto;
+  }
 `;
 
 const StyledFormFooter = styled(Grid)`
@@ -107,7 +110,8 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
     touched,
     errors,
     isUpdate,
-    image
+    image,
+    birthDate
   } = props;
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
@@ -256,6 +260,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
               component={FormDatePiker}
               onChange={setFieldValue}
               disableFuture={true}
+              initialDate={birthDate}
             />
           </StyledFieldWrapper>
 
@@ -335,9 +340,9 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
             </>
           )}
 
-          <StyledFieldWrapper>
+          <StyledFieldWrapper item xs={12} sm={6}>
             <StyledUploadBtn>
-              <label htmlFor="userImage">
+              <label htmlFor="userImageFile">
                 {formatMessage({
                   id: "User.uploadPhoto",
                   defaultMessage: "Upload photo"
@@ -349,7 +354,7 @@ const UserForm = (props: IRegisterUserProps & FormikProps<IUserFormValues>) => {
           <UploadFilePreview
             onChange={setFieldValue}
             imageUrl={image}
-            inputId="userImage"
+            inputId="userImageFile"
           />
 
           <StyledHeading>

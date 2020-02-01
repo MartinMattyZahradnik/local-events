@@ -37,12 +37,12 @@ const UploadFilePreview = ({
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
     setImage(URL.createObjectURL(file));
-    onChange("imageUrl", file);
+    onChange(inputId, file);
   };
 
   const handleClearImage = () => {
     setImage("");
-    onChange("image", "");
+    onChange(inputId, "");
   };
 
   return (
@@ -51,7 +51,7 @@ const UploadFilePreview = ({
         id={inputId}
         onChange={handleInputChange}
         type="file"
-        name="imageUrl"
+        name={inputId}
         accept="image/png, image/jpeg"
         hidden
       />

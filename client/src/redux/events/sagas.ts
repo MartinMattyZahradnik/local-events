@@ -80,10 +80,10 @@ function* createEventWatcher({
       makeSelectCountryNameByCode(payload.eventData.address.countryCode)
     );
 
-    if (payload.eventData.imageUrl) {
+    if (payload.eventData.eventImageFile) {
       try {
         const data = new FormData();
-        data.append("image", payload.eventData.imageUrl);
+        data.append("image", payload.eventData.eventImageFile);
         const res = yield request.post(`/upload`, data, {
           headers: { "Content-Type": "multipart/form-data" }
         });
@@ -139,10 +139,10 @@ function* updateEventWatcher({
     ...formValues,
     coordinates: Array()
   };
-  if (formValues.imageUrl) {
+  if (formValues.eventImageFile) {
     try {
       const data = new FormData();
-      data.append("image", formValues.imageUrl);
+      data.append("image", formValues.eventImageFile);
       const res = yield request.post(`/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" }
       });

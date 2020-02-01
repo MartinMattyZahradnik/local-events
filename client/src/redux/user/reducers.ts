@@ -13,7 +13,8 @@ import {
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  LOGOUT
+  LOGOUT,
+  UPDATE_USER_SUCCESS
 } from "redux/user/constants";
 
 function error(state: null | number = null, action: UserErrorReducerTypes) {
@@ -37,6 +38,7 @@ function result(state: null | IUser = null, action: UserResultReducerTypes) {
   switch (action.type) {
     case FETCH_USER_SUCCESS:
     case LOGIN_SUCCESS:
+    case UPDATE_USER_SUCCESS:
       return action.payload.user;
 
     case LOGOUT:

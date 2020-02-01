@@ -30,6 +30,7 @@ export interface IUserFormValues {
   password: string;
   passwordConfirm: string;
   image: string;
+  userImageFile?: File;
   phone?: string;
   gender: string;
   address: {
@@ -145,7 +146,8 @@ export type UserErrorReducerTypes =
 export type UserResultReducerTypes =
   | FetchUserSuccessAction
   | LoginSuccessAction
-  | LogoutAction;
+  | LogoutAction
+  | UpdateUserSuccessAction;
 
 export type UserIsLoadingReducerTypes =
   | FetchUserAction

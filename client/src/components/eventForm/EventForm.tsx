@@ -118,7 +118,8 @@ const EventForm = (
     touched,
     errors,
     address,
-    imageUrl
+    imageUrl,
+    date
   } = props;
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
@@ -171,6 +172,7 @@ const EventForm = (
               })}
               component={FormDatePiker}
               onChange={setFieldValue}
+              initialDate={date}
             />
 
             <StyledFormErrorWrapper>
@@ -203,7 +205,7 @@ const EventForm = (
 
           <StyledFieldWrapper item xs={12} sm={6}>
             <StyledUploadBtn>
-              <label htmlFor="eventImage">
+              <label htmlFor="eventImageFile">
                 {formatMessage({
                   id: "Event.uploadImages",
                   defaultMessage: "Upload images"
@@ -215,7 +217,7 @@ const EventForm = (
           <UploadFilePreview
             onChange={setFieldValue}
             imageUrl={imageUrl}
-            inputId="eventImage"
+            inputId="eventImageFile"
           />
 
           <StyledDescriptionWrapper item xs={12}>

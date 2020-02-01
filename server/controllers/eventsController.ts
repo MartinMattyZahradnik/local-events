@@ -5,13 +5,16 @@ import { Request, Response, NextFunction } from "express";
 export const getEventsController = async (req: Request, res: Response) => {
   const { offset, limit, city, searchTerm } = req.query;
 
-  const searchConditions: { "address.city"?: string; $text?: any } = {};
+  const searchConditions: {
+    "address.city"?: string;
+    name?: { $regex: string; $options: "i" };
+  } = {};
   if (city !== "all") {
     searchConditions["address.city"] = city;
   }
 
   if (searchTerm) {
-    searchConditions.$text = { $search: searchTerm };
+    searchConditions.name = { $regex: searchTerm, $options: "i" };
   }
 
   try {
