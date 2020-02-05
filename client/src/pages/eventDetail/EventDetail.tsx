@@ -108,11 +108,11 @@ const EventDetail = ({ match }: IEventDetailProps) => {
   }, [dispatch, id]);
 
   if (!event) {
-    return null;
+    return <div data-testid="event-detail-loading">Loadingg</div>;
   }
 
   return (
-    <StyledEventDetail container>
+    <StyledEventDetail container data-testid="event-detail">
       <EventHeader event={event} />
       <StyledEventContent>
         <StyledEventImage src={event.imageUrl} />

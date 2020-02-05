@@ -53,13 +53,11 @@ function isLoading(state = false, action: CountryListLoadingTypes) {
   }
 }
 
-export interface ICountryListReducerState {
-  isLoading: boolean;
-  error: boolean;
-  result: ICountry[];
-}
-
 export const countryListReducer = combineReducers({ error, result, isLoading });
+
+export const defaultState = {
+  countryList: { error: null, result: [], isLoading: false }
+};
 
 export default combineReducers({
   countryList: countryListReducer

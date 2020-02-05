@@ -4,7 +4,7 @@ import {
 } from "redux/notifications/constants";
 import { INotificationReducerState, NotificationReducerTypes } from "./types";
 
-const defaultState: INotificationReducerState = {
+export const defaultState: INotificationReducerState = {
   list: []
 };
 

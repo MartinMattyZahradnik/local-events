@@ -16,6 +16,14 @@ import { IApplicationReducerState } from "redux/application/types";
 import { INotificationReducerState } from "redux/notifications/types";
 import { IUserReducerState } from "redux/user/types";
 
+// Default states
+import { defaultState as localizationDefaultState } from "./localization/reducers";
+import { defaultState as notificationsDefaultState } from "./notifications/reducer";
+import { defaultState as userDefaultState } from "./user/reducers";
+import { defaultState as eventsDefaultState } from "./events/reducers";
+import { defaultState as eventDetailDefaultState } from "./eventDetail/reducers";
+import { defaultState as applicationDefaultState } from "./application/reducers";
+
 export interface IState {
   localization: ILocalizationReducerState;
   user: IUserReducerState;
@@ -24,6 +32,15 @@ export interface IState {
   application: IApplicationReducerState;
   notifications: INotificationReducerState;
 }
+
+export const initialState: IState = {
+  localization: localizationDefaultState,
+  user: userDefaultState,
+  events: eventsDefaultState,
+  eventDetail: eventDetailDefaultState,
+  application: applicationDefaultState,
+  notifications: notificationsDefaultState
+};
 
 export default combineReducers({
   localization: localizationReducer,

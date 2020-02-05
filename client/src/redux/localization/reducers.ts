@@ -1,7 +1,7 @@
 import { CHANGE_LOCALE } from "redux/localization/constants";
 import { ILocalizationReducerState, LocalizationReducerTypes } from "./types";
 
-const defaultState: ILocalizationReducerState = {
+export const defaultState: ILocalizationReducerState = {
   locale: "en"
 };
 

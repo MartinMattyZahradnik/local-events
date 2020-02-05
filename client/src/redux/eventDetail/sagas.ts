@@ -15,7 +15,7 @@ function* fetchEventDetailWatcher({
   payload: { eventId: string };
 }) {
   const { eventId } = payload;
-
+  console.log("???");
   try {
     const resp = yield request.get(`/events/${eventId}`);
 

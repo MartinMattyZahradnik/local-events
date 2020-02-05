@@ -71,4 +71,10 @@ export interface IEventsReducerState {
   result: IResultState;
 }
 
+export const defaultState = {
+  error: false,
+  result: null,
+  isLoading: false
+};
+
 export default combineReducers({ error, result, isLoading });

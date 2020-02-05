@@ -36,13 +36,13 @@ function error(state: null | number = null, action: EventErrorReducerTypes) {
   }
 }
 
-const ResultDefaultState = {
+const resultDefaultState = {
   events: [],
   totalItems: 0
 };
 
 function result(
-  state: IResultState = ResultDefaultState,
+  state: IResultState = resultDefaultState,
   action: EventsResultReducerTypes
 ) {
   switch (action.type) {
@@ -83,13 +83,13 @@ function isLoading(state = false, action: EventLoadingLoadingTypes) {
 
 export interface IMyEventsReducerState {
   isLoading: boolean;
-  error: boolean;
+  error: null | number;
   result: IEvent[];
 }
 
 const MyEventsDefaultState = {
   isLoading: false,
-  error: false,
+  error: null,
   result: []
 };
 
@@ -160,5 +160,13 @@ function search(
       return state;
   }
 }
+
+export const defaultState = {
+  error: null,
+  result: resultDefaultState,
+  isLoading: false,
+  myEvents: MyEventsDefaultState,
+  search: searchReducerDefaultState
+};
 
 export default combineReducers({ error, result, isLoading, myEvents, search });

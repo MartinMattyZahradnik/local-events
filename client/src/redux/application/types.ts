@@ -13,12 +13,14 @@ export interface ICountry extends IState {
   states?: IState[];
 }
 
+export interface ICountryListReducerState {
+  isLoading: boolean;
+  error: null | number;
+  result: ICountry[];
+}
+
 export type IApplicationReducerState = {
-  countryList: {
-    result: ICountry[];
-    isLoading: boolean;
-    error: boolean;
-  };
+  countryList: ICountryListReducerState;
 };
 
 export interface FetchCountyListAction {

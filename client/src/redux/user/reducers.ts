@@ -17,6 +17,12 @@ import {
   UPDATE_USER_SUCCESS
 } from "redux/user/constants";
 
+export const defaultState = {
+  error: null,
+  result: null,
+  isLoading: false
+};
+
 function error(state: null | number = null, action: UserErrorReducerTypes) {
   switch (action.type) {
     case FETCH_USER:

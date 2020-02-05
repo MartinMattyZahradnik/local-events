@@ -115,7 +115,7 @@ const EventCard = ({ event }: IEventCardProps) => {
   );
 
   return (
-    <StyledCard>
+    <StyledCard data-testid="event-card">
       {hasRightToEditEvent && (
         <Link to={`/event/${_id}/update`}>
           <StyledEditIcon />
@@ -134,7 +134,7 @@ const EventCard = ({ event }: IEventCardProps) => {
             <StyledMonth>{format(date, "MMM")}</StyledMonth>
             {format(date, "d")}
           </StyledDate>
-          <StyledPrice>
+          <StyledPrice data-testid="event-card-price">
             {localizePrice(price.price, price.locale, price.currency)}
           </StyledPrice>
         </StyledPriceWrapper>
