@@ -26,7 +26,7 @@ export interface IEventModel extends Document {
   tags?: string[];
   price: IPrice;
   address: IAddress;
-  owner: Schema.Types.ObjectId | IUserModel;
+  owner: IUserModel["_id"];
   createdAt: number;
   deletedAt: number | null;
 }

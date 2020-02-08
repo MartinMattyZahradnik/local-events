@@ -3,7 +3,7 @@ import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
 
 export const getEventsController = async (req: Request, res: Response) => {
-  const { offset, limit, city, searchTerm } = req.query;
+  const { offset = 0, limit = 10, city = "all", searchTerm = "" } = req.query;
 
   const searchConditions: {
     "address.city"?: string;
@@ -19,6 +19,7 @@ export const getEventsController = async (req: Request, res: Response) => {
 
   try {
     const totalItems = await Event.find(searchConditions).countDocuments();
+    console.log("searchConditions", searchConditions);
     const events = await Event.find(searchConditions)
       .sort({ date: -1 })
       .skip(parseInt(offset))
@@ -58,7 +59,7 @@ export const updateEventController = async (
   } = req;
 
   try {
-    const event: any = await Event.findById(eventId)
+    const event = await Event.findById(eventId)
       .populate("owner")
       .exec();
 
@@ -124,7 +125,7 @@ export const deleteEventController = async (
   } = req;
 
   try {
-    const event: any = await Event.findById(eventId).populate("owner");
+    const event = await Event.findById(eventId).populate("owner");
     if (!event) {
       return res
         .status(404)

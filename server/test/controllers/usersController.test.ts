@@ -2,12 +2,9 @@ import chai, { expect } from "chai";
 import mongoose from "mongoose";
 
 import app from "../../app";
-import eventsMock from "../eventsMock";
-import Event from "../../models/event";
 import { getToken } from "../testUtils";
 import usersMock from "../usersMock";
 import User from "../../models/user";
-import user from "../../models/user";
 
 describe("GET Users", () => {
   it("GET /user -> should return array of users", async () => {

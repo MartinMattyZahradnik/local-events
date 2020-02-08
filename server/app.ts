@@ -29,7 +29,11 @@ const s3 = new aws.S3({
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
 });
 
-const fileFilter = (req: Request, file: Express.Multer.File, callback: any) => {
+const fileFilter = (
+  req: Request,
+  file: Express.Multer.File,
+  callback: Function
+) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
     return callback(
       new Error("Only .jpg, .jpeg, .png, .gif files are allowed"),

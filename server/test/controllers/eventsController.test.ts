@@ -34,21 +34,21 @@ describe("Event detail", () => {
 
 describe("Get Events", () => {
   it("GET /events -> should return array of events", async () => {
-    const req = await chai.request(app).get(`/events`);
-    const { events } = req.body;
-    expect(req.status).to.equal(200);
+    const res = await chai.request(app).get(`/events`);
+    const { events } = res.body;
+    expect(res.status).to.equal(200);
     expect(events).to.be.an("array");
     expect(events.length).to.equal(eventsMock.length);
   });
 
   it("GET /events -> should return totalItems property", async () => {
-    const req = await chai.request(app).get(`/events`);
-    expect(req.body.totalItems).to.equal(eventsMock.length);
+    const res = await chai.request(app).get(`/events`);
+    expect(res.body.totalItems).to.equal(eventsMock.length);
   });
 
   it("GET /events -> should populate owner correctly", async () => {
-    const req = await chai.request(app).get(`/events?offset=0&limit=10`);
-    const { events } = req.body;
+    const res = await chai.request(app).get(`/events?offset=0&limit=10`);
+    const { events } = res.body;
     expect(events[0]).to.have.property("owner");
     expect(events[0].owner).to.have.property("email");
     expect(events[0].owner.email).to.equal("admin@localevents.com");
@@ -57,10 +57,10 @@ describe("Get Events", () => {
   it("GET /events -> should paginate correctly", async () => {
     const limit = 2;
     const offset = 3;
-    const req = await chai
+    const res = await chai
       .request(app)
       .get(`/events?offset=${offset}&limit=${limit}`);
-    const { events } = req.body;
+    const { events } = res.body;
     expect(events.length).to.equal(limit);
     expect(events[0]._id).to.equal(eventsMock[offset]._id.toHexString());
   });
