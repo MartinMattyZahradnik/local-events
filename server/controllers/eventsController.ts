@@ -3,7 +3,12 @@ import User from "../models/user";
 import { Request, Response, NextFunction } from "express";
 
 export const getEventsController = async (req: Request, res: Response) => {
-  const { offset = 0, limit = 10, city = "all", searchTerm = "" } = req.query;
+  const {
+    offset = "0",
+    limit = "10",
+    city = "all",
+    searchTerm = "",
+  } = req.query;
 
   const searchConditions: {
     "address.city"?: string;
@@ -19,7 +24,6 @@ export const getEventsController = async (req: Request, res: Response) => {
 
   try {
     const totalItems = await Event.find(searchConditions).countDocuments();
-    console.log("searchConditions", searchConditions);
     const events = await Event.find(searchConditions)
       .sort({ date: -1 })
       .skip(parseInt(offset))
@@ -29,7 +33,7 @@ export const getEventsController = async (req: Request, res: Response) => {
     return res.status(200).json({
       message: "Fetched events successfully.",
       events: events,
-      totalItems: totalItems
+      totalItems: totalItems,
     });
   } catch (err) {
     return res.status(500).send({});
@@ -55,13 +59,11 @@ export const updateEventController = async (
   const {
     body,
     token: { _id, userRole },
-    params: { eventId }
+    params: { eventId },
   } = req;
 
   try {
-    const event = await Event.findById(eventId)
-      .populate("owner")
-      .exec();
+    const event = await Event.findById(eventId).populate("owner").exec();
 
     if (!event) {
       return res
@@ -77,7 +79,7 @@ export const updateEventController = async (
 
     await Event.findByIdAndUpdate(eventId, {
       ...body,
-      price: { ...event.price, price: body.price }
+      price: { ...event.price, price: body.price },
     });
     return res.status(200).json(body);
   } catch (err) {
@@ -121,7 +123,7 @@ export const deleteEventController = async (
 ) => {
   const {
     params: { eventId },
-    token: { email }
+    token: { email },
   } = req;
 
   try {
@@ -156,7 +158,7 @@ export const getSimilarEventsController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const limit = req.query.limit || 4;
+  const limit = req.query.limit || "4";
   const { eventId } = req.params;
 
   try {
@@ -170,7 +172,7 @@ export const getSimilarEventsController = async (
 
     const similarEvents = await Event.find({
       category: { $in: event.category },
-      country: event.country
+      country: event.country,
     }).limit(parseInt(limit));
 
     return res

@@ -4,6 +4,9 @@ import jwt from "jsonwebtoken";
 declare module "express" {
   interface Request {
     token?: any;
+    query: {
+      [key: string]: string;
+    };
   }
 }
 
