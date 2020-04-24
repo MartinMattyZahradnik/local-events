@@ -19,7 +19,7 @@ import {
 
   // Fetch events by user id
   fetchEventsByUserIdSuccess,
-  fetchEventsByUserIdError
+  fetchEventsByUserIdError,
 } from "./actions";
 import { pushNotificationToStack } from "redux/notifications/actions";
 
@@ -32,7 +32,7 @@ import {
   CREATE_EVENT,
   UPDATE_EVENT,
   DELETE_EVENT,
-  FETCH_EVENTS_BY_USER_ID
+  FETCH_EVENTS_BY_USER_ID,
 } from "./constants";
 
 // Selectors
@@ -41,7 +41,7 @@ import { makeSelectCountryNameByCode } from "redux/application/selectors";
 import { selectSearchCity, selectSearchTerm } from "./selectors";
 
 function* fetchEventsWatcher({
-  payload
+  payload,
 }: {
   type: string;
   payload: FetchEventsPayload;
@@ -60,7 +60,7 @@ function* fetchEventsWatcher({
     yield put(
       fetchEventsSuccess({
         totalItems: resp.data.totalItems,
-        events: resp.data.events
+        events: resp.data.events,
       })
     );
   } catch (e) {
@@ -69,7 +69,7 @@ function* fetchEventsWatcher({
 }
 
 function* createEventWatcher({
-  payload
+  payload,
 }: {
   type: string;
   payload: { eventData: IEventFormValues };
@@ -85,7 +85,7 @@ function* createEventWatcher({
         const data = new FormData();
         data.append("image", payload.eventData.eventImageFile);
         const res = yield request.post(`/upload`, data, {
-          headers: { "Content-Type": "multipart/form-data" }
+          headers: { "Content-Type": "multipart/form-data" },
         });
 
         payload.eventData.imageUrl = res.data.files[0].path;
@@ -103,14 +103,16 @@ function* createEventWatcher({
       owner,
       address: {
         ...payload.eventData.address,
-        country
+        country,
       },
       ...(payload.eventData.coordinates && {
         coordinates: payload.eventData.coordinates
           .split(",")
-          .map(value => parseFloat(value))
+          .map((value) => parseFloat(value)),
       }),
-      ...(payload.eventData.tags && { tags: payload.eventData.tags.split(",") })
+      ...(payload.eventData.tags && {
+        tags: payload.eventData.tags.split(","),
+      }),
     };
 
     const resp = yield request.post("/events", eventData);
@@ -130,21 +132,21 @@ function* createEventWatcher({
 }
 
 function* updateEventWatcher({
-  payload: { eventId, formValues }
+  payload: { eventId, formValues },
 }: {
   type: string;
   payload: { eventId: string; formValues: IEventFormValues };
 }) {
   const values = {
     ...formValues,
-    coordinates: Array()
+    coordinates: Array(),
   };
   if (formValues.eventImageFile) {
     try {
       const data = new FormData();
       data.append("image", formValues.eventImageFile);
       const res = yield request.post(`/upload`, data, {
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       values.imageUrl = res.data.files[0].path;
@@ -183,7 +185,7 @@ function* updateEventWatcher({
 }
 
 function* deleteEventWatcher({
-  payload: { id }
+  payload: { id },
 }: {
   type: string;
   payload: { id: string };
@@ -205,7 +207,7 @@ function* deleteEventWatcher({
 }
 
 function* fetchEventsByIdWatcher({
-  payload: { userId }
+  payload: { userId },
 }: {
   type: string;
   payload: { userId: string };

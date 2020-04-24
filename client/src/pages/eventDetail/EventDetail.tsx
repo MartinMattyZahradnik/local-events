@@ -9,6 +9,7 @@ import { Grid, Card, Chip } from "@material-ui/core";
 import EventHeader from "./EventHeader";
 import SimilarEvents from "./SimilarEvents";
 import { Map } from "components/common";
+import { Loading } from "bricks";
 
 // Actions
 import { fetchEventDetail, resetEventDetail } from "redux/eventDetail/actions";
@@ -108,7 +109,7 @@ const EventDetail = ({ match }: IEventDetailProps) => {
   }, [dispatch, id]);
 
   if (!event) {
-    return <div data-testid="event-detail-loading">Loadingg</div>;
+    return <Loading />;
   }
 
   return (
@@ -116,21 +117,25 @@ const EventDetail = ({ match }: IEventDetailProps) => {
       <EventHeader event={event} />
       <StyledEventContent>
         <StyledEventImage src={event.imageUrl} />
-        <StyledHeading>{event.name}</StyledHeading>
-        <StyledDescription>{event.description}</StyledDescription>
-        <StyledHeading>
+        <StyledHeading data-testid="event-heading">{event.name}</StyledHeading>
+        <StyledDescription data-testid="event-description">
+          {event.description}
+        </StyledDescription>
+        <StyledHeading data-testid="event-tags-heading">
           {formatMessage({ id: "General.tags", defaultMessage: "Tags" })}
         </StyledHeading>
-        <StyledTags>
-          {event.tags.map(tag => (
+        <StyledTags data-testid="event-tags">
+          {event.tags.map((tag) => (
             <StyledTag key={tag} label={tag} variant="outlined" />
           ))}
         </StyledTags>
+
         {event.coordinates && (
           <Map
+            dataTestid="event-detail-map"
             initialCenter={{
               lat: event.coordinates[0],
-              lng: event.coordinates[1]
+              lng: event.coordinates[1],
             }}
             width="100%"
             height="40rem"
@@ -138,11 +143,11 @@ const EventDetail = ({ match }: IEventDetailProps) => {
         )}
       </StyledEventContent>
 
-      <StyledSideBar>
+      <StyledSideBar data-testid="sidebar">
         <h3>
           {formatMessage({
             id: "Event.moreEventsIn",
-            defaultMessage: "More Events In"
+            defaultMessage: "More Events In",
           })}{" "}
           {event.address.city}
         </h3>
@@ -151,7 +156,7 @@ const EventDetail = ({ match }: IEventDetailProps) => {
       <StyledSimilarEventsHeading>
         {formatMessage({
           id: "General.similarEvents",
-          defaultMessage: "Similar Events"
+          defaultMessage: "Similar Events",
         })}
       </StyledSimilarEventsHeading>
       <SimilarEvents eventId={event._id} />

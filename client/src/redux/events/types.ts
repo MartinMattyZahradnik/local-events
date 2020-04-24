@@ -16,7 +16,7 @@ import {
   FETCH_EVENTS_BY_USER_ID_SUCCESS,
   FETCH_EVENTS_BY_USER_ID_ERROR,
   SET_SEARCH_TERM,
-  SET_SEARCH_CITY
+  SET_SEARCH_CITY,
 } from "./constants";
 
 export interface IEventFormValues {

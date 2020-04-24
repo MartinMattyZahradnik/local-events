@@ -7,7 +7,7 @@ import {
   EventLoadingLoadingTypes,
   EventErrorReducerTypes,
   EventsSearchReducerTypes,
-  MyEventsReducerTypes
+  MyEventsReducerTypes,
 } from "./types";
 import {
   FETCH_EVENTS_ERROR,
@@ -19,7 +19,7 @@ import {
   FETCH_EVENTS_BY_USER_ID_SUCCESS,
   FETCH_EVENTS_BY_USER_ID_ERROR,
   SET_SEARCH_TERM,
-  SET_SEARCH_CITY
+  SET_SEARCH_CITY,
 } from "./constants";
 
 function error(state: null | number = null, action: EventErrorReducerTypes) {
@@ -38,7 +38,7 @@ function error(state: null | number = null, action: EventErrorReducerTypes) {
 
 const resultDefaultState = {
   events: [],
-  totalItems: 0
+  totalItems: 0,
 };
 
 function result(
@@ -52,14 +52,14 @@ function result(
     case CREATE_EVENT_SUCCESS:
       return {
         events: [action.payload.eventData, ...state.events],
-        totalItems: state.totalItems + 1
+        totalItems: state.totalItems + 1,
       };
 
     case DELETE_EVENT_SUCCESS:
       return {
         ...state,
-        events: state.events.filter(event => event._id !== action.payload.id),
-        totalItems: state.totalItems - 1
+        events: state.events.filter((event) => event._id !== action.payload.id),
+        totalItems: state.totalItems - 1,
       };
 
     default:
@@ -90,7 +90,7 @@ export interface IMyEventsReducerState {
 const MyEventsDefaultState = {
   isLoading: false,
   error: null,
-  result: []
+  result: [],
 };
 
 function myEvents(
@@ -102,15 +102,15 @@ function myEvents(
       return {
         ...state,
         result: state.result.filter(
-          userEvent => userEvent._id !== action.payload.id
-        )
+          (userEvent) => userEvent._id !== action.payload.id
+        ),
       };
 
     case FETCH_EVENTS_BY_USER_ID:
       return {
         ...state,
         isLoading: true,
-        error: false
+        error: null,
       };
 
     case FETCH_EVENTS_BY_USER_ID_SUCCESS:
@@ -118,7 +118,7 @@ function myEvents(
         ...state,
         result: action.payload.events,
         isLoading: false,
-        error: false
+        error: null,
       };
 
     case FETCH_EVENTS_BY_USER_ID_ERROR:
@@ -126,7 +126,7 @@ function myEvents(
         ...state,
         result: [],
         isLoading: false,
-        error: true
+        error: 400,
       };
 
     default:
@@ -136,7 +136,7 @@ function myEvents(
 
 const searchReducerDefaultState = {
   city: "all",
-  term: ""
+  term: "",
 };
 
 function search(
@@ -147,13 +147,13 @@ function search(
     case SET_SEARCH_TERM:
       return {
         ...state,
-        term: action.payload.searchTerm
+        term: action.payload.searchTerm,
       };
 
     case SET_SEARCH_CITY:
       return {
         ...state,
-        city: action.payload.searchCity
+        city: action.payload.searchCity,
       };
 
     default:
@@ -166,7 +166,7 @@ export const defaultState = {
   result: resultDefaultState,
   isLoading: false,
   myEvents: MyEventsDefaultState,
-  search: searchReducerDefaultState
+  search: searchReducerDefaultState,
 };
 
 export default combineReducers({ error, result, isLoading, myEvents, search });

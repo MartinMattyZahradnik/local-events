@@ -7,7 +7,7 @@ export const request = axios.create({
   baseURL,
   headers: {
     ...(sessionStorage.getItem("jwtToken") && {
-      Authorization: sessionStorage.getItem("jwtToken")
-    })
-  }
+      Authorization: sessionStorage.getItem("jwtToken"),
+    }),
+  },
 });

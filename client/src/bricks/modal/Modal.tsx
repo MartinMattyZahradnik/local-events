@@ -56,9 +56,16 @@ const Modal = ({
   onConfirm,
   title,
   confirmLabel = "Ok",
-  cancelLabel = "Cancel"
+  cancelLabel = "Cancel",
 }: IModalProps) => {
   const el = document.createElement("div");
+  const handleKeyDown = (e: KeyboardEvent): void => {
+    if (open && e.keyCode === 27) {
+      // ESC
+      handleCloseModal();
+    }
+  };
+
   useEffect(() => {
     const modalRoot = document.getElementById("modal-root");
     document.addEventListener("keydown", handleKeyDown, true);
@@ -66,17 +73,10 @@ const Modal = ({
       modalRoot.appendChild(el);
       return () => {
         modalRoot.removeChild(el);
-        document.removeEventListener("keyDown", handleKeyDown, true);
+        document.removeEventListener("keydown", handleKeyDown, true);
       };
     }
-  }, [el]);
-
-  const handleKeyDown = (e: any): void => {
-    if (open && e.keyCode === 27) {
-      // ESC
-      handleCloseModal();
-    }
-  };
+  }, [el, handleKeyDown]);
 
   const handleCloseModal = (): void => {
     onClose();

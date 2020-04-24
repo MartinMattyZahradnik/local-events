@@ -3,7 +3,7 @@ import {
   IUser,
   UserErrorReducerTypes,
   UserResultReducerTypes,
-  UserIsLoadingReducerTypes
+  UserIsLoadingReducerTypes,
 } from "./types";
 
 import {
@@ -14,13 +14,13 @@ import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   LOGOUT,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
 } from "redux/user/constants";
 
 export const defaultState = {
   error: null,
   result: null,
-  isLoading: false
+  isLoading: false,
 };
 
 function error(state: null | number = null, action: UserErrorReducerTypes) {
@@ -45,7 +45,13 @@ function result(state: null | IUser = null, action: UserResultReducerTypes) {
     case FETCH_USER_SUCCESS:
     case LOGIN_SUCCESS:
     case UPDATE_USER_SUCCESS:
-      return action.payload.user;
+      return state
+        ? {
+            _id: state._id,
+            userRole: state.userRole,
+            ...action.payload.user,
+          }
+        : null;
 
     case LOGOUT:
       return null;

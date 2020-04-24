@@ -14,6 +14,7 @@ interface IMapProps extends IMapWrapperProps {
   };
   zoom?: number;
   google: any;
+  dataTestid?: string;
 }
 
 const StyledMapWrapper = styled.div<IMapWrapperProps>`
@@ -27,9 +28,10 @@ export const MapComponent = ({
   zoom = 14,
   google,
   width = "100%",
-  height = "100%"
+  height = "100%",
+  dataTestid = "map",
 }: IMapProps) => (
-  <StyledMapWrapper width={width} height={height}>
+  <StyledMapWrapper width={width} height={height} data-testid={dataTestid}>
     <Map google={google} initialCenter={initialCenter} zoom={zoom}>
       <Marker />
     </Map>
@@ -37,5 +39,5 @@ export const MapComponent = ({
 );
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_MAPS_API || ""
+  apiKey: process.env.REACT_APP_GOOGLE_MAPS_API || "",
 })(MapComponent);

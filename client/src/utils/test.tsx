@@ -19,14 +19,14 @@ const middlewares: Middleware[] = [sagaMiddleware];
 const history = createMemoryHistory();
 
 export function renderWithRedux(
-  ui,
+  ui: JSX.Element,
   {
     initialState,
     store = createStore(
       rootReducer,
       compose(applyMiddleware(...middlewares)),
       initialState
-    )
+    ),
   } = {}
 ) {
   sagaMiddleware.run(rootSaga);
@@ -43,6 +43,6 @@ export function renderWithRedux(
         </Router>
       </IntlProvider>
     ),
-    store
+    store,
   };
 }

@@ -5,14 +5,14 @@ import {
   FETCH_SIMILAR_EVENTS_SUCCESS,
   RESET_EVENT_DETAIL,
   FETCH_SIMILAR_EVENTS,
-  FETCH_EVENT_DETAIL_ERROR
+  FETCH_EVENT_DETAIL_ERROR,
 } from "./constants";
 
 export type IResultState = IEvent | null;
 
 export type IEventDetailReducerState = {
   result: IResultState;
-  error: boolean;
+  error: null | number;
   isLoading: boolean;
 };
 
@@ -54,6 +54,8 @@ export type EventDetailErrorReducerTypes =
 
 export type EventDetailLoadingReducerTypes =
   | FetchEventDetailAction
+  | FetchEventDetailSuccessAction
+  | FetchEventDetailErrorAction
   | ResetEventDetailAction;
 
 export type EventDetailResultReducerTypes =

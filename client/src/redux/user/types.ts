@@ -15,7 +15,7 @@ import {
   UPDATE_USER,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
-  SET_NEW_PASSWORD
+  SET_NEW_PASSWORD,
 } from "./constants";
 
 export type AvailableUserRoles = "admin" | "user" | "visitor";

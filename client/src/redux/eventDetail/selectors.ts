@@ -21,10 +21,10 @@ export const selectEventForUpdateForm = createSelector(
           price: event.price.price,
           coordinates: event.coordinates
             ? event.coordinates
-                .map(coordinate => coordinate.toString())
+                .map((coordinate) => coordinate.toString())
                 .join(",")
             : "",
-          tags: event.tags.join("")
+          tags: event.tags.join(""),
         }
       : null
 );
@@ -36,9 +36,10 @@ export const selectEventDetailLoading = createSelector(
 
 export const selectEventDetailError = createSelector(
   getEventDetail,
-  (eventsDetail): boolean | number => eventsDetail.error
+  (eventsDetail): null | number => (eventsDetail ? eventsDetail.error : null)
 );
 
-export const selectSimilarEvents = createSelector(getEventDetail, eventDetail =>
-  get(eventDetail, "result.similarEvents", [])
+export const selectSimilarEvents = createSelector(
+  getEventDetail,
+  (eventDetail) => get(eventDetail, "result.similarEvents", [])
 );
