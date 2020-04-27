@@ -79,12 +79,14 @@ interface IPaginationProps {
   total: number;
   onChange: (pageNumper: number, perPage: number) => void;
   rowsOptions?: number[];
+  dataTestid?: string;
 }
 
 const Pagination = ({
   total,
   onChange,
-  rowsOptions = [5, 10, 15]
+  rowsOptions = [5, 10, 15],
+  dataTestid = "pagination",
 }: IPaginationProps) => {
   const [perPage, setPerPage] = useState(10);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
@@ -109,56 +111,54 @@ const Pagination = ({
   const hasBeforePage = currentPageNumber > 1;
 
   return (
-    <>
-      <StyledPagination>
-        <StyledForm onSubmit={(e: React.FormEvent) => e.preventDefault()}>
-          <StyledPerPage>
-            {intl.formatMessage({
-              id: "General.rowsPerPage",
-              defaultMessage: "Rows Per Page"
-            })}
-            :
-          </StyledPerPage>
-          <StyledFormControl>
-            <StyledSelect
-              value={perPage}
-              onChange={handleChangePerPage}
-              input={<Input name="age" id="age-helper" />}
-            >
-              {rowsOptions.map((value, index) => (
-                <MenuItem key={value * index} value={value}>
-                  {value}
-                </MenuItem>
-              ))}
-            </StyledSelect>
-          </StyledFormControl>
-
-          <StyledBoldText>
-            {perPage * (currentPageNumber - 1) + 1} -{" "}
-            {Math.min(perPage * currentPageNumber, total)}
-          </StyledBoldText>
-          <StyledOfText>
-            {intl.formatMessage({ id: "General.of", defaultMessage: "of" })}
-          </StyledOfText>
-          <StyledBoldText>{total}</StyledBoldText>
-        </StyledForm>
-        {hasBeforePage && (
-          <StyledBeforeIcon onClick={handleChangePage(currentPageNumber - 1)} />
-        )}
-        {paginationItems.map((paginationItem, index) => (
-          <StyledPaginationItem
-            key={index}
-            onClick={handleChangePage(index + 1)}
-            active={index + 1 === currentPageNumber}
+    <StyledPagination data-testid={dataTestid}>
+      <StyledForm onSubmit={(e: React.FormEvent) => e.preventDefault()}>
+        <StyledPerPage>
+          {intl.formatMessage({
+            id: "General.rowsPerPage",
+            defaultMessage: "Rows Per Page",
+          })}
+          :
+        </StyledPerPage>
+        <StyledFormControl>
+          <StyledSelect
+            value={perPage}
+            onChange={handleChangePerPage}
+            input={<Input name="age" id="age-helper" />}
           >
-            {index + 1}
-          </StyledPaginationItem>
-        ))}
-        {hasNextPage && (
-          <StyledNextIcon onClick={handleChangePage(currentPageNumber + 1)} />
-        )}
-      </StyledPagination>
-    </>
+            {rowsOptions.map((value, index) => (
+              <MenuItem key={value * index} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </StyledSelect>
+        </StyledFormControl>
+
+        <StyledBoldText>
+          {perPage * (currentPageNumber - 1) + 1} -{" "}
+          {Math.min(perPage * currentPageNumber, total)}
+        </StyledBoldText>
+        <StyledOfText>
+          {intl.formatMessage({ id: "General.of", defaultMessage: "of" })}
+        </StyledOfText>
+        <StyledBoldText>{total}</StyledBoldText>
+      </StyledForm>
+      {hasBeforePage && (
+        <StyledBeforeIcon onClick={handleChangePage(currentPageNumber - 1)} />
+      )}
+      {paginationItems.map((paginationItem, index) => (
+        <StyledPaginationItem
+          key={index}
+          onClick={handleChangePage(index + 1)}
+          active={index + 1 === currentPageNumber}
+        >
+          {index + 1}
+        </StyledPaginationItem>
+      ))}
+      {hasNextPage && (
+        <StyledNextIcon onClick={handleChangePage(currentPageNumber + 1)} />
+      )}
+    </StyledPagination>
   );
 };
 

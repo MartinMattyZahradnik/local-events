@@ -19,7 +19,7 @@ import {
   selectEventsIsLoading,
   selectEventsError,
   selectSearchTerm,
-  selectSearchCity
+  selectSearchCity,
 } from "redux/events/selectors";
 
 // Types
@@ -85,7 +85,7 @@ const EventList = (): JSX.Element | null => {
 
   if (!isLoading && events.length === 0) {
     return (
-      <StyledNoEvents>
+      <StyledNoEvents data-testid="no-events-message">
         Sorry, there are no events match your search criteria
       </StyledNoEvents>
     );
@@ -96,16 +96,16 @@ const EventList = (): JSX.Element | null => {
   };
 
   return (
-    <StyledEventList>
+    <StyledEventList data-testid="event-list">
       {/* @TODO preset unknown visitor with data from https://ipinfo.io - setup search */}
-      <StyledHeading>
+      <StyledHeading data-testid="heading">
         <FormattedMessage
           id="EventList.heading"
           defaultMessage="Popular Events in"
         />{" "}
         Bratislava
       </StyledHeading>
-      <Grid container spacing={5}>
+      <Grid container spacing={5} data-testid="event-list-cards">
         {events.map((event: IEvent) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={event._id}>
             <Link to={`/event/${event._id}`}>
@@ -115,7 +115,11 @@ const EventList = (): JSX.Element | null => {
         ))}
       </Grid>
       <StyledPaginationWrapper>
-        <Pagination onChange={handlePaginationChange} total={total} />
+        <Pagination
+          onChange={handlePaginationChange}
+          total={total}
+          dataTestid="event-list-pagination"
+        />
       </StyledPaginationWrapper>
     </StyledEventList>
   );

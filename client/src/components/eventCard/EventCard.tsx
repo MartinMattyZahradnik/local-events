@@ -17,10 +17,6 @@ import { makeSelectHasRightToEditEvent } from "redux/events/selectors";
 // Other
 import { localizePrice } from "localization";
 
-interface IEventCardProps {
-  event: IEvent;
-}
-
 const StyledEditIcon = styled(EditIcon)`
   display: none;
   position: absolute;
@@ -98,6 +94,10 @@ const StyledPrice = styled.span`
   font-weight: 700;
 `;
 
+interface IEventCardProps {
+  event: IEvent;
+}
+
 const EventCard = ({ event }: IEventCardProps) => {
   const {
     _id,
@@ -107,7 +107,7 @@ const EventCard = ({ event }: IEventCardProps) => {
     date,
     price,
     address: { city, street },
-    owner
+    owner,
   } = event;
 
   const hasRightToEditEvent = useSelector(
@@ -123,14 +123,16 @@ const EventCard = ({ event }: IEventCardProps) => {
       )}
       <StyledImage src={imageUrl} />
       <StyledCardContent>
-        <StyledHeading>{name}</StyledHeading>
+        <StyledHeading data-testid="event-card-name">{name}</StyledHeading>
         <StyledSubheading>
           {city} {street}
         </StyledSubheading>
-        <StyledDescription>{description}</StyledDescription>
+        <StyledDescription data-testid="event-card-description">
+          {description}
+        </StyledDescription>
 
         <StyledPriceWrapper container alignItems="center">
-          <StyledDate>
+          <StyledDate data-testid="event-card-date">
             <StyledMonth>{format(date, "MMM")}</StyledMonth>
             {format(date, "d")}
           </StyledDate>

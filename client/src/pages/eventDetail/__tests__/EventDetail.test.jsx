@@ -26,7 +26,7 @@ describe("<EventDetail>", () => {
   });
 
   it("Render without error with correct props", async () => {
-    const { getByTestId, debug } = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <EventDetail history={{}} location={{}} match={match} />
     );
 
