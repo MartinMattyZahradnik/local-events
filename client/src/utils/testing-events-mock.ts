@@ -9,7 +9,7 @@ export const mockedEvents = [
     imageUrl:
       "https://local-events-react.s3.us-east-2.amazonaws.com/2020-01-02T10%3A12%3A02.739Z-art-battle-ny.jpg",
     price: {
-      price: 0,
+      price: 11,
       currency: "EUR",
       locale: "en",
     },
@@ -20,7 +20,7 @@ export const mockedEvents = [
       countryCode: "SK",
       country: "SM",
     },
-    category: ["art"],
+    category: ["art", "sport", "foor"],
     similarEvents: [],
     coordinates: [40.7285022, -74.0022365],
     tags: ["Art", "Outdoor", "Paint"],

@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanup, fireEvent } from "@testing-library/react";
+import { cleanup } from "@testing-library/react";
 import EventCard from "../EventCard";
 import { renderWithRedux } from "utils/test";
 import { getMockedEvents } from "utils/testing-events-mock";

@@ -42,8 +42,6 @@ function error(state: null | number = null, action: UserErrorReducerTypes) {
 
 function result(state: null | IUser = null, action: UserResultReducerTypes) {
   switch (action.type) {
-    case FETCH_USER_SUCCESS:
-    case LOGIN_SUCCESS:
     case UPDATE_USER_SUCCESS:
       return state
         ? {
@@ -52,6 +50,10 @@ function result(state: null | IUser = null, action: UserResultReducerTypes) {
             ...action.payload.user,
           }
         : null;
+
+    case FETCH_USER_SUCCESS:
+    case LOGIN_SUCCESS:
+      return action.payload.user;
 
     case LOGOUT:
       return null;

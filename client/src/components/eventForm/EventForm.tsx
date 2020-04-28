@@ -12,7 +12,7 @@ import {
   FormDatePiker,
   FormHeader,
   FormError,
-  UploadFilePreview
+  UploadFilePreview,
 } from "components/common";
 import { Button } from "bricks";
 import { Card, Grid } from "@material-ui/core";
@@ -117,9 +117,8 @@ const EventForm = (
     formHeading,
     touched,
     errors,
-    address,
     imageUrl,
-    date
+    date,
   } = props;
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
@@ -130,14 +129,14 @@ const EventForm = (
   const categories = useSelector(selectEventCategories);
   const countries = useSelector(selectCountryList);
   return (
-    <StyledEventFormWrapper>
+    <StyledEventFormWrapper data-testid="event-form">
       <FormHeader formHeading={formHeading} />
       <StyledForm>
         <Grid container>
           <StyledHeading>
             {formatMessage({
               id: "Event.details",
-              defaultMessage: "Event details"
+              defaultMessage: "Event details",
             })}
           </StyledHeading>
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -149,7 +148,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "Event.typeName",
-                defaultMessage: "Enter event name"
+                defaultMessage: "Enter event name",
               })}
               component={FormField}
             />
@@ -168,7 +167,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "Event.dateSelect",
-                defaultMessage: "Select event date"
+                defaultMessage: "Select event date",
               })}
               component={FormDatePiker}
               onChange={setFieldValue}
@@ -193,12 +192,12 @@ const EventForm = (
               placeholder="Select category"
               component={FormSelect}
               multiple
-              options={categories.map(category => ({
+              options={categories.map((category) => ({
                 value: category,
                 label: formatMessage({
                   id: `Event.category.${category}`,
-                  defaultMessage: category
-                })
+                  defaultMessage: category,
+                }),
               }))}
             />
           </StyledFieldWrapper>
@@ -208,7 +207,7 @@ const EventForm = (
               <label htmlFor="eventImageFile">
                 {formatMessage({
                   id: "Event.uploadImages",
-                  defaultMessage: "Upload images"
+                  defaultMessage: "Upload images",
                 })}
               </label>
             </StyledUploadBtn>
@@ -233,7 +232,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "Event.typeDescription",
-                defaultMessage: "Type event description"
+                defaultMessage: "Type event description",
               })}
               component={FormField}
             />
@@ -248,7 +247,7 @@ const EventForm = (
           <StyledHeading>
             {formatMessage({
               id: "User.address",
-              defaultMessage: "Address"
+              defaultMessage: "Address",
             })}
           </StyledHeading>
           <StyledFieldWrapper item xs={12} sm={6}>
@@ -263,7 +262,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "From.address.typeStreet",
-                defaultMessage: "Type street"
+                defaultMessage: "Type street",
               })}
               component={FormField}
             />
@@ -288,7 +287,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "From.address.typeZipCode",
-                defaultMessage: "Type Zip Code"
+                defaultMessage: "Type Zip Code",
               })}
               component={FormField}
             />
@@ -312,7 +311,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "From.address.typeCity",
-                defaultMessage: "Type city"
+                defaultMessage: "Type city",
               })}
               component={FormField}
             />
@@ -323,7 +322,6 @@ const EventForm = (
               />
             </StyledFormErrorWrapper>
           </StyledFieldWrapper>
-
           <StyledFieldWrapper item xs={12} sm={6}>
             <Field
               required
@@ -336,13 +334,12 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "From.address.typeCountry",
-                defaultMessage: "Type country"
+                defaultMessage: "Type country",
               })}
               component={FormSelect}
-              defaultValue={address.countryCode}
               options={countries.map((country: ICountry) => ({
                 value: country.code,
-                label: country.name
+                label: country.name,
               }))}
             />
             <StyledFormErrorWrapper>
@@ -358,11 +355,11 @@ const EventForm = (
               type="number"
               name="price"
               label={
-                <FormattedMessage id="General.price" defaultMessage="Pride" />
+                <FormattedMessage id="General.price" defaultMessage="Price" />
               }
               placeholder={formatMessage({
                 id: "General.typePrice",
-                defaultMessage: "Type price"
+                defaultMessage: "Type price",
               })}
               component={FormField}
             />
@@ -378,7 +375,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "General.typeTags",
-                defaultMessage: "Type tags"
+                defaultMessage: "Type tags",
               })}
               component={FormField}
             />
@@ -397,7 +394,7 @@ const EventForm = (
               }
               placeholder={formatMessage({
                 id: "General.typeCoordinates",
-                defaultMessage: "Type coordinates"
+                defaultMessage: "Type coordinates",
               })}
               component={FormField}
             />
@@ -409,10 +406,14 @@ const EventForm = (
             {" "}
             {formatMessage({
               id: "General.back",
-              defaultMessage: "Back"
+              defaultMessage: "Back",
             })}
           </StyledLink>
-          <StyledButton type="submit" disabled={isSubmitting}>
+          <StyledButton
+            type="submit"
+            disabled={isSubmitting}
+            data-testid="event-form-submit"
+          >
             {actionButtonLabel}
           </StyledButton>
         </StyledFormFooter>
@@ -437,7 +438,7 @@ export default withFormik<ICreateEventProps, IEventFormValues>({
     address,
     price,
     tags,
-    coordinates
+    coordinates,
   }) {
     return {
       name,
@@ -448,7 +449,7 @@ export default withFormik<ICreateEventProps, IEventFormValues>({
       address,
       price,
       tags,
-      coordinates
+      coordinates,
     };
-  }
+  },
 })(EventForm);
